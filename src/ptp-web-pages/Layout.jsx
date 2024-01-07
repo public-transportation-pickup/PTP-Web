@@ -1,7 +1,7 @@
 //import React from 'react'
 import {Outlet} from 'react-router-dom'
-import Sidebar from '../foodie-pickup-components/Sidebar'
-import Header from '../foodie-pickup-components/Header'
+import Sidebar from '../ptp-web-components/Sidebar'
+import Header from '../ptp-web-components/Header'
 
 export default function Layout() {
   return (
