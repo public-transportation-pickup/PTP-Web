@@ -1,7 +1,7 @@
 //import React from 'react'
 import {Outlet} from 'react-router-dom'
-import Sidebar from '../ptp-web-components/Sidebar'
-import Header from '../ptp-web-components/Header'
+import Sidebar from '../ptp-web-admin-components/Sidebar'
+import Header from '../ptp-web-admin-components/Header'
 
 export default function Layout() {
   return (
