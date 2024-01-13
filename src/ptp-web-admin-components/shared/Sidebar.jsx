@@ -1,8 +1,9 @@
 //import React from 'react'
 import { FcOrgUnit } from "react-icons/fc";
-import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../lib/contants/navigation";
+import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../../lib/contants/navigation";
 import { Link,useLocation  } from "react-router-dom";
 import classNames from 'classnames'
+
 import{HiOutlineLogout } from 'react-icons/hi'
 
 const linkClass = 

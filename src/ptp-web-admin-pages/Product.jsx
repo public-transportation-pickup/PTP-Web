@@ -2,6 +2,6 @@
 
 export default function Product() {
   return (
-    <div>Product</div>
+    <button>Product</button>
   )
 }
