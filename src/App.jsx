@@ -4,15 +4,18 @@ import SignUp from './ptp-web-admin-pages/SignUp'
 import Layout from './ptp-web-admin-components/shared/Layout.jsx'
 import Product from './ptp-web-admin-pages/Product.jsx';
 import Dashboard from './ptp-web-admin-pages/Dashboard.jsx';
+import PrivateRoute from './ptp-web-admin-components/shared/PrivateRoute.jsx';
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Layout/>}>
-          <Route index element={<Dashboard/>}/>
-          <Route path='product' element={<Product/>}/>
+        <Route element={<PrivateRoute/>}>
+          <Route path='/' element={<Layout/>}>
+            <Route index element={<Dashboard/>}/>
+            <Route path='product' element={<Product/>}/>
+          </Route>
         </Route>
-
+        
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/sign-up' element={<SignUp/>}/>
         
