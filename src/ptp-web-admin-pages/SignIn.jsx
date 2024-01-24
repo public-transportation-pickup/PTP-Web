@@ -57,16 +57,16 @@ export default function SignIn() {
     {/*<!-- Left column container with background-->*/}
     <div
       className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-      <div
+      {/* <div
         className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-5/12 xl:w-5/12">
         <img
           src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
           className="w-full mt-6"
           alt="Sample image" />
-      </div>
+      </div> */}
 
       {/* <!-- Right column container --> */}
-      <div className="mb-12 md:mb-0 md:w-8/12 lg:w-7/12 xl:w-7/12">
+      <div className="mb-12 md:mb-0 md:w-8/12 lg:w-7/12 xl:w-7/12 mx-auto">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -123,22 +123,15 @@ export default function SignIn() {
             </div>
 
             <div>
-              <button
+              {/* <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-cyan-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
               >
                 {loading ? 'Waiting...' :'Sign In'}
-              </button>
+              </button> */}
               <OAuth formData={formData}/>
             </div>
           </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
-            <a href="#" className="font-semibold leading-6 text-cyan-600 hover:text-indigo-500">
-              Start a 14 day free trial
-            </a>
-          </p>
         </div>
       </div>
       {error && <p className='text-red-500 mt-5'>{error}</p>}

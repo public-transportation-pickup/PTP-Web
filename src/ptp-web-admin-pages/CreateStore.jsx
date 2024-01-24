@@ -1,7 +1,8 @@
 import { useState } from "react"
 //import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
-import {BASE_URL} from '../lib/contants/index.js';
+import DisplayData from "../ptp-web-admin-components/store-components/DisplayData";
+//import {BASE_URL} from '../lib/contants/index.js';
 
 export default function CreateStore() {
     //const {currentUser} =useSelector(state=>state.user);
@@ -12,65 +13,28 @@ export default function CreateStore() {
         Name:'',
         Description:'',
         PhoneNumber:'',
-        OpenTime:'',
+        OpenedTime:'',
         ClosedTime:'',
         Address:'',
         ActivationDate:new Date(),
     });
+
+    let formdata1= new FormData();
+    formdata1.append('Name',formData.Name);
+    formdata1.append('Description',formData.Description);
+    formdata1.append('PhoneNumber',formData.PhoneNumber);
+    formdata1.append('OpenedTime',formData.OpenedTime);
+    formdata1.append('ClosedTime',formData.ClosedTime);
+    formdata1.append('Address',formData.Address);
+    formdata1.append('ActivationDate',formData.ActivationDate.toISOString());
+    formdata1.append('File',files);
     
     console.log("file",files);
-    // const [imageUploadError,setImageUploadError]=useState(false);
-    // const [uploading,setUploading]=useState(false);
     const [error, setError]=useState(false);
     const [loading,setLoading]=useState(false);
     console.log("FormData",formData);
-    //console.log("Error create store",error);
-    // const handleImageSubmit =  ()=>{
-    //     if(files.length >0 && files.length +formData.imageUrls.length < 2){
-    //         setUploading(true);
-    //         setImageUploadError(false);
-    //         const promises=[];
-    //         for(let i=0; i<files.length;i++){
-    //             promises.push(storeImage(files[i]));
-    //         }
-    //         Promise.all(promises).then((urls)=>{
-    //             setFormData({...formData,files:formData.imageUrls.concat(urls)});
-    //             setImageUploadError(false);
-    //             setUploading(false);
-    //         }).catch(()=>{
-    //             setImageUploadError('Image upload failed');
-    //             setUploading(false);
-    //         });
-    //     }else{
-    //         setImageUploadError('You can only upload 1 image per listing');
-    //         setUploading(false);
-    //     }
-    // }
-
-    // const storeImage=async(file)=>{
-    //     return new Promise((resolve, reject)=>{
-    //         const storage=getStorage(app);
-    //         const fileName= new Date().getTime()+ file.name;
-    //         const storageRef= ref(storage,fileName);
-    //         const uploadTask=uploadBytesResumable(storageRef,file);
-    //         uploadTask.on(
-    //             "state_changed",
-    //             (snapshot)=>{
-    //                 const progress=(snapshot.bytesTransferred/snapshot.totalBytes)*100;
-    //                 console.log(`Upload is ${progress}% done`);
-    //             },
-    //             (error)=>{
-    //                 reject(error);
-    //             },
-    //             ()=>{
-    //                 getDownloadURL(uploadTask.snapshot.ref).then((downloadURL)=>{
-    //                     resolve(downloadURL);
-    //                 });
-    //             }
-    //         );
-    //     })
-    // }
-
+    
+    
         
     const handleChange=(e)=>{
         // if(e.target.id ==='sale' ||e.target.id==='rent'){
@@ -89,28 +53,28 @@ export default function CreateStore() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
         try{
-            if(files.length<1) return setError('You must upload at least one image');
+            //if(files.length<1) return setError('You must upload at least one image');
             //if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price must be lower than regular price');
+            
             setLoading(false);
             setError(false);
-            const res= await fetch(`${BASE_URL}stores`,{
+            console.log("formdata1:",formdata1);
+            const res= await fetch(`/api/stores`,{                
                 method:'POST',
-                mode:'no-cors',
-                headers:{
-                    'Content-Type':'application/json',
-                },
-                body:JSON.stringify({
-                    ...formData,
-                    //userRef:currentUser._id,
-                }),
+                // headers:{
+                //     'Content-Type':'multipart/form-data'
+                // },
+                body:formData
             });
             const data=await res.json();
+            console.log("Response",data);
             setLoading(false);
             if(data.success===false){
                 setError(data.message);
             }
             navigate(`/store/${data._id}`);
         }catch(error){
+            console.log("Catch:",error);
             setError(error.message);
             setLoading(false);
         }
@@ -128,10 +92,11 @@ export default function CreateStore() {
     
 
 return (
-    <main className='p-3 max-w-4xl mx-auto'>
+    <>
+        <main className='p-3 max-w-6xl mx-auto'>
     <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
     <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
-        <div className='flex flex-col gap-4 flex-1'>
+        <div className='w-3/4 flex flex-col gap-4 flex-1'>
             <input onChange={handleChange} value={formData.Name} type='text' placeholder='Name' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
             <textarea onChange={handleChange} value={formData.Description} type='text' placeholder='Description' className='border p-3 rounded-lg'id='Description' required/>
             <input onChange={handleChange} value={formData.Address} type='text' placeholder='Address' className='border p-3 rounded-lg'id='Address'  required/>
@@ -139,7 +104,7 @@ return (
             <div className='flex gap-5 flex-row'>
                 <div className='flex gap-2'>
                     <span>Open Time</span>
-                    <input onChange={handleChange} checked={formData.OpenTime} type='time' id='OpenTime' className='w-3/4'/>
+                    <input onChange={handleChange} checked={formData.OpenedTime} type='time' id='OpenedTime' className='w-3/4'/>
                     
                 </div>
                 <div className='flex gap-2'>
@@ -149,7 +114,7 @@ return (
                 </div>
         </div>
         </div>
-        <div className='flex flex-col flex-1 gap-2'>
+        <div className='w-3/12 flex flex-col flex-1 gap-2'>
             <div className="flex justify-center flex-row gap-2 ">
             <div className='flex gap-4'>
                 {/* <input onChange={handleInputImgChange} className='hidden' type='file' id='images' accept='image/*'/>
@@ -180,7 +145,12 @@ return (
             {error&& <p className="text-red-700 text-sm">{error}</p>}
         </div>
     </form>
-</main>
+        </main>
+    <div className="p-4" >
+        <DisplayData className/>
+    </div>
+    </>
+    
   )
 }
 
