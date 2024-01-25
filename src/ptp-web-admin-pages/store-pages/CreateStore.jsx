@@ -1,7 +1,7 @@
 import { useState } from "react"
 //import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
-import DisplayData from "../ptp-web-admin-components/store-components/DisplayData";
+import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
 //import {BASE_URL} from '../lib/contants/index.js';
 
 export default function CreateStore() {

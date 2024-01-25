@@ -30,14 +30,14 @@ export default function Sidebar() {
   const {currentUser,loading, error}=useSelector(state=>state.user);
   const handleSignout= async ()=>{
     try{
-      dispatch(signOutUserStart)
-      const res= await fetch('/api/auth/signout');
-      const data=await res.json();
-      if(data.success ===false){
-        dispatch(signOutUserFailre(error.message));
-        return;
-      }
-      dispatch(signOutUserSuccess(data));
+      // dispatch(signOutUserStart)
+      // const res= await fetch('/api/auth/signout');
+      // const data=await res.json();
+      // if(data.success ===false){
+      //   dispatch(signOutUserFailre(error.message));
+      //   return;
+      // }
+      // dispatch(signOutUserSuccess(data));
     }catch(error){
       dispatch(signOutUserFailre(error.message));
     }
