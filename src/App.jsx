@@ -7,6 +7,7 @@ import PrivateRoute from './ptp-web-admin-components/shared/PrivateRoute.jsx';
 import CreateStore from './ptp-web-admin-pages/store-pages/CreateStore.jsx';
 import StoreList from './ptp-web-admin-pages/StoreList.jsx';
 import UpdateStore from './ptp-web-admin-pages/store-pages/UpdateStore.jsx';
+import Map from './ptp-web-admin-pages/Map.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ export default function App() {
             <Route path='product' element={<Product/>}/>
             <Route path='store/create-store' element={<CreateStore/>}/>
             <Route path='/update-store' element={<UpdateStore/>}/>
+            <Route path='/map' element={<Map/>}/>
           </Route>
         </Route>
         

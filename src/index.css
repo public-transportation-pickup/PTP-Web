@@ -23,3 +23,23 @@
 		@apply text-sky-500 hover:underline;
 	}
 }
+
+.leaflet-container{
+	height: 80vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .cluster-icon {
+	height: 2.1rem;
+	width: 2.1rem;
+	border-radius: 50%;
+	background-color: aqua;
+	transform: translate(-25%, -25%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-weight: 900;
+	font-size:1rem ;
+  }

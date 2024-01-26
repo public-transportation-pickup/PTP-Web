@@ -23,8 +23,8 @@ export default function CreateStore() {
     formdata1.append('Name',formData.Name);
     formdata1.append('Description',formData.Description);
     formdata1.append('PhoneNumber',formData.PhoneNumber);
-    formdata1.append('OpenedTime',formData.OpenedTime);
-    formdata1.append('ClosedTime',formData.ClosedTime);
+    formdata1.append('OpenedTime',formData.OpenedTime.toString());
+    formdata1.append('ClosedTime',formData.ClosedTime.toString());
     formdata1.append('Address',formData.Address);
     formdata1.append('ActivationDate',formData.ActivationDate.toISOString());
     formdata1.append('File',files);
@@ -33,6 +33,10 @@ export default function CreateStore() {
     const [error, setError]=useState(false);
     const [loading,setLoading]=useState(false);
     console.log("FormData",formData);
+    console.log("FormData1",formdata1);
+    for (let entry of formdata1.entries()) {
+        console.log(entry[0] + ':', entry[1]);
+      }
     
     
         
@@ -64,7 +68,7 @@ export default function CreateStore() {
                 // headers:{
                 //     'Content-Type':'multipart/form-data'
                 // },
-                body:formData
+                body:formdata1
             });
             const data=await res.json();
             console.log("Response",data);

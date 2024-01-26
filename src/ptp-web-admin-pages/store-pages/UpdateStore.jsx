@@ -5,7 +5,7 @@ export default function UpdateStore() {
     return (
         <div className='flex flex-row gap-3'>
             <div className='w-2/3 p-4'>
-                <h1>Profile</h1>
+                <h1>Profile Store</h1>
                 <h2></h2>
             </div>
             
