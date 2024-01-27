@@ -1,14 +1,12 @@
 import { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { signInStart, signInSuccess,signInFailure } from '../redux/user/userSlice';
+//import {useNavigate} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import OAuth from '../ptp-web-admin-components/shared/OAuth';
 
 export default function SignIn() {
   const [formData,setFormData]=useState({});
-  const navigate=useNavigate();
-  const dispatch=useDispatch();
-  const {loading, error}=useSelector((state)=>state.user);
+  const {error}=useSelector((state)=>state.user);
   const handleChange=(e)=>{
     setFormData({
       ...formData,
@@ -16,41 +14,7 @@ export default function SignIn() {
     });
     console.log("HandleChange: ",e.target.id);
   };
-  console.log("Formdata",formData);
-
-  const handleSubmit= async(e)=>{
-    e.preventDefault();
-    //setLoading(true);
-    try{
-      dispatch(signInStart());
-      const res=await fetch('/api/auth/signin',{
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-        },
-        body:JSON.stringify(formData),
-      });
-      console.log('HandleSubmit req:',res);
-      const data = await res.json();
-      console.log('Data Sign in res:',data);
-      if(data.success===false){
-        // setError(data.message);
-        // setLoading(false);
-        dispatch(signInFailure(data.message));
-        return;
-      }
-      // setLoading(false);
-      // setError(null);
-      dispatch(signInSuccess(data));
-      navigate('/');
-    }catch(error){
-      // setLoading(false);
-      // setError(error.message);
-      dispatch(signInFailure(error.message));
-      console.log("Submit Form Sign Up error",error)
-    }
-    
-  };
+  //console.log("Formdata",formData);
 
   return (
     <div className="h-screen">
@@ -80,7 +44,7 @@ export default function SignIn() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6 gap-4" action="#" method="POST" onSubmit={handleSubmit}>
+          <form className="space-y-6 gap-4" action="#" method="POST">
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address

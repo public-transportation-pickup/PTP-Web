@@ -37,11 +37,14 @@ export default function Sidebar() {
       //   dispatch(signOutUserFailre(error.message));
       //   return;
       // }
-      // dispatch(signOutUserSuccess(data));
+      await localStorage.clear();
+      dispatch(signOutUserSuccess(currentUser));
     }catch(error){
       dispatch(signOutUserFailre(error.message));
     }
   }
+
+
   return (
     <div className="bg-neutral-200 w-60 p-3 flex flex-col text-black">
         <div className="flex items-center gap-2 px-1 py-3">
