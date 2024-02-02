@@ -1,7 +1,7 @@
 //import { Combobox } from '@headlessui/react'
 import { TERipple } from 'tw-elements-react';
 
-export default function UpdateStore() {
+export default function UpdateStorePage() {
     return (
         <div className='flex flex-row gap-3'>
             <div className='w-2/3 p-4'>

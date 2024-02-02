@@ -1,6 +1,6 @@
 //import React from 'react'
 import { FcOrgUnit } from "react-icons/fc";
-import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../../lib/contants/navigation.jsx";
+import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../../lib/contants/NavigationSidebar.jsx";
 import { Link,useLocation  } from "react-router-dom";
 import classNames from 'classnames'
 import PropTypes from 'prop-types';
@@ -27,16 +27,11 @@ SidebarLink.propTypes ={
 
 export default function Sidebar() {
   const dispatch=useDispatch();
-  const {currentUser,loading, error}=useSelector(state=>state.user);
+  const {currentUser}=useSelector(state=>state.user);
   const handleSignout= async ()=>{
     try{
-      // dispatch(signOutUserStart)
-      // const res= await fetch('/api/auth/signout');
-      // const data=await res.json();
-      // if(data.success ===false){
-      //   dispatch(signOutUserFailre(error.message));
-      //   return;
-      // }
+      dispatch(signOutUserStart)
+      
       await localStorage.clear();
       dispatch(signOutUserSuccess(currentUser));
     }catch(error){
