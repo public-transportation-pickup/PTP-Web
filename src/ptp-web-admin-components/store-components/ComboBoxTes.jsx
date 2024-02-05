@@ -73,7 +73,7 @@ export default function ComboBoxTes({listItems,params}) {
                                     selected ? 'font-medium' : 'font-normal'
                                 }`}
                                 >
-                                {params}
+                                {person[params]}
                                 </span>
                                 {selected ? (
                                 <span

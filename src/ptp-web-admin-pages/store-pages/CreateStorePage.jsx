@@ -1,16 +1,40 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 //import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
 import ComboBoxRoute from "../../ptp-web-admin-components/store-components/ComboBoxRoute";
 import ComboBoxRouteVar from "../../ptp-web-admin-components/store-components/ComboBoxRouteVar";
 import ComboBoxRouteStation from "../../ptp-web-admin-components/store-components/ComboBoxRouteStation";
+import { getAllProvince,getDistrictByProvinceId } from "../../ptp-web-admin-api/store-api";
+import ComboboxComponent from "../../ptp-web-admin-components/store-components/ComboboxComponent";
+
 
 export default function CreateStorePage() {
     //const {currentUser} =useSelector(state=>state.user);
     const navigate=useNavigate();
+    const [listProvinces,setListProvince]=useState([]);
+    const [listDistrict,setListDistrict]=useState([]);
+    console.log("List province",listProvinces);
+    console.log("List district",listDistrict);
     const [files, setFiles]=useState([]);
     const [preview,setPreview]=useState();
+
+    const [selectedProvince,setSelectedProvince]=useState({});
+    const [selectedDistrict,setSelectedDistrict]=useState({});
+
+    const handleProvinceChange=async (value)=>{
+        await setSelectedProvince(value);
+        console.log("Selected Province",selectedProvince);
+    }
+
+    const handleDistrictChange=(value)=>{
+        setSelectedDistrict(value);
+        console.log("Selected District: ",selectedDistrict)
+    }
+
+
+
+
     const [formData,setFormData]=useState({
         Name:'',
         Description:'',
@@ -83,6 +107,21 @@ export default function CreateStorePage() {
             [name]: value,
         }));
         };
+
+    useEffect(()=>{
+        async function fetchData() {
+            const responseProvince =await getAllProvince();
+            setListProvince(responseProvince);
+            if(selectedProvince.province_id=='79'){
+                const reponseDistrict=await getDistrictByProvinceId();
+                setListDistrict(reponseDistrict);
+            }else{
+                console.log("Chọn đúng provicen")
+            }
+        }
+        fetchData();
+        
+    },[]);
     
 
 return (
@@ -92,10 +131,46 @@ return (
             <div className="flex flex-row gap-4 pb-8 justify-center items-center">
                 <p>Chọn Tuyến</p>
                 <ComboBoxRoute/>
+                {/* <ComboboxComponent listItems={listProvinces} params="province_name"/> */}
                 <p>Chọn Lượt</p>
                 <ComboBoxRouteVar/>
                 <p>Chọn Trạm</p>
                 <ComboBoxRouteStation/>
+            </div>
+            <div className="flex flex-row gap-4 pb-8  items-center border border-solid border-orange-200 py-2 ">
+                <p className="text-xl">Địa chỉ</p>
+                <div className="flex flex-col gap-8">
+                    <div className="flex flex-row gap-3 items-center">
+                        <p>Chọn Thành Phố</p>
+                        {/* <ComboBoxRoute/> */}<ComboboxComponent listItems={listProvinces} params="province_name"onValueChange={handleProvinceChange}/>
+                        <p>Chọn Quận</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <p>Chọn Phường</p>
+                        <ComboBoxRouteStation/>
+                    </div>
+                    <div className="flex flex-row gap-3 items-center">
+                        <label htmlFor="streetName">Đường:</label>
+                        <input
+                        type="text"
+                        id="streetName"
+                        className="rounded-lg w-64 h-12"
+                        />
+                        <label className="" htmlFor="streetName">Khu phố:</label>
+                        <input
+                        type="text"
+                        id="streetName"
+                        className="rounded-lg w-32 h-12"
+                        />
+                        <label htmlFor="streetName">Tổ:</label>
+                        <input
+                        type="text"
+                        id="streetName"
+                        className="rounded-lg w-24 h-12"
+                        />
+                    </div>
+                </div>
+                
+                
             </div>
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
@@ -155,4 +230,6 @@ return (
     
   )
 }
+
+//tphcm province_id 79
 
