@@ -1,9 +1,11 @@
 //import React from 'react'
 import { FcOrgUnit } from "react-icons/fc";
-import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../../lib/contants/navigation";
+import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../../lib/contants/NavigationSidebar.jsx";
 import { Link,useLocation  } from "react-router-dom";
 import classNames from 'classnames'
-
+import PropTypes from 'prop-types';
+import { signOutUserStart, signOutUserFailre, signOutUserSuccess } from "../../redux/user/userSlice.js";
+import { useDispatch,useSelector } from "react-redux";
 import{HiOutlineLogout } from 'react-icons/hi'
 
 const linkClass = 
@@ -17,9 +19,27 @@ function SidebarLink({item}){
       {item.label}
     </Link>
   );
+  
+}
+SidebarLink.propTypes ={
+  item:PropTypes.object.isRequired,
 }
 
 export default function Sidebar() {
+  const dispatch=useDispatch();
+  const {currentUser}=useSelector(state=>state.user);
+  const handleSignout= async ()=>{
+    try{
+      dispatch(signOutUserStart)
+      
+      await localStorage.clear();
+      dispatch(signOutUserSuccess(currentUser));
+    }catch(error){
+      dispatch(signOutUserFailre(error.message));
+    }
+  }
+
+
   return (
     <div className="bg-neutral-200 w-60 p-3 flex flex-col text-black">
         <div className="flex items-center gap-2 px-1 py-3">
@@ -37,7 +57,7 @@ export default function Sidebar() {
               <SidebarLink key={item.key}item={item}/>
             ))
           }
-          <div className={classNames(linkClass, 'cursor-pointer text-red-500')}>
+          <div className={classNames(linkClass, 'cursor-pointer text-red-500')} onClick={handleSignout}>
             <span className="text-xl"><HiOutlineLogout /></span>
             Logout
           </div>
@@ -45,3 +65,5 @@ export default function Sidebar() {
     </div>
   )
 }
+
+
