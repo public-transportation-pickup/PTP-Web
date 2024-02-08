@@ -10,6 +10,8 @@ import UpdateStorePage from './ptp-web-admin-pages/store-pages/UpdateStorePage.j
 import Map from './ptp-web-admin-pages/Map.jsx';
 //import ComboBoxRoute from './ptp-web-admin-components/store-components/ComboBoxRoute.jsx';
 import ComboBoxTes from './ptp-web-admin-components/store-components/ComboBoxTes.jsx';
+import StorePageMain from './ptp-web-admin-pages/store-pages/StorePageMain.jsx';
+import DetailStorePage from './ptp-web-admin-pages/store-pages/DetailStorePage.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -18,15 +20,21 @@ export default function App() {
           <Route path='/' element={<Layout/>}>
             <Route index element={<Dashboard/>}/>
             <Route path='product' element={<Product/>}/>
-            <Route path='store/create-store' element={<CreateStorePage/>}/>
-            <Route path='/update-store' element={<UpdateStorePage/>}/>
-            <Route path='/map' element={<Map/>}/>
+            <Route path='map' element={<Map/>}/>
+
+            <Route path='store'>
+              <Route index element={<StorePageMain/>}/>
+              <Route path='create-store' element={<CreateStorePage/>}/>
+              <Route path='update-store' element={<UpdateStorePage/>}/>
+              <Route path='detail-store' element={<DetailStorePage/>}/>
+            </Route>
           </Route>
         </Route>
         
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/getall' element={<StoreList/>}/>
         <Route path='/comboBox' element={<ComboBoxTes/>}/>
+        
         
       </Routes>
     </BrowserRouter>
