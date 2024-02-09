@@ -1,7 +1,7 @@
 import PaginationButton from "../../ptp-web-admin-components/store-components/PaginationButton";
 
 
-export default function ProductMainPage() {
+export default function MenuMainPage() {
   return (
     <>
         <h1 className="text-center mx-auto text-4xl">List Store</h1>
