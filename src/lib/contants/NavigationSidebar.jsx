@@ -45,7 +45,7 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'Map',
 		label: 'Map',
-		path: '/messages',
+		path: '/map',
 		icon: <VscMapFilled />,
 		flag:false
 	},{

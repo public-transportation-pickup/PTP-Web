@@ -4,6 +4,7 @@ import { Marker } from 'react-leaflet';
 import { Icon, divIcon, point } from 'leaflet';
 import MarkerClusterGroup from "react-leaflet-cluster";
 import busStationIcon from '../assets/bus_station_icon.png';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Map() {
@@ -38,6 +39,11 @@ const createCustomClusterIcon =(cluster)=>{
     iconSize:point(33,33,true)
   });
 }
+const navigate= useNavigate();
+const handleClick=()=>{
+  
+  navigate("/");
+}
 
 
 
@@ -49,12 +55,12 @@ return (
     />
     <MarkerClusterGroup
       chunkedLoading
-      iconCreateFunction={createCustomClusterIcon}>
+      iconCreateFunction={createCustomClusterIcon} onClick={handleClick}>
       {
         markers.map((marker)=>{
           return (
             console.log("Geocode", marker.geocode+" Icon", customIcon),
-            <Marker key={marker.geocode} position={marker.geocode} icon={customIcon}>
+            <Marker key={marker.geocode} position={marker.geocode} icon={customIcon} >
               <Popup>
                 {marker.popUp}
               </Popup>

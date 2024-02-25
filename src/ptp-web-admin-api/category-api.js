@@ -22,3 +22,6 @@ export const CreateCategory=async (formData)=>{
     }
 }
 
+export const UpdateCategory=async (updateCate)=>{
+    
+}

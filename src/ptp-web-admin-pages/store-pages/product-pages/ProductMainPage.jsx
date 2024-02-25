@@ -1,7 +1,7 @@
-import PaginationButton from "../../ptp-web-admin-components/store-components/PaginationButton";
+import PaginationButton from "../../../ptp-web-admin-components/store-components/PaginationButton";
 
 
-export default function MenuMainPage() {
+export default function ProductMainPage() {
   return (
     <>
         <h1 className="text-center mx-auto text-4xl">List Store</h1>
@@ -43,3 +43,7 @@ export default function MenuMainPage() {
     </>
   )
 }
+
+/*
+    Thay đổi icon khi từ menu điều hướng qua (Web Store)
+*/
