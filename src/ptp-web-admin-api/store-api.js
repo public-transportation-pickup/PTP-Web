@@ -3,19 +3,30 @@ export const getAllProvince= async ()=>{
     try {
         const data= await fetch('https://vapi.vnappmob.com/api/province/');
         res=await data.json();
-        console.log("Get all province response",res.results);
+        //console.log("Get all province response",res.results);
     } catch (error) {
         console.log("Error at getAllProvince", error);
     }
     return res.results;
 }
 
-export const getDistrictByProvinceId= async ()=>{
+export const getDistrictByProvinceId= async (provinceId)=>{
     let res;
     try {
-        const data= await fetch('https://vapi.vnappmob.com/api/province/district/79');
+        const data= await fetch(`https://vapi.vnappmob.com/api/province/district/${provinceId}`);
         res=await data.json();
-        console.log("Get district by province Id response",res.results);
+        //console.log("Get district by province Id response",res.results);
+    } catch (error) {
+        console.log("Error at getAllProvince", error);
+    }
+    return res.results;
+}
+export const getWardByDistrictId= async (districtId)=>{
+    let res;
+    try {
+        const data= await fetch(`https://vapi.vnappmob.com/api/province/ward/${districtId}`);
+        res=await data.json();
+        //console.log("Get district by province Id response",res.results);
     } catch (error) {
         console.log("Error at getAllProvince", error);
     }

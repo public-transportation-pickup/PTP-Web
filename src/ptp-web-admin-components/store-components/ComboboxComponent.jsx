@@ -1,26 +1,17 @@
 import PropTypes from 'prop-types';
-import data from "../../data.json";
 import { Fragment, useState } from 'react'
 import { Combobox, Transition } from '@headlessui/react'
 //import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { HiOutlineCheck,HiChevronDown } from "react-icons/hi";
 
-
 export default function ComboboxComponent({listItems,params,onValueChange}) {
-    // listItems=data.Data1;
-    // params='name';
-    console.log("Data",data.Data1);
-    
-    //const propertyName = 'name';
-    // listItems.forEach(element => {
-    //     //const paramToGet = element[propertyName];
-    //     //console.log("Params name",element.params)
-    //     console.log("Params value", element[params]);
-    // });
-    const [selected, setSelected] = useState(listItems[0]);
+    const [selected, setSelected] = useState(listItems[0] ||'');
     const handeleChange=(value)=>{
       setSelected(value);
-      onValueChange(value);
+      if(value!==null || value!==undefined){
+        onValueChange(value!==undefined?value:'');
+      }
+      
       console.log("onValueChange",value);
     }
     const [query, setQuery] = useState('')
@@ -57,7 +48,7 @@ export default function ComboboxComponent({listItems,params,onValueChange}) {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
         >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm z-10">
             {filteredList.length === 0 && query !== '' ? (
                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                 Nothing found.
@@ -105,7 +96,7 @@ export default function ComboboxComponent({listItems,params,onValueChange}) {
 }
 
 ComboboxComponent.propTypes={
-    listItems:PropTypes.object.isRequired,
-    params:PropTypes.object.isRequired,
-    onValueChange:PropTypes.object.isRequired
+    listItems:PropTypes.array.isRequired,
+    params:PropTypes.string.isRequired,
+    onValueChange:PropTypes.func.isRequired
 }

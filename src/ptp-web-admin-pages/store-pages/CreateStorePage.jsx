@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 //import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
-import { getAllProvince,getDistrictByProvinceId } from "../../ptp-web-admin-api/store-api";
+import { getAllProvince,getDistrictByProvinceId,getWardByDistrictId } from "../../ptp-web-admin-api/store-api";
 import ComboboxComponent from "../../ptp-web-admin-components/store-components/ComboboxComponent";
 
 
@@ -11,25 +11,16 @@ export default function CreateStorePage() {
     const navigate=useNavigate();
     const [listProvinces,setListProvince]=useState([]);
     const [listDistrict,setListDistrict]=useState([]);
-    console.log("List province",listProvinces);
-    console.log("List district",listDistrict);
+    const [listWard,setListWard]=useState([]);
+    // console.log("List province",listProvinces);
+    // console.log("List district",listDistrict);
+    // console.log("List ward",listWard);
     const [files, setFiles]=useState([]);
     const [preview,setPreview]=useState();
-
-    const [selectedProvince,setSelectedProvince]=useState({});
-    const [selectedDistrict,setSelectedDistrict]=useState({});
-
-    const handleProvinceChange=async (value)=>{
-        await setSelectedProvince(value);
-        console.log("Selected Province",selectedProvince);
-    }
-
-    const handleDistrictChange=(value)=>{
-        setSelectedDistrict(value);
-        console.log("Selected District: ",selectedDistrict)
-    }
-
-
+    const [provinceId,setProvinceId]=useState('');
+    const [districtId,setDistrictId]=useState('');
+    console.log("ProvinceID", provinceId);
+    console.log("DistrictId",districtId);
 
 
     const [formData,setFormData]=useState({
@@ -39,8 +30,41 @@ export default function CreateStorePage() {
         OpenedTime:'',
         ClosedTime:'',
         Address:'',
+        Route:'',
+        RouteVar:'',
+        Station:'',
+        City:'',
+        Zone:'',
+        Ward:'',
         ActivationDate:new Date(),
     });
+
+    const handleRouteChange=async (value)=>{
+        await setFormData({...formData,Route:value.district_name});
+        
+    }
+    const handleRouteVarChange=async (value)=>{
+        await setFormData({...formData,RouteVar:value.district_name});
+        
+    }
+    const handleStationChange=async (value)=>{
+        await setFormData({...formData,Station:value.district_name});
+        
+    }
+    const handleCityChange=async (value)=>{
+        await setFormData({...formData,City:value.province_name});
+        await setProvinceId(value.province_id)
+        
+    }
+    const handleZoneChange=async (value)=>{
+        await setFormData({...formData,Zone:value.district_name});
+        await setDistrictId(value.district_id)
+        
+    }
+    const handleWardChange=async (value)=>{
+        await setFormData({...formData,Ward:value.ward_name});
+        
+    }
 
     let formdata1= new FormData();
     formdata1.append('Name',formData.Name);
@@ -108,14 +132,11 @@ export default function CreateStorePage() {
     useEffect(()=>{
         async function fetchData() {
             const responseProvince =await getAllProvince();
-            console.log("Response get all province",responseProvince);
             await setListProvince(responseProvince);
-            // if(selectedProvince.province_id=='79'){
-                const reponseDistrict=await getDistrictByProvinceId();
-                await setListDistrict(reponseDistrict);
-            // }else{
-            //     console.log("Chọn đúng provicen")
-            // }
+                const reponseDistrict=await getDistrictByProvinceId(provinceId);
+                provinceId?await setListDistrict(reponseDistrict):setListDistrict([]);
+                const reponseWard=await getWardByDistrictId(districtId);
+                districtId?await setListWard(reponseWard):setListWard([]);
         }
         fetchData();
         
@@ -126,30 +147,24 @@ return (
     <>
         <main className='p-3 max-w-6xl mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
-            
             <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
                 <div className="flex flex-col gap-8 items-start">
-                    <div className="flex flex-row gap-4 pb-8 justify-center items-center">
+                    <div className="flex flex-row gap-4 justify-center items-center">
                         <p>Chọn Tuyến</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <ComboboxComponent listItems={listDistrict !==null || listDistrict !==undefined?listDistrict:null} params="district_name" onValueChange={handleRouteChange}/>
                         <p>Chọn Lượt</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleRouteVarChange}/>
                         <p>Chọn Trạm</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleStationChange}/>
                     </div>
                     <div className="flex flex-row gap-3 items-center">
-                        <p>Chọn Tuyến</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
-                        <p>Chọn Lượt</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
-                        <p>Chọn Trạm</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        {/* Kiểm soát cho chọn từng thành phần, chọn thành phố xong mới cho chọn quận-> phường */}
                         <p>Chọn Thành Phố</p>
-                        <ComboboxComponent listItems={listProvinces} params="province_name"onValueChange={handleProvinceChange}/>
+                        <ComboboxComponent listItems={listProvinces} params="province_name" onValueChange={handleCityChange}/>
                         <p>Chọn Quận</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleZoneChange}/>
                         <p>Chọn Phường</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <ComboboxComponent listItems={listWard} params="ward_name" onValueChange={handleWardChange}/>
                     </div>
                     <div className="flex flex-row gap-3 items-center">
                         <label htmlFor="streetName">Đường:</label>
