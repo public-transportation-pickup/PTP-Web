@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 export default function ItemComponent({listing}) {
   return (
     <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[270px]'>
-    <Link to={`/listing/${listing._id}`}>
+    <Link to={`/product/${listing._id}`}>
         <img src={listing.imageUrls[0] ||"https:https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedia.architecturaldigest.com%2Fphotos%2F61b0ce48dccdb75fa170f8f7%2F16%3A9%2Fw_1280%2Cc_limit%2FPurpleCherry_Williams_0012.jpg&tbnid=z8EjvFa1Mc-KBM&vet=12ahUKEwix6NirjrSDAxXMSmwGHeBCA1kQMygBegQIARBz..i&imgrefurl=https%3A%2F%2Fwww.architecturaldigest.com%2Fstory%2Fbig-houses-sprawling-estates-and-cool-compounds-tour-12-large-properties&docid=G7y6tU89Neba0M&w=1280&h=720&q=estate&ved=2ahUKEwix6NirjrSDAxXMSmwGHeBCA1kQMygBegQIARBz"} alt="listing cover"
             className='h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300'/>
         

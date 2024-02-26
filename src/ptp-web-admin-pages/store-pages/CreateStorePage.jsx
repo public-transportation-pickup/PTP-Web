@@ -2,9 +2,6 @@ import { useEffect, useState } from "react"
 //import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
 import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
-import ComboBoxRoute from "../../ptp-web-admin-components/store-components/ComboBoxRoute";
-import ComboBoxRouteVar from "../../ptp-web-admin-components/store-components/ComboBoxRouteVar";
-import ComboBoxRouteStation from "../../ptp-web-admin-components/store-components/ComboBoxRouteStation";
 import { getAllProvince,getDistrictByProvinceId } from "../../ptp-web-admin-api/store-api";
 import ComboboxComponent from "../../ptp-web-admin-components/store-components/ComboboxComponent";
 
@@ -111,13 +108,14 @@ export default function CreateStorePage() {
     useEffect(()=>{
         async function fetchData() {
             const responseProvince =await getAllProvince();
-            setListProvince(responseProvince);
-            if(selectedProvince.province_id=='79'){
+            console.log("Response get all province",responseProvince);
+            await setListProvince(responseProvince);
+            // if(selectedProvince.province_id=='79'){
                 const reponseDistrict=await getDistrictByProvinceId();
-                setListDistrict(reponseDistrict);
-            }else{
-                console.log("Chọn đúng provicen")
-            }
+                await setListDistrict(reponseDistrict);
+            // }else{
+            //     console.log("Chọn đúng provicen")
+            // }
         }
         fetchData();
         
@@ -128,25 +126,30 @@ return (
     <>
         <main className='p-3 max-w-6xl mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
-            <div className="flex flex-row gap-4 pb-8 justify-center items-center">
-                <p>Chọn Tuyến</p>
-                <ComboBoxRoute/>
-                {/* <ComboboxComponent listItems={listProvinces} params="province_name"/> */}
-                <p>Chọn Lượt</p>
-                <ComboBoxRouteVar/>
-                <p>Chọn Trạm</p>
-                <ComboBoxRouteStation/>
-            </div>
-            <div className="flex flex-row gap-4 pb-8  items-center border border-solid border-orange-200 py-2 ">
-                <p className="text-xl">Địa chỉ</p>
-                <div className="flex flex-col gap-8">
+            
+            <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
+                <div className="flex flex-col gap-8 items-start">
+                    <div className="flex flex-row gap-4 pb-8 justify-center items-center">
+                        <p>Chọn Tuyến</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <p>Chọn Lượt</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <p>Chọn Trạm</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                    </div>
                     <div className="flex flex-row gap-3 items-center">
+                        <p>Chọn Tuyến</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <p>Chọn Lượt</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
+                        <p>Chọn Trạm</p>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
                         <p>Chọn Thành Phố</p>
-                        {/* <ComboBoxRoute/> */}<ComboboxComponent listItems={listProvinces} params="province_name"onValueChange={handleProvinceChange}/>
+                        <ComboboxComponent listItems={listProvinces} params="province_name"onValueChange={handleProvinceChange}/>
                         <p>Chọn Quận</p>
                         <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
                         <p>Chọn Phường</p>
-                        <ComboBoxRouteStation/>
+                        <ComboboxComponent listItems={listDistrict} params="district_name"onValueChange={handleDistrictChange}/>
                     </div>
                     <div className="flex flex-row gap-3 items-center">
                         <label htmlFor="streetName">Đường:</label>
@@ -169,8 +172,6 @@ return (
                         />
                     </div>
                 </div>
-                
-                
             </div>
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>

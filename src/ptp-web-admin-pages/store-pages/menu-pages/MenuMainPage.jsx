@@ -1,4 +1,5 @@
 import PaginationButton from "../../../ptp-web-admin-components/store-components/PaginationButton";
+import {Outlet} from 'react-router-dom'
 
 
 export default function MenuMainPage() {
@@ -10,32 +11,16 @@ export default function MenuMainPage() {
         </div> */}
         
         <div className="border rounded-lg">
-            <table className="table-auto rounded-lg min-w-full divide-y divide-gray-200">
-                <thead className="rounded-lg bg-gray-50">
-                    <tr>
-                    <th>Song</th>
-                    <th>Artist</th>
-                    <th>Year</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr className="hover:bg-gray-100">
-                    <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                    <td>Malcolm Lockyer</td>
-                    <td>1961</td>
-                    </tr>
-                    <tr>
-                    <td>Witchy Woman</td>
-                    <td>The Eagles</td> 
-                    <td>1972</td>
-                    </tr>
-                    <tr>
-                    <td>Shining Star</td>
-                    <td>Earth, Wind, and Fire</td>
-                    <td>1975</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div className="flex flex-row">
+                <div>
+                    Menu List
+                </div>
+                <div>
+                    Detail Menu
+                    {/* Render detail menu ở đây */}
+                    <Outlet/>
+                </div>
+            </div>
             <div>
                 <PaginationButton/>
             </div>
