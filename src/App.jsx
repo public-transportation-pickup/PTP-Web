@@ -9,7 +9,7 @@ import StoreList from './ptp-web-admin-pages/StoreList.jsx';
 import UpdateStorePage from './ptp-web-admin-pages/store-pages/UpdateStorePage.jsx';
 import Map from './ptp-web-admin-pages/Map.jsx';
 //import ComboBoxRoute from './ptp-web-admin-components/store-components/ComboBoxRoute.jsx';
-import ComboBoxTes from './ptp-web-admin-components/store-components/ComboBoxTes.jsx';
+//import ComboBoxTes from './ptp-web-admin-components/store-components/ComboBoxTes.jsx';
 import StorePageMain from './ptp-web-admin-pages/store-pages/StorePageMain.jsx';
 import DetailStorePage from './ptp-web-admin-pages/store-pages/DetailStorePage.jsx';
 

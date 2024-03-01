@@ -25,6 +25,7 @@ export default function MenuMainPage() {
                 <PaginationButton/>
             </div>
         </div>
+        
     </>
   )
 }
