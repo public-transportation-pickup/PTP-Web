@@ -3,13 +3,15 @@ import {Popover, Transition,Menu} from '@headlessui/react'
 import classNames from 'classnames'
 import { Fragment } from 'react'
 import {useNavigate} from 'react-router-dom'
-import { useSelector } from 'react-redux';
 import { HiArrowLeftOnRectangle } from "react-icons/hi2";
+import { useSelector } from 'react-redux';
 
 
 export default function Header() {
   const navigate= useNavigate();
   const {currentUser}=useSelector(state=>state.user);
+//   console.log("Current user",currentUser);
+//   console.log("Token", currentUser.stsTokenManager.accessToken)
     return (
         <div className='bg-white h-16 px-4 flex justify-between items-center left-3 border-b border-gray-200'>
           <div className='relative'>

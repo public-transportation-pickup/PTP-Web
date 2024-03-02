@@ -33,8 +33,9 @@ export default function App() {
               {/* url for menu of store */}
               {/* url for product of menu of store */}
             </Route>
-            <Route path='menu' element={<MenuMainPage/>}>
-
+            <Route path='menu'>
+              <Route index element={<MenuMainPage/>}/>
+              <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
             </Route>
           </Route>
         </Route>
@@ -42,7 +43,7 @@ export default function App() {
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/getall' element={<StoreList/>}/>
         {/* <Route path='/comboBox' element={<ComboBoxTes/>}/> */}
-        <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/>
+        {/* <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/> */}
         
         
       </Routes>
