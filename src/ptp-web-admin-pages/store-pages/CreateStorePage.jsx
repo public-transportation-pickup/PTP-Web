@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 //import {useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
-import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
+//import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
 import { getAllProvince,getDistrictByProvinceId,getWardByDistrictId } from "../../ptp-web-admin-api/store-api";
 import ComboboxComponent from "../../ptp-web-admin-components/store-components/ComboboxComponent";
 
@@ -133,14 +133,25 @@ export default function CreateStorePage() {
         async function fetchData() {
             const responseProvince =await getAllProvince();
             await setListProvince(responseProvince);
-                const reponseDistrict=await getDistrictByProvinceId(provinceId);
-                provinceId?await setListDistrict(reponseDistrict):setListDistrict([]);
-                const reponseWard=await getWardByDistrictId(districtId);
-                districtId?await setListWard(reponseWard):setListWard([]);
+            if(provinceId){
+                const responseDistrict=await getDistrictByProvinceId(provinceId);
+                await setListDistrict(responseDistrict);
+            }else{
+                setListDistrict([])
+            }
+
+            if(districtId){
+                const responseWard=await getWardByDistrictId(districtId);
+                await setListWard(responseWard);
+            }else{
+                setListWard([]);
+            }
+               
+                
         }
         fetchData();
         
-    },[]);
+    },[provinceId,districtId]);
     
 
 return (
@@ -148,7 +159,7 @@ return (
         <main className='p-3 max-w-6xl mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
             <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
-                <div className="flex flex-col gap-8 items-start">
+                <div className="flex flex-col gap-8 items-start pb-4">
                     <div className="flex flex-row gap-4 justify-center items-center">
                         <p>Chọn Tuyến</p>
                         <ComboboxComponent listItems={listDistrict !==null || listDistrict !==undefined?listDistrict:null} params="district_name" onValueChange={handleRouteChange}/>
@@ -166,25 +177,14 @@ return (
                         <p>Chọn Phường</p>
                         <ComboboxComponent listItems={listWard} params="ward_name" onValueChange={handleWardChange}/>
                     </div>
-                    <div className="flex flex-row gap-3 items-center">
-                        <label htmlFor="streetName">Đường:</label>
+                    <div className="flex flex-row gap-1 items-center w-full">
+                        <label className="w-1/3" htmlFor="Address">Địa chỉ (Số nhà, tổ, đường, khu phố):</label>
                         <input
                         type="text"
-                        id="streetName"
-                        className="rounded-lg w-64 h-12"
+                        id="Address"
+                        className="rounded-lg w-2/3 h-12"
                         />
-                        <label className="" htmlFor="streetName">Khu phố:</label>
-                        <input
-                        type="text"
-                        id="streetName"
-                        className="rounded-lg w-32 h-12"
-                        />
-                        <label htmlFor="streetName">Tổ:</label>
-                        <input
-                        type="text"
-                        id="streetName"
-                        className="rounded-lg w-24 h-12"
-                        />
+                        
                     </div>
                 </div>
             </div>
@@ -239,9 +239,9 @@ return (
             </div>
             
         </main>
-    <div className="p-4" >
+    {/* <div className="p-4" >
         <DisplayData className/>
-    </div>
+    </div> */}
     </>
     
   )

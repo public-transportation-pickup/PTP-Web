@@ -3,21 +3,23 @@ import {Popover, Transition,Menu} from '@headlessui/react'
 import classNames from 'classnames'
 import { Fragment } from 'react'
 import {useNavigate} from 'react-router-dom'
-import { useSelector } from 'react-redux';
 import { HiArrowLeftOnRectangle } from "react-icons/hi2";
+import { useSelector } from 'react-redux';
 
 
 export default function Header() {
   const navigate= useNavigate();
   const {currentUser}=useSelector(state=>state.user);
+//   console.log("Current user",currentUser);
+//   console.log("Token", currentUser.stsTokenManager.accessToken)
     return (
         <div className='bg-white h-16 px-4 flex justify-between items-center left-3 border-b border-gray-200'>
-          <div className='relative'>
-            <HiOutlineSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-3'/>
-            <input type='text' placeholder='Search...' className='text-sm focus:outline-none active:outline-none h-10 w-[24rem] border border-gray-300 rounded-sm px-4 pl-11'/>
-          </div>
-          <div className='flex items-center gap-2 mr-2'>
-          <Popover className="relative">
+			<div className='relative'>
+				<HiOutlineSearch fontSize={20} className='text-gray-400 absolute top-1/2 -translate-y-1/2 left-3'/>
+				<input type='text' placeholder='Search...' className='text-sm focus:outline-none active:outline-none h-10 w-[24rem] border border-gray-300 rounded-sm px-4 pl-11'/>
+			</div>
+			<div className='flex items-center gap-2 mr-2'>
+				<Popover className="relative">
 					{({ open }) => (
 						<>
 							<Popover.Button
@@ -47,7 +49,7 @@ export default function Header() {
 						</>
 					)}
 				</Popover>
-        <Popover className="relative">
+				<Popover className="relative">
 					{({ open }) => (
 						<>
 							<Popover.Button
@@ -77,7 +79,7 @@ export default function Header() {
 						</>
 					)}
 				</Popover>
-        <Menu as="div" className="relative">
+				<Menu as="div" className="relative">
 					<div>
 						<Menu.Button className="ml-2 bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-400">
 							<span className="sr-only">Open user menu</span>
@@ -142,9 +144,8 @@ export default function Header() {
 							</Menu.Item>
 						</Menu.Items>
 					</Transition>
-				</Menu>
-            
-          </div>
-        </div>
-      )
+				</Menu>     
+			</div>
+		</div>
+    )
 }

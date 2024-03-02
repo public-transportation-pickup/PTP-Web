@@ -9,7 +9,7 @@ import StoreList from './ptp-web-admin-pages/StoreList.jsx';
 import UpdateStorePage from './ptp-web-admin-pages/store-pages/UpdateStorePage.jsx';
 import Map from './ptp-web-admin-pages/Map.jsx';
 //import ComboBoxRoute from './ptp-web-admin-components/store-components/ComboBoxRoute.jsx';
-import ComboBoxTes from './ptp-web-admin-components/store-components/ComboBoxTes.jsx';
+//import ComboBoxTes from './ptp-web-admin-components/store-components/ComboBoxTes.jsx';
 import StorePageMain from './ptp-web-admin-pages/store-pages/StorePageMain.jsx';
 import DetailStorePage from './ptp-web-admin-pages/store-pages/DetailStorePage.jsx';
 
@@ -33,8 +33,9 @@ export default function App() {
               {/* url for menu of store */}
               {/* url for product of menu of store */}
             </Route>
-            <Route path='menu' element={<MenuMainPage/>}>
-
+            <Route path='menu'>
+              <Route index element={<MenuMainPage/>}/>
+              <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
             </Route>
           </Route>
         </Route>
@@ -42,7 +43,7 @@ export default function App() {
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/getall' element={<StoreList/>}/>
         {/* <Route path='/comboBox' element={<ComboBoxTes/>}/> */}
-        <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/>
+        {/* <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/> */}
         
         
       </Routes>
