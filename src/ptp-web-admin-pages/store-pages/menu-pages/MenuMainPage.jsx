@@ -5,7 +5,8 @@ import {Outlet} from 'react-router-dom'
 export default function MenuMainPage() {
   return (
     <>
-        <h1 className="text-center mx-auto text-4xl">List Store</h1>
+        <h1 className="text-center mx-auto text-4xl">List Menu</h1>
+        <button className="">Create Menu</button>
         {/* <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new product</button>
         </div> */}
