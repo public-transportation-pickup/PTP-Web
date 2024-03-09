@@ -98,5 +98,5 @@ export default function ComboboxComponent({listItems,params,onValueChange}) {
 ComboboxComponent.propTypes={
     listItems:PropTypes.array.isRequired,
     params:PropTypes.string.isRequired,
-    onValueChange:PropTypes.func.isRequired
+    onValueChange:PropTypes.func
 }

@@ -15,6 +15,14 @@ import DetailStorePage from './ptp-web-admin-pages/store-pages/DetailStorePage.j
 
 import ScheduleMenuPage from './ptp-web-admin-pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
 import MenuMainPage from './ptp-web-admin-pages/store-pages/menu-pages/MenuMainPage.jsx';
+import RouteItem from './ptp-web-admin-components/route-components/RouteItem.jsx';
+import RouteMainPage from './ptp-web-admin-pages/route-pages/RouteMainPage.jsx';
+import MapStationPage from './ptp-web-admin-pages/route-pages/MapStationPage.jsx';
+import StationsList from './ptp-web-admin-components/route-components/StationsList.jsx';
+import DetailRoutePage from './ptp-web-admin-pages/route-pages/DetailRoutePage.jsx';
+import CreateProductPage from './ptp-web-admin-pages/store-pages/product-pages/CreateProductPage.jsx';
+import CreateMenuPage from './ptp-web-admin-pages/store-pages/menu-pages/CreateMenuPage.jsx';
+import ProductItemModal from './ptp-web-admin-components/store-components/menu-components/ProductItemModal.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -25,7 +33,7 @@ export default function App() {
             
             <Route path='map' element={<Map/>}/>
             {/* url web for store */}
-            <Route path='store'>
+            <Route path='stores'>
               <Route index element={<StorePageMain/>}/>
               <Route path='create-store' element={<CreateStorePage/>}/>
               <Route path='update-store' element={<UpdateStorePage/>}/>
@@ -37,13 +45,25 @@ export default function App() {
               <Route index element={<MenuMainPage/>}/>
               <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
             </Route>
+            <Route path='routes'>
+              <Route index element={<RouteMainPage/>}/>
+              <Route path='routes/:id' element={<DetailRoutePage/>}>
+                <Route path='stations/:routeId' element={<MapStationPage/>}/>
+              </Route>
+            </Route>
           </Route>
         </Route>
         
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/getall' element={<StoreList/>}/>
+        <Route path='/routeItem' element={<RouteItem/>}/>
+        <Route path='/routes/:id' element={<DetailRoutePage/>}/>
         {/* <Route path='/comboBox' element={<ComboBoxTes/>}/> */}
         {/* <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/> */}
+        <Route path='/stationList' element={<StationsList/>}/>
+        <Route path='/createproduct' element={<CreateProductPage/>}/>
+        <Route path='/createmenu'element={<CreateMenuPage/>}/>
+        <Route path='/productitemmodal' element={<ProductItemModal/>}/>
         
         
       </Routes>
