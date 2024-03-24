@@ -1,18 +1,14 @@
 import {BrowserRouter, Routes,Route} from 'react-router-dom';
 import SignIn from './ptp-web-admin-pages/SignIn.jsx'
 import Layout from './ptp-web-admin-components/shared/Layout.jsx'
-//import Product from './ptp-web-admin-pages/Product.jsx';
 import Dashboard from './ptp-web-admin-pages/Dashboard.jsx';
 import PrivateRoute from './ptp-web-admin-components/shared/PrivateRoute.jsx';
 import CreateStorePage from './ptp-web-admin-pages/store-pages/CreateStorePage.jsx';
 import StoreList from './ptp-web-admin-pages/StoreList.jsx';
 import UpdateStorePage from './ptp-web-admin-pages/store-pages/UpdateStorePage.jsx';
 import Map from './ptp-web-admin-pages/Map.jsx';
-//import ComboBoxRoute from './ptp-web-admin-components/store-components/ComboBoxRoute.jsx';
-//import ComboBoxTes from './ptp-web-admin-components/store-components/ComboBoxTes.jsx';
 import StorePageMain from './ptp-web-admin-pages/store-pages/StorePageMain.jsx';
 import DetailStorePage from './ptp-web-admin-pages/store-pages/DetailStorePage.jsx';
-
 import ScheduleMenuPage from './ptp-web-admin-pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
 import MenuMainPage from './ptp-web-admin-pages/store-pages/menu-pages/MenuMainPage.jsx';
 import RouteItem from './ptp-web-admin-components/route-components/RouteItem.jsx';
@@ -20,9 +16,11 @@ import RouteMainPage from './ptp-web-admin-pages/route-pages/RouteMainPage.jsx';
 import MapStationPage from './ptp-web-admin-pages/route-pages/MapStationPage.jsx';
 import StationsList from './ptp-web-admin-components/route-components/StationsList.jsx';
 import DetailRoutePage from './ptp-web-admin-pages/route-pages/DetailRoutePage.jsx';
-import CreateProductPage from './ptp-web-admin-pages/store-pages/product-pages/CreateProductPage.jsx';
-import CreateMenuPage from './ptp-web-admin-pages/store-pages/menu-pages/CreateMenuPage.jsx';
 import ProductItemModal from './ptp-web-admin-components/store-components/menu-components/ProductItemModal.jsx';
+import CategoryMainPage from './ptp-web-admin-pages/category-pages/CategoryMainPage.jsx';
+import CreateCategoryPage from './ptp-web-admin-pages/category-pages/CreateCategoryPage.jsx';
+import UserMainPage from './ptp-web-admin-pages/user-pages/UserMainPage.jsx';
+import CreateRoutePage from './ptp-web-admin-pages/route-pages/CreateRoutePage.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -33,11 +31,11 @@ export default function App() {
             
             <Route path='map' element={<Map/>}/>
             {/* url web for store */}
-            <Route path='stores'>
+            <Route path='store'>
               <Route index element={<StorePageMain/>}/>
-              <Route path='create-store' element={<CreateStorePage/>}/>
-              <Route path='update-store' element={<UpdateStorePage/>}/>
-              <Route path='detail-store' element={<DetailStorePage/>}/>
+              <Route path='create' element={<CreateStorePage/>}/>
+              <Route path='update' element={<UpdateStorePage/>}/>
+              <Route path=':id' element={<DetailStorePage/>}/>
               {/* url for menu of store */}
               {/* url for product of menu of store */}
             </Route>
@@ -45,12 +43,22 @@ export default function App() {
               <Route index element={<MenuMainPage/>}/>
               <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
             </Route>
-            <Route path='routes'>
+
+            <Route path='route'>
               <Route index element={<RouteMainPage/>}/>
               <Route path='routes/:id' element={<DetailRoutePage/>}>
                 <Route path='stations/:routeId' element={<MapStationPage/>}/>
               </Route>
+              <Route path='create' element={<CreateRoutePage/>}/>
             </Route>
+            {/* url category */}
+            <Route path='category'>
+              <Route index element={<CategoryMainPage/>}/>
+              <Route path='create' element={<CreateCategoryPage/>}/>
+              
+            </Route>
+            {/* url user */}
+            <Route path='user' element={<UserMainPage/>}/>
           </Route>
         </Route>
         
@@ -61,8 +69,7 @@ export default function App() {
         {/* <Route path='/comboBox' element={<ComboBoxTes/>}/> */}
         {/* <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/> */}
         <Route path='/stationList' element={<StationsList/>}/>
-        <Route path='/createproduct' element={<CreateProductPage/>}/>
-        <Route path='/createmenu'element={<CreateMenuPage/>}/>
+        {/* <Route path='/createmenu'element={<CreateMenuPage/>}/> */}
         <Route path='/productitemmodal' element={<ProductItemModal/>}/>
         
         

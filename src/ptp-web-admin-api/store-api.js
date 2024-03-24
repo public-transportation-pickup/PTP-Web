@@ -1,3 +1,5 @@
+import {BASE_URL} from '../lib/contants/index'
+
 export const getAllProvince= async ()=>{
     let res;
     try {
@@ -33,9 +35,10 @@ export const getWardByDistrictId= async (districtId)=>{
     return res.results;
 }
 
-export const getAllStores=async()=>{
+
+export const getStores=async()=>{
     try {
-        const res= await fetch('/api/stores');
+        const res= await fetch(`${BASE_URL}/stores`);
         const data=await res.json();
         return data;
     } catch (error) {

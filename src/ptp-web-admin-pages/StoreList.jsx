@@ -1,14 +1,15 @@
 
 //import {BASE_URL} from '../lib/contants/index.js';
 
+import { authentication } from "../ptp-web-admin-api/auth-api";
+
+
 export default function StoreList() {
     const handleButton= async ()=>{
         // const res= await fetch(`api/stores`);
         // console.log("Get all store", await res);
-        const res= await fetch('/api/routes',{
-        });
-        const data= await res.json();
-        console.log("Data: ",data);
+        const res= await authentication;
+        console.log("Data: ",res);
            
     }
   return (

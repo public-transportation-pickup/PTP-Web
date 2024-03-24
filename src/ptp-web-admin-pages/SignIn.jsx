@@ -7,6 +7,7 @@ import OAuth from '../ptp-web-admin-components/shared/OAuth';
 export default function SignIn() {
   const [formData,setFormData]=useState({});
   const {error}=useSelector((state)=>state.user);
+  
   const handleChange=(e)=>{
     setFormData({
       ...formData,
@@ -21,13 +22,6 @@ export default function SignIn() {
     {/*<!-- Left column container with background-->*/}
     <div
       className="g-6 flex h-full flex-wrap items-center justify-center lg:justify-between">
-      {/* <div
-        className="shrink-1 mb-12 grow-0 basis-auto md:mb-0 md:w-9/12 md:shrink-0 lg:w-5/12 xl:w-5/12">
-        <img
-          src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-          className="w-full mt-6"
-          alt="Sample image" />
-      </div> */}
 
       {/* <!-- Right column container --> */}
       <div className="mb-12 md:mb-0 md:w-8/12 lg:w-7/12 xl:w-7/12 mx-auto">
@@ -87,12 +81,6 @@ export default function SignIn() {
             </div>
 
             <div>
-              {/* <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-cyan-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
-              >
-                {loading ? 'Waiting...' :'Sign In'}
-              </button> */}
               <OAuth formData={formData}/>
             </div>
           </form>

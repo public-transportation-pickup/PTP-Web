@@ -4,6 +4,7 @@ import {app} from '../../firebase.js'
 import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux'
 import { signInStart, signInSuccess,signInFailure } from '../../redux/user/userSlice.js';
+import { authentication } from "../../ptp-web-admin-api/auth-api.js";
 
 
 export default function OAuth({formData}) {
@@ -23,6 +24,8 @@ export default function OAuth({formData}) {
       dispatch(signInFailure());
     }
     dispatch(signInSuccess(user));
+    // await authentication(currentUser.stsTokenManager.accessToken);
+    // await console.log("Authentication call api return", authentication)
     navigate('/');
     
     } catch (error) {
