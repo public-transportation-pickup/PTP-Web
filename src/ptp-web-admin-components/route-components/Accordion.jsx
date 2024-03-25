@@ -5,9 +5,9 @@ import PropTypes from 'prop-types'
 export default function Accordion({title,component}) {
     const [accordionOpen,setAccordionOpen]=useState(false);
   return (
-    <div className="py-2">
+    <div className="py-4 bg-indigo-100 p-4 rounded-lg">
         <button onClick={()=>setAccordionOpen(!accordionOpen)} className="flex justify-between w-full">
-            <span>This is the title{title}</span>
+            <span>{title}</span>
             {accordionOpen?<span>+</span>:<span>-</span>}
             
         </button>
@@ -18,7 +18,6 @@ export default function Accordion({title,component}) {
         }`}
         >
             <div className="overflow-hidden">
-                This is the answer
                 {component}
             </div>
         </div>
