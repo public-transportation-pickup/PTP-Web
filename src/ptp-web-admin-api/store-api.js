@@ -73,6 +73,7 @@ export const createStore = async (storeModel,file)=>{
         formData.append('File',file);
         formData.append('ActivationDate',storeModel.ActivationDate);
         formData.append('StationIds',storeModel.StationId);
+        console.log("FormData req: ",formData);
         const res= await fetch('/api/stores',{
             headers:{
                 'method':'POST'

@@ -1,6 +1,6 @@
-import Accordion from "../../ptp-web-admin-components/route-components/Accordion";
-import CreateRouteForm from "../../ptp-web-admin-components/route-components/CreateRouteForm";
-import CreateRouteVarForm from "../../ptp-web-admin-components/route-components/CreateRouteVarForm";
+import Accordion from "../../ptp-web-admin-components/route-components/route-create-components/Accordion";
+import CreateRouteForm from "../../ptp-web-admin-components/route-components/route-create-components/CreateRouteForm";
+import CreateRouteVarForm from "../../ptp-web-admin-components/route-components/route-create-components/CreateRouteVarForm";
 
 
 
