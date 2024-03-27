@@ -1,95 +1,88 @@
 import { useEffect, useState } from "react"
 //import {useSelector} from 'react-redux';
-import {useNavigate} from 'react-router-dom'
+//import {useNavigate} from 'react-router-dom'
 //import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
 import { getAllProvince,getDistrictByProvinceId,getWardByDistrictId } from "../../ptp-web-admin-api/store-api";
 import ComboboxComponent from "../../ptp-web-admin-components/store-components/ComboboxComponent";
+import { getStations } from "../../ptp-web-admin-api/station-api";
 
 
 export default function CreateStorePage() {
     //const {currentUser} =useSelector(state=>state.user);
-    const navigate=useNavigate();
+    //const navigate=useNavigate();
     const [listProvinces,setListProvince]=useState([]);
     const [listDistrict,setListDistrict]=useState([]);
     const [listWard,setListWard]=useState([]);
+    const [listStation,setListStation]=useState([]);
     // console.log("List province",listProvinces);
     // console.log("List district",listDistrict);
     // console.log("List ward",listWard);
-    const [files, setFiles]=useState([]);
+    console.log("List station",listStation);
     const [preview,setPreview]=useState();
     const [provinceId,setProvinceId]=useState('');
     const [districtId,setDistrictId]=useState('');
     console.log("ProvinceID", provinceId);
     console.log("DistrictId",districtId);
 
-
-    const [formData,setFormData]=useState({
-        Name:'',
-        Description:'',
-        PhoneNumber:'',
-        OpenedTime:'',
-        ClosedTime:'',
-        Address:'',
-        Route:'',
-        RouteVar:'',
-        Station:'',
-        City:'',
-        Zone:'',
-        Ward:'',
-        ActivationDate:new Date(),
-    });
-
-    const handleRouteChange=async (value)=>{
-        await setFormData({...formData,Route:value.district_name});
+    const [jsonForm,setJsonForm]=useState({
+        Name:"",
+        Description:"",
+        PhoneNumber:"",
+        OpenedTime:"06:00",
+        ClosedTime:"22:00",
+        Latitude:0,
+        Longtitude:0,
+        Zone:"",
+        Ward:"",
+        AddressNo:"",
+        Street:"",
+        ActivationDate: new Date(),
+        StationIds:[]
+    })
+    console.log("Json form: ",jsonForm);
+    const [file,setFile]=useState([]);
+    console.log("File ava", file);
+    
+    // const handleRouteChange=async (value)=>{
+    //     await setJsonForm({...jsonForm,Route:value.district_name});
         
-    }
-    const handleRouteVarChange=async (value)=>{
-        await setFormData({...formData,RouteVar:value.district_name});
+    // }
+    // const handleRouteVarChange=async (value)=>{
+    //     await setFormData({...formData,RouteVar:value.district_name});
         
-    }
+    // }
     const handleStationChange=async (value)=>{
-        await setFormData({...formData,Station:value.district_name});
+        await setJsonForm({...jsonForm,StationIds:value.id});
         
     }
     const handleCityChange=async (value)=>{
-        await setFormData({...formData,City:value.province_name});
+        //await setJsonForm({...jsonForm,Zone:value.province_name});
         await setProvinceId(value.province_id)
         
     }
     const handleZoneChange=async (value)=>{
-        await setFormData({...formData,Zone:value.district_name});
+        await setJsonForm({...jsonForm,Zone:value.district_name});
         await setDistrictId(value.district_id)
         
     }
     const handleWardChange=async (value)=>{
-        await setFormData({...formData,Ward:value.ward_name});
+        await setJsonForm({...jsonForm,Ward:value.ward_name});
         
     }
 
-    let formdata1= new FormData();
-    formdata1.append('Name',formData.Name);
-    formdata1.append('Description',formData.Description);
-    formdata1.append('PhoneNumber',formData.PhoneNumber);
-    formdata1.append('OpenedTime',formData.OpenedTime.toString());
-    formdata1.append('ClosedTime',formData.ClosedTime.toString());
-    formdata1.append('Address',formData.Address);
-    formdata1.append('ActivationDate',formData.ActivationDate.toISOString());
-    formdata1.append('File',files);
-    
-    console.log("file",files);
     const [error, setError]=useState(false);
     const [loading,setLoading]=useState(false);
-    console.log("FormData",formData);
-    console.log("FormData1",formdata1);
-    for (let entry of formdata1.entries()) {
-        console.log(entry[0] + ':', entry[1]);
-      }
+    //console.log("FormData",formData);
+    // console.log("FormData1",formdata1);
+    // for (let entry of formdata1.entries()) {
+    //     console.log(entry[0] + ':', entry[1]);
+    //   }
     
     
         
     const handleChange=(e)=>{
         if(e.target.type==='time' || e.target.type ==='text' || e.target.type==='textarea'){
-            setFormData({...formData,[e.target.id]:e.target.value,});
+            setJsonForm({...jsonForm,[e.target.id]:e.target.value,});
         }
     }
 
@@ -100,18 +93,18 @@ export default function CreateStorePage() {
             //if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price must be lower than regular price');
             setLoading(false);
             setError(false);
-            console.log("formdata1:",formdata1);
-            const res= await fetch(`/api/stores`,{                
-                method:'POST',
-                body:formdata1
-            });
-            const data=await res.json();
-            console.log("Response",data);
+            // console.log("formdata1:",formdata1);
+            // const res= await fetch(`/api/stores`,{                
+            //     method:'POST',
+            //     body:formdata1
+            // });
+            // const data=await res.json();
+            // console.log("Response",data);
             setLoading(false);
-            if(data.success===false){
-                setError(data.message);
-            }
-            navigate(`/store/${data._id}`);
+            // if(data.success===false){
+            //     setError(data.message);
+            // }
+            // navigate(`/store/${data._id}`);
         }catch(error){
             console.log("Catch:",error);
             setError(error.message);
@@ -121,9 +114,9 @@ export default function CreateStorePage() {
 
     const handleInputImgChange = (e) => {
         const { name, value } = e.target;
-        setFiles(e.target.files)
+        setFile(e.target.files)
         setPreview(URL.createObjectURL(e.target.files[0]))
-        setFormData((prevFormData) => ({
+        setJsonForm((prevFormData) => ({
             ...prevFormData,
             [name]: value,
         }));
@@ -147,6 +140,8 @@ export default function CreateStorePage() {
                 setListWard([]);
             }
                
+            const fetchListStation= await getStations();
+            await setListStation(fetchListStation);
                 
         }
         fetchData();
@@ -160,15 +155,16 @@ return (
             <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
             <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
                 <div className="flex flex-col gap-8 items-start pb-4">
-                    <div className="flex flex-row gap-4 justify-center items-center">
-                        <p>Chọn Tuyến</p>
+                    {/* <div className="flex flex-row gap-4 justify-center items-center">
+                        {/* <p>Chọn Tuyến</p>
                         <ComboboxComponent listItems={listDistrict !==null || listDistrict !==undefined?listDistrict:null} params="district_name" onValueChange={handleRouteChange}/>
                         <p>Chọn Lượt</p>
                         <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleRouteVarChange}/>
-                        <p>Chọn Trạm</p>
-                        <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleStationChange}/>
-                    </div>
+                       
+                    </div> */}
                     <div className="flex flex-row gap-3 items-center">
+                    <p>Chọn Trạm</p>
+                        <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
                         {/* Kiểm soát cho chọn từng thành phần, chọn thành phố xong mới cho chọn quận-> phường */}
                         <p>Chọn Thành Phố</p>
                         <ComboboxComponent listItems={listProvinces} params="province_name" onValueChange={handleCityChange}/>
@@ -191,11 +187,11 @@ return (
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
                     <div className='w-3/4 flex flex-col gap-4 flex-1'>
-                        <input onChange={handleChange} value={formData.Name} type='text' placeholder='Name' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
-                        <textarea onChange={handleChange} value={formData.Description} type='text' placeholder='Description' className='border p-3 rounded-lg'id='Description' required/>
+                        <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Name' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
+                        <textarea onChange={handleChange} value={jsonForm.Description} type='text' placeholder='Description' className='border p-3 rounded-lg'id='Description' required/>
                         {/* <input onChange={handleChange} value={formData.Address} type='text' placeholder='Address' className='border p-3 rounded-lg'id='Address'  required/> */}
-                        <input onChange={handleChange} value={formData.PhoneNumber} type='text' placeholder='PhoneNumber' className='border p-3 rounded-lg'id='PhoneNumber'  required/>
-                        <div className='flex gap-5 flex-row'>
+                        <input onChange={handleChange} value={jsonForm.PhoneNumber} type='text' placeholder='PhoneNumber' className='border p-3 rounded-lg'id='PhoneNumber'  required/>
+                        {/* <div className='flex gap-5 flex-row'>
                             <div className='flex gap-2'>
                                 <span>Open Time</span>
                                 <input onChange={handleChange} checked={formData.OpenedTime} type='time' id='OpenedTime' className='w-3/4'/>
@@ -206,7 +202,7 @@ return (
                                 <input onChange={handleChange} checked={formData.ClosedTime} type='time' id='ClosedTime' className='w-3/4'/>
                                 
                             </div>
-                    </div>
+                        </div> */}
                     </div>
                     <div className='w-3/12 flex flex-col flex-1 gap-2'>
                         <div className="flex justify-center flex-row gap-2 ">

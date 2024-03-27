@@ -8,7 +8,7 @@ export default function StorePageMain() {
     const navigate=useNavigate();
 
     const handleCreateButtonClick=()=>{
-        navigate('/store/create-store');
+        navigate('/store/create');
     }
 
     const handleRowClick=(id)=>{

@@ -21,6 +21,7 @@ import CategoryMainPage from './ptp-web-admin-pages/category-pages/CategoryMainP
 import CreateCategoryPage from './ptp-web-admin-pages/category-pages/CreateCategoryPage.jsx';
 import UserMainPage from './ptp-web-admin-pages/user-pages/UserMainPage.jsx';
 import CreateRoutePage from './ptp-web-admin-pages/route-pages/CreateRoutePage.jsx';
+import DuplicateForm from './ptp-web-admin-components/route-components/route-create-components/DuplicateForm.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -71,7 +72,7 @@ export default function App() {
         <Route path='/stationList' element={<StationsList/>}/>
         {/* <Route path='/createmenu'element={<CreateMenuPage/>}/> */}
         <Route path='/productitemmodal' element={<ProductItemModal/>}/>
-        
+        <Route path='/duplicateroute' element={<DuplicateForm/>}/>
         
       </Routes>
     </BrowserRouter>

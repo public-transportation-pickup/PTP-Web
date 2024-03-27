@@ -1,11 +1,15 @@
+import axios from 'axios';
 import { BASE_URL } from '../lib/contants/index'
 
 export const getRoutes = async ()=>{
     try {
-        const response= await fetch(`${BASE_URL}/routes`);
-        const data= await response.json();
-        console.log("Get all route data",data);
-        return data;
+        // const response= await fetch(`${BASE_URL}/routes`);
+        // const data= await response.json();
+        // console.log("Get all route data",data);
+        // return data;
+        const response= await axios.get(`${BASE_URL}/routes`);
+        console.log("Response, response.dâta",response,response.data);
+        return response.data;
     } catch (error) {
         console.log("Get routes exception", error);
     }
