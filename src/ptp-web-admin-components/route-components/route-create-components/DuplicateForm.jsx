@@ -11,7 +11,8 @@ export default function DuplicateForm() {
     const [listRoute,setListRoute]=useState([]);
     const [listRouteVar,setListRouteVar]=useState([]);
     const [routeVarStation,setRouteVarStation]=useState([]);
-    const[routeId,setRouteId]=useState('');
+    const [routeId,setRouteId]=useState('');
+    const [duplicate,setDuplicate]=useState(false);
 
     const handleRouteIdChange=async(value)=>{
         console.log("Route choose", value);
@@ -30,6 +31,10 @@ export default function DuplicateForm() {
                 toast("Tuyến bạn chọn không có trạm");
             }
         }
+    }
+
+    const handleDuplicateButton=async()=>{
+        setDuplicate(true);
     }
 
     useEffect(()=>{
@@ -61,7 +66,12 @@ export default function DuplicateForm() {
             <ComboboxComponent listItems={listRouteVar} params="routeVarName" onValueChange={handleRouteVarIdChange}/>
             <button type="button" className="bg-blue-300 hover:opacity-85 p-4">Tạo bản sao</button>
         </div>
-        Onclick button thì show detail route var ra
+        {/* Onclick button thì show detail route var ra */}
+        {duplicate ? (<div>
+            list station of route var chose here
+        </div>):(
+            <></>
+        )}
     </div>
   )
 }

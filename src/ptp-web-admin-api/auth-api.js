@@ -25,7 +25,7 @@ export const authentication= async (tokenFirebase)=>{
 export const authenticationV2=async (tokenFirebase)=>{
     console.log("firebaseToken",tokenFirebase)
     const res= await axios.post(`${BASE_URL}/auth`,{
-        role:"Customer",
+        role:"Admin",
         token:tokenFirebase
     }).catch((error)=>console.log("Exception authenV2",error));
     return res.data
