@@ -34,4 +34,4 @@ export const authenticationV2=async (tokenFirebase)=>{
 //console.log("AuthReq",authReq)
 //console.log("Token firebase",tokenFirebase)
 //await console.log("Res-data of auth-api",JSON.parse(res)+"-"+ JSON.parse(data));
-export const CURRENT_USER= localStorage.getItem("admin") !==null?localStorage.getItem("admin"):""
+export const CURRENT_USER= await localStorage.getItem("admin") !==null?JSON.parse(localStorage.getItem("admin")):""

@@ -2,27 +2,28 @@ import { useEffect, useState } from "react"
 //import {useSelector} from 'react-redux';
 //import {useNavigate} from 'react-router-dom'
 //import DisplayData from "../../ptp-web-admin-components/store-components/DisplayData";
-import { getAllProvince,getDistrictByProvinceId,getWardByDistrictId } from "../../ptp-web-admin-api/store-api";
+import { createStore, getAllProvince,getDistrictByProvinceId,getWardByDistrictId } from "../../ptp-web-admin-api/store-api";
 import ComboboxComponent from "../../ptp-web-admin-components/store-components/ComboboxComponent";
-import { getStations } from "../../ptp-web-admin-api/station-api";
+//import { getStations } from "../../ptp-web-admin-api/station-api";
+import {ToastContainer, toast } from "react-toastify";
+import { getRoutes } from "../../ptp-web-admin-api/route-api";
 
 
 export default function CreateStorePage() {
-    //const {currentUser} =useSelector(state=>state.user);
-    //const navigate=useNavigate();
     const [listProvinces,setListProvince]=useState([]);
     const [listDistrict,setListDistrict]=useState([]);
     const [listWard,setListWard]=useState([]);
-    const [listStation,setListStation]=useState([]);
+    const [listRoute,setListRoute]=useState([]);
+    //const [listStation,setListStation]=useState([]);
     // console.log("List province",listProvinces);
     // console.log("List district",listDistrict);
     // console.log("List ward",listWard);
-    console.log("List station",listStation);
+    //console.log("List station",listStation);
     const [preview,setPreview]=useState();
     const [provinceId,setProvinceId]=useState('');
     const [districtId,setDistrictId]=useState('');
-    console.log("ProvinceID", provinceId);
-    console.log("DistrictId",districtId);
+    // console.log("ProvinceID", provinceId);
+    // console.log("DistrictId",districtId);
 
     const [jsonForm,setJsonForm]=useState({
         Name:"",
@@ -30,13 +31,13 @@ export default function CreateStorePage() {
         PhoneNumber:"",
         OpenedTime:"06:00",
         ClosedTime:"22:00",
-        Latitude:0,
-        Longtitude:0,
+        Latitude:10.975400,
+        Longitude: 106.850720,
         Zone:"",
         Ward:"",
         AddressNo:"",
-        Street:"",
-        ActivationDate: new Date(),
+        Street:"null",
+        ActivationDate: new Date().toISOString(),
         StationIds:[]
     })
     console.log("Json form: ",jsonForm);
@@ -51,10 +52,10 @@ export default function CreateStorePage() {
     //     await setFormData({...formData,RouteVar:value.district_name});
         
     // }
-    const handleStationChange=async (value)=>{
-        await setJsonForm({...jsonForm,StationIds:value.id});
+    // const handleStationChange=async (value)=>{
+    //     await setJsonForm({...jsonForm,StationIds:value.id});
         
-    }
+    // }
     const handleCityChange=async (value)=>{
         //await setJsonForm({...jsonForm,Zone:value.province_name});
         await setProvinceId(value.province_id)
@@ -89,7 +90,7 @@ export default function CreateStorePage() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
         try{
-            //if(files.length<1) return setError('You must upload at least one image');
+            if(file.length<1) return setError('You must upload at least one image');
             //if(+formData.regularPrice < +formData.discountPrice) return setError('Discount price must be lower than regular price');
             setLoading(false);
             setError(false);
@@ -100,6 +101,10 @@ export default function CreateStorePage() {
             // });
             // const data=await res.json();
             // console.log("Response",data);
+            const responseAPI= await createStore(jsonForm,file);
+            console.log("call api create store", responseAPI);
+            if(responseAPI===null) toast("Tạo thất bại")
+            else toast("Tạo thành công")
             setLoading(false);
             // if(data.success===false){
             //     setError(data.message);
@@ -122,6 +127,10 @@ export default function CreateStorePage() {
         }));
         };
 
+    // const handleCreateStore=async()=>{
+       
+    // }
+
     useEffect(()=>{
         async function fetchData() {
             const responseProvince =await getAllProvince();
@@ -139,9 +148,11 @@ export default function CreateStorePage() {
             }else{
                 setListWard([]);
             }
-               
-            const fetchListStation= await getStations();
-            await setListStation(fetchListStation);
+              
+            const responseGetRouteAPI= await getRoutes();
+            
+            // const fetchListStation= await getStations();
+            // await setListStation(fetchListStation);
                 
         }
         fetchData();
@@ -151,20 +162,24 @@ export default function CreateStorePage() {
 
 return (
     <>
+    <ToastContainer/>
         <main className='p-3 max-w-6xl mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
             <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
                 <div className="flex flex-col gap-8 items-start pb-4">
-                    {/* <div className="flex flex-row gap-4 justify-center items-center">
-                        {/* <p>Chọn Tuyến</p>
+                    <div className="flex flex-row gap-4 justify-center items-center">
+                        <p>Chọn Tuyến</p>
                         <ComboboxComponent listItems={listDistrict !==null || listDistrict !==undefined?listDistrict:null} params="district_name" onValueChange={handleRouteChange}/>
                         <p>Chọn Lượt</p>
                         <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleRouteVarChange}/>
-                       
-                    </div> */}
+                        <p>Chọn Trạm</p>
+                            <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                        </div> 
                     <div className="flex flex-row gap-3 items-center">
-                    <p>Chọn Trạm</p>
-                        <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                        {/* <div className="flex flex-row gap-2">
+                            
+                        </div> */}
+                        
                         {/* Kiểm soát cho chọn từng thành phần, chọn thành phố xong mới cho chọn quận-> phường */}
                         <p>Chọn Thành Phố</p>
                         <ComboboxComponent listItems={listProvinces} params="province_name" onValueChange={handleCityChange}/>
@@ -177,8 +192,11 @@ return (
                         <label className="w-1/3" htmlFor="Address">Địa chỉ (Số nhà, tổ, đường, khu phố):</label>
                         <input
                         type="text"
-                        id="Address"
+                        id="AddressNo"
                         className="rounded-lg w-2/3 h-12"
+                        onChange={handleChange}
+                        value={jsonForm.AddressNo}
+                        required
                         />
                         
                     </div>
@@ -211,7 +229,7 @@ return (
                             <button className='p-1 text-green-700 border border-green-700 rounded uppercase hover: shadow-lg disabled:opacity-80'>Select Image</button> */}
                             <label htmlFor="images" className="p-1 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80">
                                 Select Image
-                                <input onChange={handleInputImgChange} className="hidden" type="file" id="images" name="File" accept="image/*" />
+                                <input onChange={handleInputImgChange} className="hidden" type="file" id="images" name="File" accept="image/*" multiple={false}/>
                             </label>
                             
                         </div>
@@ -228,7 +246,7 @@ return (
                                         {/* <button type="button" className="p-3 text-red-700 rounded-lg uppercase hover: opacity-65">Delete</button> */}
                                     </div>
                         ):(<></>)}
-                        <button disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading?'Creating ....':'Create Store'}</button>
+                        <button onClick={handleSubmit} disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading?'Creating ....':'Create Store'}</button>
                         {error&& <p className="text-red-700 text-sm">{error}</p>}
                     </div>
                 </form>

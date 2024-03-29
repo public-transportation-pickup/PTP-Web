@@ -1,4 +1,6 @@
+import axios from 'axios';
 import {BASE_URL} from '../lib/contants/index'
+import { CURRENT_USER } from './auth-api';
 
 export const getAllProvince= async ()=>{
     let res;
@@ -70,20 +72,27 @@ export const createStore = async (storeModel,file)=>{
         formData.append('Ward',storeModel.Ward);
         formData.append('AddressNo',storeModel.AddressNo);
         formData.append('Street',storeModel.Street);
-        formData.append('File',file);
+        formData.append('File',file[0]);
         formData.append('ActivationDate',storeModel.ActivationDate);
-        formData.append('StationIds',storeModel.StationId);
-        console.log("FormData req: ",formData);
-        const res= await fetch('/api/stores',{
+        formData.append('StationIds',"81c5dfcd-9b2d-4374-bb2e-d47517997f23");
+        // formData.forEach(element => {
+        //     console.log("element form data req", element);
+        // });
+        console.log("FormData req: ",file[0]);
+        // console.log("Current user token",CURRENT_USER.token)
+        const res= await axios.post(`${BASE_URL}/stores`,formData,{
             headers:{
-                'method':'POST'
+                Authorization:`Bearer ${CURRENT_USER.token}`,
             },
-            body:formData
-        });
-        const data= await res.json();
-        return data;
+        })
+        //const data= await res.json();
+        console.log("Create store dâta", res.data);
+        if(res.status===201)return res.data;
+        else return null;
+        
     } catch (error) {
         console.log("Create store api wrong", error);
+        return null;
     }
 }
 

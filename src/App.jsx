@@ -22,7 +22,7 @@ import CreateCategoryPage from './ptp-web-admin-pages/category-pages/CreateCateg
 import UserMainPage from './ptp-web-admin-pages/user-pages/UserMainPage.jsx';
 import CreateRoutePage from './ptp-web-admin-pages/route-pages/CreateRoutePage.jsx';
 import DuplicateForm from './ptp-web-admin-components/route-components/route-create-components/DuplicateForm.jsx';
-import DragComponent from './ptp-web-admin-components/route-components/route-create-components/DragComponent.jsx';
+//import DragComponent from './ptp-web-admin-components/route-components/route-create-components/DragComponent.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -74,7 +74,7 @@ export default function App() {
         {/* <Route path='/createmenu'element={<CreateMenuPage/>}/> */}
         <Route path='/productitemmodal' element={<ProductItemModal/>}/>
         <Route path='/duplicateroute' element={<DuplicateForm/>}/>
-        <Route path='/drag' element={<DragComponent/>}/>
+        {/* <Route path='/drag' element={<DragComponent/>}/> */}
       </Routes>
     </BrowserRouter>
   )

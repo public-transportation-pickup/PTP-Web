@@ -5,7 +5,7 @@ import PopularProducts from "../ptp-web-admin-components/PopularProducts";
 import RecentOrdrers from "../ptp-web-admin-components/RecentOrdrers";
 import TransactionChart from "../ptp-web-admin-components/TransactionChart";
 import { useEffect } from "react";
-import { authentication, authenticationV2 } from "../ptp-web-admin-api/auth-api";
+import { authenticationV2 } from "../ptp-web-admin-api/auth-api";
 
 
 export default function Dashboard() {
@@ -18,7 +18,8 @@ export default function Dashboard() {
         const dataFetch=await authenticationV2(currentUser.stsTokenManager.accessToken);
         localStorage.setItem("admin",JSON.stringify(dataFetch));
         // console.log("admin storage", localStorage.getItem("admin"));
-        console.log("DataFetch",JSON.stringify(dataFetch));
+        // console.log("DataFetch",JSON.stringify(dataFetch));
+        // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
       } catch (error) {
         console.log("Exception useEffect Dashboard",error)
       }
