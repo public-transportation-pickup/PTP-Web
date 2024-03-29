@@ -1,7 +1,10 @@
+import { useParams } from "react-router-dom";
 import Map from "../Map";
 
 
 export default function DetailStorePage() {
+    const {param}= useParams();
+    console.log("param detail page", param);
   return (
     <div>
         <h1 className="text-center text-2xl pb-6">Store 1 (cho tên của store zô đây)</h1>

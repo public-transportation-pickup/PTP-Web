@@ -12,13 +12,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
 		label: 'Dashboard',
-		path: '/home',
+		path: '/',
 		icon: <HiOutlineViewGrid />,
 		flag: false
 	},
 	{
 		key: 'store',
-		label: 'Store',
+		label: 'Cửa hàng',
 		path: '/store',
 		icon: <CiShop />,
 		flag:true
@@ -36,29 +36,29 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 	// 	icon: <HiOutlineShoppingCart />
 	// },
 	{
-		key: 'customers',
-		label: 'Customers',
-		path: '/customers',
+		key: 'user',
+		label: 'Người dùng',
+		path: '/user',
 		icon: <HiOutlineUsers />,
 		flag:false
 	},
 	{
 		key: 'Map',
-		label: 'Map',
+		label: 'Bản đồ',
 		path: '/map',
 		icon: <VscMapFilled />,
 		flag:false
 	},{
-		key: 'Route',
-		label: 'Route',
+		key: 'route',
+		label: 'Tuyến',
 		path: '/route',
 		icon: <CiRoute />,
 		flag:false
 	},
 	{
-		key: 'transactions',
-		label: 'Transactions',
-		path: '/transactions',
+		key: 'category',
+		label: 'Danh mục',
+		path: '/category',
 		icon: <HiOutlineDocumentText />,
 		flag:false
 	},
