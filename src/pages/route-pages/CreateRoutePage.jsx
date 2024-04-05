@@ -1,10 +1,12 @@
 import { useState } from "react";
 import Accordion from "../../components/route-components/route-create-components/Accordion";
-import CreateRouteForm from "../../components/route-components/route-create-components/CreateRouteForm";
-import CreateRouteVarForm from "../../components/route-components/route-create-components/CreateRouteVarForm";
-import DuplicateForm from "../../components/route-components/route-create-components/DuplicateForm";
+import CreateRouteForm from "../../components/route-components/route-create-components/manual-form-components/CreateRouteForm";
+import CreateRouteVarForm from "../../components/route-components/route-create-components/manual-form-components/CreateRouteVarForm";
+import DuplicateForm from "../../components/route-components/route-create-components/duplicate-form-components/DuplicateForm";
 import ModalRoute from "../../components/route-components/route-create-components/duplicate-form-components/ModalRoute";
 import { DUPLICATE, MANUAL } from "../../lib/enums/RouteEnums";
+import CreateTimeTable from "../../components/route-components/route-create-components/CreateTimeTable";
+import CreateTrip from "../../components/route-components/route-create-components/CreateTrip";
 
 
 
@@ -46,9 +48,10 @@ export default function CreateRoutePage() {
           <p>- Bạn cần điền đầy đủ thông tin và xác nhận theo thứ tự các bước</p>
         </div>
         <div className="p-4 flex flex-col gap-5">
-          <Accordion title="Bước 1: Tạo thông tin tuyến" component={<CreateRouteForm/>}/>
-          
+          <Accordion title="Bước 1: Tạo thông tin tuyến" component={<CreateRouteForm/>}/> 
           <Accordion title="Bước 2: Tạo thông tin các lượt" component={<CreateRouteVarForm/>}/>
+          <Accordion title="Bước 3: Tạo thời khóa biểu" component={<CreateTimeTable/>}/>
+          <Accordion title="Bước 4: Tạo thông tin chuyến" component={<CreateTrip/>}/>
         </div>
       </div>
       )}

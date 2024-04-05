@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {getCategories} from '../../api/category-api.js'
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
+import MenuDropDown from '../shared/MenuDropDown.jsx';
 
 export default function CategoryItem() {
 const [loading,setLoading]=useState(false);
@@ -24,7 +25,7 @@ const [listCategory,setListCategory]=useState([]);
         fetchData();
     },[])
 
-    const commonProperty= 'flex flex-row border gap-2 p-2 ';
+    const commonProperty= 'flex border gap-2 p-2 ';
     const inactiveProperty='border-dashed border-rose-500 border-4 hover:bg-rose-200'
     const activeProperty= 'border-solid  border-green-500 border-4 hover:bg-green-200'
     //className='flex flex-row border border-dashed border-green-100 border-4 gap-2
@@ -35,14 +36,27 @@ const [listCategory,setListCategory]=useState([]);
       <div className="grid grid-cols-3 gap-5">
         {listCategory.length>0 && listCategory&& (listCategory.map((item,index)=>(
            <Link to={`/category/${item.id}`} key={index}>
-              <div key={index} className={ classNames(item.status==="Active"? activeProperty:inactiveProperty,commonProperty)}>
+
+            <div key={index} className={ classNames(item.status==="Active"? activeProperty:inactiveProperty,commonProperty)}>
+             
+              <div className='flex flex-row mr-auto items-center gap-2'>
                 <img className='h-10 w-10 rounded-full' src={item.imageURL===null? imgDefault:item.imageURL}/>
                 <div className='flex flex-col gap-1'>
-                <p>{item.name}</p>
-                <p>{item.Description}</p>
+                  <p>{item.name}</p>
+                  <p>{item.Description}</p>
                 </div>
+              </div>
+              <div className='ml-auto mr-4'>
+                <MenuDropDown/>
+              </div>
+
+              
                 
-          </div>
+              </div>
+              
+
+            
+              
            </Link>
           
         ))

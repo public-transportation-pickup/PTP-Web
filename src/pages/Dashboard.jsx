@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const {currentUser}=useSelector(state=>state.user);
   const navigate=useNavigate()
-  //console.log("Current user firebase", currentUser)
+  console.log("Current user firebase", currentUser)
   useEffect(()=>{
     const storeUserLocal=async()=>{
       try {
@@ -20,10 +20,10 @@ export default function Dashboard() {
         const dataFetch=await authenticationV2(currentUser.stsTokenManager.accessToken);
         
         // console.log("admin storage", localStorage.getItem("admin"));
-        // console.log("DataFetch",JSON.stringify(dataFetch));
+        console.log("DataFetch",JSON.stringify(dataFetch));
         // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
-        if(dataFetch===null) navigate('/sign-in');
-        if(dataFetch===500) await authenticationV2(currentUser.stsTokenManager.accessToken);
+        //if(dataFetch===null) navigate('/sign-in');
+        if(dataFetch===500) await navigate('/sign-in');
         // else navigate('/sign-in');
       } catch (error) {
         console.log("Exception useEffect Dashboard",error)

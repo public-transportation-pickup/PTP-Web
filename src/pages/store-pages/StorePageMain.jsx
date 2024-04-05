@@ -3,6 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import {useNavigate} from 'react-router-dom'
 import { getStores } from "../../api/store-api";
+import classNames from 'classnames'
+import MenuDropDown from "../../components/shared/MenuDropDown";
 
 export default function StorePageMain() {
     const navigate=useNavigate();
@@ -11,9 +13,16 @@ export default function StorePageMain() {
         navigate('/store/create');
     }
 
-    const handleRowClick=(id)=>{
+    const ViewDetailFunc=(id)=>{
         navigate(`/store/${id}`)
     }
+    const DeleteFunc=(id)=>{
+        navigate(`/store/${id}`)
+    }
+    const EditFunc=(id)=>{
+        navigate(`/store/${id}`)
+    }
+    
     
 
     const [listStore,setListStore]=useState([]);
@@ -34,15 +43,16 @@ export default function StorePageMain() {
 
 return (
     <>
-        <h1 className="text-center mx-auto text-4xl">List Store</h1>
+        <h1 className="text-center mx-auto text-4xl">Danh sách cửa hàng</h1>
         <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new store</button>
         </div>
         
         <div className="">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
                     <tr>
+                    <th className="px-4">#</th>
                     <th>Tên cửa hàng</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
@@ -52,13 +62,17 @@ return (
                 </thead>
                 <tbody>
                     {listStore && listStore.length >0 ? (listStore.map((item,index)=>(
-                        <tr key={index} onClick={()=>handleRowClick(item.id)} className=" h-8 border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-red-400 text-sm">
+                        <tr key={index} className=" h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4">
+                            {/* <div className="hover:bg-red-400"> */}
+                            <td className="px-4">{index+1}</td>
                             <td>{item.name}</td>
                             <td>{item.phoneNumber}</td>
                             <td>{item.addressNo}, Đường {item.street}, {item.ward}, {item.zone}, TPHCM</td>
                             
-                            <td>{item.status}</td>
-                            <td><p>Chỉnh sửa</p> <p>Xem chi tiết</p></td>
+                            <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status}</span></td>
+                            {/* </div> */}
+                            
+                            <td><MenuDropDown EditFunc={()=>EditFunc(item.id)} DeleteFunc={()=>DeleteFunc(item.id)} ViewDetailFunc={()=>ViewDetailFunc(item.id)}/></td>
                         </tr>
                     ))):(<></>)}
                    

@@ -152,7 +152,12 @@ export const deleteStore=async (storeId)=>{
 
 export const getProductByStoreId=async (storeId)=>{
     try {
-        const res= await fetch(`${BASE_URL}/stores/${storeId}/products`);
+        console.log("Store id", storeId)
+        const res= await fetch(`${BASE_URL}/stores/${storeId}/products`,{
+            headers:{
+                Authorization:`Bearer ${CURRENT_USER.token}`,
+            }
+        });
         const data= await res.json();
         console.log("get product by store id data", data);
         if(res.status===200) return data;

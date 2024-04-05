@@ -5,27 +5,29 @@ import { Icon, divIcon, point } from 'leaflet';
 import MarkerClusterGroup from "react-leaflet-cluster";
 import busStationIcon from '../assets/bus_station_icon.png';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types'
 
 
-export default function Map() {
-  const markers =  [
-    {
-      geocode: [10.836530227310535, 106.80836723756903],
-      popUp: "FPT Software FTown 3"
-    },
-    {
-      geocode: [10.851130840419415, 106.79884167932613],
-      popUp: "FPT Software FTown 1"
-    },
-    {
-      geocode: [10.842470210132719, 106.80913639097463],
-      popUp: "HPT Vietnam Corporation"
-    }, 
-    {
-      geocode:[10.957718022113736, 106.84300482222983],
-      popUp:"Vincom Plaza Bien Hoa"
-    }
-  ]
+export default function Map({markers}) {
+  console.log("Marker on map component",markers)
+  // const markers =  [
+  //   {
+  //     geocode: ["10.836530227310535", "106.80836723756903"],
+  //     popUp: "FPT Software FTown 3"
+  //   },
+  //   {
+  //     geocode: [10.851130840419415, 106.79884167932613],
+  //     popUp: "FPT Software FTown 1"
+  //   },
+  //   {
+  //     geocode: [10.842470210132719, 106.80913639097463],
+  //     popUp: "HPT Vietnam Corporation"
+  //   }, 
+  //   {
+  //     geocode:[10.957718022113736, 106.84300482222983],
+  //     popUp:"Vincom Plaza Bien Hoa"
+  //   }
+  // ]
 
 const customIcon=new Icon({
   iconUrl:busStationIcon,
@@ -57,10 +59,10 @@ return (
       chunkedLoading
       iconCreateFunction={createCustomClusterIcon} onClick={handleClick}>
       {
-        markers.map((marker)=>{
+        markers&& markers.map((marker,index)=>{
           return (
-            console.log("Geocode", marker.geocode+" Icon", customIcon),
-            <Marker key={marker.geocode} position={marker.geocode} icon={customIcon} >
+            //console.log("Geocode", marker.geocode+" Icon", customIcon),
+            <Marker key={index} position={marker.geocode} icon={customIcon} >
               <Popup>
                 {marker.popUp}
               </Popup>
@@ -72,4 +74,8 @@ return (
     
   </MapContainer>
 );
+}
+
+Map.propTypes={
+  markers:PropTypes.array
 }

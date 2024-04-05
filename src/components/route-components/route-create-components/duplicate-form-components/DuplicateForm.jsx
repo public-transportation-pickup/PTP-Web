@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import ComboboxComponent from "../../store-components/ComboboxComponent"
-import { getRoutes } from "../../../api/route-api";
-import { getRouteVars} from "../../../api/route-var-api";
+import ComboboxComponent from "../../../store-components/ComboboxComponent"
+import { getRoutes } from "../../../../api/route-api";
+import { getRouteVars} from "../../../../api/route-var-api";
 import { ToastContainer,toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { getRouteStation } from "../../../api/route-station-api";
-import DragandDrop from "./duplicate-form-components/DragandDrop";
+import { getRouteStation } from "../../../../api/route-station-api";
+import DragandDrop from "./DragandDrop";
 
 export default function DuplicateForm() {
     
@@ -75,7 +75,7 @@ export default function DuplicateForm() {
             <button onClick={handleDuplicateButton} type="button" className="rounded-lg bg-blue-300 hover:opacity-85 p-4">Tạo bản sao</button>
         </div>
         {/* Onclick button thì show detail route var ra */}
-        {duplicate===true && listRouteVarStation.length()!==0(
+        {duplicate===true &&  (
             <div>
                 <h2>{routeVarInfo.RouteVarName }</h2>
                 <DragandDrop listRouteVarStation={listRouteVarStation}/>

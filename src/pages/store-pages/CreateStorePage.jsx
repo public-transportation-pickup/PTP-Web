@@ -35,9 +35,9 @@ export default function CreateStorePage() {
         ActivationDate: new Date().toISOString(),
         StationIds:[]
     })
-    console.log("Json form: ",jsonForm);
+    //console.log("Json form: ",jsonForm);
     const [file,setFile]=useState([]);
-    console.log("File ava", file);
+    //console.log("File ava", file);
 
     const handleStationChange=async (value)=>{
         await setJsonForm({...jsonForm,StationIds:value.id});

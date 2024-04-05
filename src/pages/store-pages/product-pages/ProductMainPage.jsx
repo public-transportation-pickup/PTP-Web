@@ -9,6 +9,7 @@ export default function ProductMainPage() {
     console.log("param store on product main page", params.storeId);
     const navigate= useNavigate();
     const [listProduct,setListProduct]=useState([]);
+    console.log("List product", listProduct);
     const handleDetailClick=async ()=>{
         navigate(`/store/${await params.storeId}`)
     }

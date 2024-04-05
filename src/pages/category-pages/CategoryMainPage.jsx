@@ -30,7 +30,7 @@ export default function CategoryMainPage() {
                     <CategoryItem item={item}/>
                 </div>
             ))):(<></>)} */}
-            <CategoryItem/>
+                <CategoryItem/>
             <div>
                 {/* <PaginationButton/> */}
             </div>

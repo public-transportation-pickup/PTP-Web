@@ -8,13 +8,19 @@ export default function DetailStorePage() {
     const params= useParams();
     const navigate= useNavigate();
     console.log("param detail page", params.storeId);
-    const [detailStore, setDetailStore]=useState();
+    const [detailStore, setDetailStore]=useState({});
+    const [markerStore,setMarkerStore]=useState([])
+    console.log("detail store", detailStore);
+    console.log("Marker store", markerStore);
+    //console.log("JSON.strungfy",detailStore.name)
+
     
     useEffect(()=>{
         const fetchData=async()=>{
             const responseAPI= await getStoreById(params.storeId);
-            console.log("response api detail store",responseAPI);
+            //console.log("response api detail store",responseAPI);
             await setDetailStore(responseAPI)
+            await setMarkerStore((prevList)=>[...prevList,{popUp:detailStore.name, geocode:[detailStore.latitude,detailStore.longitude]}])
            
         }
         fetchData();
@@ -28,8 +34,15 @@ export default function DetailStorePage() {
         navigate(`/store/${id}/menu`)
     }
 
+    const handleStoreAllButton=async ()=>{
+        navigate('/store')
+    }
+
   return (
     <div>
+        <div>
+            <button onClick={handleStoreAllButton} className="hover:underline cursor-pointer">Cửa hàng</button>
+        </div>
         {detailStore&&(
              <div>
         
@@ -86,9 +99,9 @@ export default function DetailStorePage() {
                  {/*Import a location map of store by coordinate of store*/}
                  <h1 className="pt-10 text-lg">Location maps</h1>
                  <div className="flex justify-center" >
-                     <div className="w-3/4 items-center border border-s-slate-200">
-                         <Map/>
-                     </div>
+                     {/* <div className="w-3/4 items-center border border-s-slate-200">
+                         <Map markers={markerStore}/>
+                     </div> */}
                  </div>
                  
              </div>
