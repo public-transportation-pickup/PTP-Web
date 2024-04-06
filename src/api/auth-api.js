@@ -17,9 +17,9 @@ export const refreshToken=async (oldAccessToken)=>{
         if(res.status===200 && res.data!==null){
             await localStorage.setItem("accessToken",JSON.stringify(res.data.token));
             await localStorage.setItem("admin",JSON.stringify(res.data));
-            await console.log("Local storage refresh",await localStorage.getItem("admin"));
-            await console.log("Access token local refresh", await localStorage.getItem("accessToken"))
-        } 
+            //await console.log("Local storage refresh",await localStorage.getItem("admin"));
+            //await console.log("Access token local refresh", await localStorage.getItem("accessToken"))
+        } else window.location.href(`/src/pages/SignIn.jsx`)
         return res.status;
     } catch (error) {
         console.error("Exception refreshToken",error)
