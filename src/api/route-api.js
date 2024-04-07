@@ -51,4 +51,14 @@ export const updateRoute = async (routeModel)=>{
     }
 }
 
+export const updateDistanceRoute=async (routeId)=>{
+    try {
+        const res= await axios.put(`${BASE_URL}/routes/${routeId}/distance-modification`);
+        console.log("Update distance route response: ",res);
+        return await res.status
+    } catch (error) {
+        console.error("Update distance route exception", error);
+    }
+}
+
 
