@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {BASE_URL} from '../lib/contants/index'
-import { CURRENT_USER } from './auth-api';
+import { ACCESS_TOKEN, CURRENT_USER } from './auth-api';
 
 export const getAllProvince= async ()=>{
     let res;
@@ -93,7 +93,7 @@ export const createStore = async (storeModel,file)=>{
         // console.log("Current user token",CURRENT_USER.token)
         const res= await axios.post(`${BASE_URL}/stores`,formData,{
             headers:{
-                Authorization:`Bearer ${CURRENT_USER.token}`,
+                Authorization:`Bearer ${ACCESS_TOKEN}`,
             },
         })
         console.log("Create store dâta", res.data);
@@ -153,16 +153,47 @@ export const deleteStore=async (storeId)=>{
 export const getProductByStoreId=async (storeId)=>{
     try {
         console.log("Store id", storeId)
-        const res= await fetch(`${BASE_URL}/stores/${storeId}/products`,{
-            headers:{
-                Authorization:`Bearer ${CURRENT_USER.token}`,
-            }
-        });
-        const data= await res.json();
-        console.log("get product by store id data", data);
-        if(res.status===200) return data;
-        return null;
+        // const res= await fetch(`${BASE_URL}/stores/${storeId}/products`,{
+        //     headers:{
+        //         "Authorization":`Bearer ${ACCESS_TOKEN}`,
+        //     }
+        // });
+        // const data= await res.json();
+        // console.log("get product by store id data", data);
+        // if(res.status===200) return data;
+        // return null;
+        const res= await axios.get(`${BASE_URL}/stores/${storeId}/products?pageNumber=-1&pageSize=100`,{
+                headers:{
+                    Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+                }
+            });
+        if(res.status===200) return res.data;
+        else return null;
     } catch (error) {
         console.error("Get product by store id exception",error)
     }
 }
+
+export const getMenuByStoreId=async (storeId)=>{
+    try {
+        const res= await fetch(`${BASE_URL}/stores/${storeId}/menus`);
+        console.log("get menu by store id res", res);
+        const data= await res.json();
+        if(res.status===200) return data;
+        else return null;
+    } catch (error) {
+        console.error("get menu by storeid exception ", error)
+    }
+}
+
+// export const getProductByStoreId=async (storeId)=>{
+//     try {
+//         const res= await fetch(`${BASE_URL}/stores/${storeId}/products`);
+//         console.log("get product by store id res", res);
+//         const data= await res.json();
+//         if(res.status===200) return data;
+//         else return null;
+//     } catch (error) {
+//         console.error("get product by storeid exception ", error)
+//     }
+// }

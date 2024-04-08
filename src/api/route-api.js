@@ -26,6 +26,19 @@ export const getRouteById=async (routeId)=>{
     }
 }
 
+export const createRoute=async (createModel)=>{
+    try {
+        const res= await axios.post(`${BASE_URL}/routes`,createModel,{
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        if(res.status===200) return res.data;
+    } catch (error) {
+        console.error("Create Route exception", error);
+    }
+}
+
 export const deleleRoute = async (routeId)=>{
     try {
         const response= await fetch(`${BASE_URL}/routes/${routeId}`,{

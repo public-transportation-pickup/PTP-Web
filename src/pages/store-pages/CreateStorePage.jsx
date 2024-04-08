@@ -163,24 +163,6 @@ return (
                         />
                         
                     </div>
-                    {/* <div className="flex flex-row gap-6">
-                        <div>
-                            <p>Vui lòng lấy tọa độ tại link dưới đây</p>
-                            <a href="https://www.latlong.net/" rel="noopener noreferrer" target="_blank" className="underline text-cyan-700">Lấy tọa độ</a>
-                        </div>
-                        <div className="flex flex-col gap-4">
-                            <div>   
-                            <label htmlFor="Latitude">Vĩ độ (Latitude)</label>
-                            <input type="number" id="Latitude" value={jsonForm.Latitude} onChange={handleChange}/>
-                            </div>
-                            <div>
-                            <label htmlFor="Latitude">Kinh độ (Longitude)</label>
-                            <input type="number" id="Longitude" value={jsonForm.Longitude} onChange={handleChange}/>
-                            </div>
-                            
-                            
-                        </div>
-                    </div> */}
                 </div>
             </div>
             <div>

@@ -17,7 +17,7 @@ export default function ProductMainPage() {
     useEffect(()=>{
         const fetchData=async()=>{
             const responseAPI= await getProductByStoreId(params.storeId);
-            if(Array.isArray(responseAPI)) setListProduct(responseAPI);
+            if(Array.isArray(responseAPI.items)) await setListProduct(responseAPI.items);
         }
         fetchData();
     },[params.storeId])
@@ -31,7 +31,7 @@ export default function ProductMainPage() {
         <span className="px-2">&gt;</span>
         <span className="hover:underline">Sản phẩm</span>
     </p>
-        <h1 className="text-center mx-auto text-4xl">Danh sách sản phẩm</h1>
+        <h1 className="text-center mx-auto text-4xl mb-8">Danh sách sản phẩm</h1>
         {/* <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new product</button>
         </div> */}
@@ -49,21 +49,27 @@ export default function ProductMainPage() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="hover:bg-gray-100">
+                    {listProduct && listProduct.length >0 && (listProduct.map((item,index)=>(
+                        <tr key={index} className="hover:bg-orange-100">
                         <td>
-                            <div className="flex flex-row">
-                                <img/>
-                                <p></p>
+                            <div className="flex flex-row py-2 gap-4 items-center ml-4">
+                                <img src={item.imageURL} className="rounded-full bg-purple-100 w-10 h-10"/>
+                                <p>{item.name}</p>
                             </div>
                         </td>
-                        <td>Malcolm Lockyer</td>
-                        <td>1961</td>
+                        <td className="text-center py-2">{item.price}</td>
+                        <td className="text-center py-2">{item.preparationTime}</td>
+                        <td className="text-center py-2">{item.numProcessParallel}</td>
+                        <td className="text-center py-2">{item.manufacturingDate}</td>
+                        <td className="text-center py-2">{item.expirationDate}</td>
                     </tr>
+                    )))}
+                    
                     
                 </tbody>
             </table>
             <div>
-                {/* <PaginationButton/> */}
+                <PaginationButton setCurrentPage={5} currentPage={5} totalPages={5}/>
             </div>
         </div>
     </>

@@ -18,13 +18,14 @@ import MapStationPage from './pages/route-pages/MapStationPage.jsx';
 import DetailRoutePage from './pages/route-pages/DetailRoutePage.jsx';
 // import ProductItemModal from './components/store-components/menu-components/ProductItemModal.jsx';
 import CategoryMainPage from './pages/category-pages/CategoryMainPage.jsx';
-import CreateCategoryPage from './pages/category-pages/CreateCategoryPage.jsx';
 import UserMainPage from './pages/user-pages/UserMainPage.jsx';
 import CreateRoutePage from './pages/route-pages/CreateRoutePage.jsx';
 // import DuplicateForm from './components/route-components/route-create-components/DuplicateForm.jsx';
 import ProductMainPage from './pages/store-pages/product-pages/ProductMainPage.jsx';
 import DragComponent from './components/route-components/test-drag/DragComponent.jsx';
 import CreateRouteVarForm from './components/route-components/route-create-components/manual-form-components/CreateRouteVarForm.jsx';
+import DragDropImage from './components/category-components/DragDropImage.jsx';
+import DetailCategoryPage from './pages/category-pages/DetailCategoryPage.jsx';
 
 export default function App() {
   return (
@@ -72,7 +73,8 @@ export default function App() {
             {/* url category */}
             <Route path='category'>
               <Route index element={<CategoryMainPage/>}/>
-              <Route path='create' element={<CreateCategoryPage/>}/>
+              <Route path=':categoryId' element={<DetailCategoryPage/>}/>
+              {/* <Route path='create' element={<CreateCategoryPage/>}/> */}
               
             </Route>
             {/* url user */}
@@ -91,6 +93,7 @@ export default function App() {
         {/* <Route path='/productitemmodal' element={<ProductItemModal/>}/>
         <Route path='/duplicateroute' element={<DuplicateForm/>}/> */}
         <Route path='/drag' element={<DragComponent/>}/>
+        <Route path='/dragimage' element={<DragDropImage/>}/>
         <Route path='/manual' element={<CreateRouteVarForm/>}/>
       </Routes>
     </BrowserRouter>

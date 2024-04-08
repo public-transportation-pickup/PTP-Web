@@ -1,9 +1,9 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, isValidElement, useState } from 'react'
 import PropTypes from 'prop-types'
 
 
-export default function ModalRoute({buttonValue,title,EnumHandler}) {
+export default function Modal({buttonValue,title,EnumHandler}) {
     let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
@@ -18,13 +18,25 @@ export default function ModalRoute({buttonValue,title,EnumHandler}) {
     return (
       <>
         <div className=" flex items-center justify-center">
-          <button
+          {isValidElement(buttonValue)===true && (
+            <button
+            type="button"
+            onClick={openModal}
+            
+          >
+            {buttonValue}
+          </button>
+          )}
+          {typeof buttonValue==='string' && (
+            <button
             type="button"
             onClick={openModal}
             className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
           >
             {buttonValue}
           </button>
+          )}
+          
         </div>
   
         <Transition appear show={isOpen} as={Fragment}>
@@ -94,8 +106,8 @@ export default function ModalRoute({buttonValue,title,EnumHandler}) {
     )
 }
 
-ModalRoute.propTypes={
-    buttonValue:PropTypes.string,
+Modal.propTypes={
+    buttonValue:PropTypes.string || PropTypes.element,
     title:PropTypes.string,
     status: PropTypes.bool,
     EnumHandler:PropTypes.func

@@ -19,6 +19,6 @@ export default function ItemDrag({id, StationName}) {
 }
 
 ItemDrag.propTypes={
-    id: PropTypes.string,
+    id: PropTypes.number,
     StationName:PropTypes.string
 }

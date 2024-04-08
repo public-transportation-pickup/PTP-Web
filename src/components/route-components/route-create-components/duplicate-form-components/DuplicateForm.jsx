@@ -16,6 +16,7 @@ export default function DuplicateForm() {
     const [routeVarInfo, setRouteVarInfo]=useState();
     const [duplicate, setDuplicate]=useState(false);
     console.log("detail route var", listRouteVarStation)
+    console.log("list Oute var station", listRouteVarStation)
 
     const handleRouteIdChange=async(value)=>{
         console.log("Route choose", value);
@@ -29,7 +30,11 @@ export default function DuplicateForm() {
             const responseAPI= await getRouteStation(routeId,value.id);
             await setRouteVarInfo(value);
             console.log("Response get list station by routevar id:",responseAPI);
-            await setListRouteVarStation(responseAPI)     
+            //await setListRouteVarStation(responseAPI)   
+            responseAPI.forEach(async (element)=> {
+                //console.log("Element", element);
+                await listRouteVarStation.push({id:element.index,stationId:element.id,index:element.index,stationName:element.stationName});
+            });  
             //await console.log("detail route var", listRouteVarStation);
         }
     }
@@ -62,7 +67,7 @@ export default function DuplicateForm() {
   return (
     <div>
         <div>
-            <ToastContainer className="w-20 h-10"/>
+            <ToastContainer className="w-60 h-10"/>
         </div>
         <div className="flex flex-col gap-4">
             <div>

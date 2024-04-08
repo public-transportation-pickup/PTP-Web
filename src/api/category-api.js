@@ -1,4 +1,6 @@
 import { BASE_URL } from "../lib/contants";
+import axios from 'axios'
+import { ACCESS_TOKEN } from "./auth-api";
 export const getCategories=async ()=>{
     try {
         const res=  await fetch(`${BASE_URL}/categories`);
@@ -9,24 +11,65 @@ export const getCategories=async ()=>{
         console.log("Get all category error: ",error);
     }
 }
-export const CreateCategory=async (formData)=>{
+
+export const getCategory=async (id)=>{
     try {
-        const res=  await fetch(`${BASE_URL}/categories`,{
-            method:'POST',
-            headers
-        });
+        const res= await fetch(`${BASE_URL}/categories/${id}`);
         const data= await res.json();
-        console.log("Data: ",data);
-        return data;
+        console.log("get category res", res)
+        if(res.status===200) return data;
+        else return null;
+    } catch (error) {
+        console.error("get category by id exception", error);
+    }
+}
+
+export const CreateCategory=async (createModal)=>{
+    try {
+        // const res=  await fetch(`${BASE_URL}/categories`,{
+        //     method:'POST',
+        
+        // });
+        // const data= await res.json();
+        // console.log("Data: ",data);
+        // return data;
+        const formData= new FormData();
+        formData.append('Name', createModal.Name);
+        formData.append("Description", createModal.Description);
+        formData.append('Status',createModal.Status);
+        formData.append('Image', createModal.Image);
+        //console.log("CURRENT_USER.token",JSON.stringify(ACCESS_TOKEN));
+        const res= await axios.post(`${BASE_URL}/categories`,formData,{
+            headers:{
+                Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+            },
+        })
+        console.log("Create Category res", res);
+        return res.status;
     } catch (error) {
         console.log("Get all category error: ",error);
     }
 }
 
-export const UpdateCategory=async (updateCate)=>{
+// export const UpdateCategory=async (updateCate)=>{
+//     try {
+//         const res= await fetch(`${BASE_URL}/`)
+//     } catch (error) {
+//         console.log("Update category exception", error);
+//     }
+// }
+
+export const DeleteCategory =async (id)=>{
     try {
-        const res= await fetch(`${BASE_URL}/`)
+        const res= await axios.delete(`${BASE_URL}/categories/${id}`,{
+            headers:{
+                Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+            },
+        }
+    );
+        console.log("Delete category", res)
+        if(res.status===204) return res.status;
     } catch (error) {
-        console.log("Update category exception", error);
+        console.log("Delete Category API", error);
     }
 }

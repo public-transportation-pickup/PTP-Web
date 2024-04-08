@@ -1,72 +1,67 @@
 import PropTypes from 'prop-types'
 import ComboboxComponent from '../../store-components/ComboboxComponent'
 import { useEffect, useState } from 'react'
-import { getDistrictByProvinceId } from '../../../api/store-api';
 import { getStations } from '../../../api/station-api';
 import { HiOutlinePlus } from "react-icons/hi";
 import { toast } from 'react-toastify';
 
-export default function StationByZone({addStation}) {
-  const [isOpen,setIsOpen]=useState(true);
-  const [zoneName, setZoneName]=useState('');
-  const [listZone, setListZone]=useState([]);
-  const [listStationByZone, setListStationByZone]=useState([])
-  const [listStationAdd, setListStationAdd]=useState([]);
-
-  const handleZoneNameChange=async (value)=>{
-    setZoneName(value.district_name);
-    const reponseAPI= await getStations(value.district_name);
-    setListStationByZone(reponseAPI);
+export default function StationByZone({handleCloseButtonFunc,addStationFunc,listZoneArray}) {
+  //const [listZone, setListZone]=useState([]);
+  const [zoneChoosen, setZoneChoozen]=useState(null);
+  const [listStationbyZone, setListStationbyZone]=useState([]);
+  //const [stationChoose,setStationChoose]=useState({});
+  const getStationtoAdd=async (value)=>{
+      console.log("Station choose",value);
   }
-
-  const getStationtoAdd=async (value)=>(
-    await addStation(value===undefined?null:value)
-  )
-    const addStationtoList= async (ele)=>{
-      listStationAdd.includes(ele)?toast("Trạm đã được thêm"):setListStationAdd((prevList)=>[...prevList,ele]);
-  }
-
-  const handleCloseButton=async ()=>{
-    await setIsOpen(false);
-  }
-
-    // useEffect(()=>{
-    //   const fetchData=async()=>{
-    //     const responseAPI= await getDistrictByProvinceId("79");
-    //     await setListZone(responseAPI);
-    //   }
-    //   fetchData();
-    // },[zoneName])
+    useEffect(()=>{
+      const fetchData= async ()=>{
+        if(zoneChoosen!==null){
+            try {
+                const responseAPI=await  getStations(zoneChoosen.district_name);
+                console.log("ReponseAPI ",responseAPI);
+                Array.isArray(responseAPI) ===true && responseAPI.length > 0 ? setListStationbyZone(responseAPI): setListStationbyZone([]);
+            } catch (error) {
+                console.log("get station by zone exception on drag.jsx", error)
+            }
+        }
+        // listRouteVarStation.forEach(async element=> {
+        //     console.log("Element", element);
+        //     await setListRouteStationUpdate(()=>[...listRouteStationUpdate,{stationId:element.id,index:element.index,stationName:element.stationName},]);
+        // });
+            
+    }
+    fetchData();
+    },[zoneChoosen])
 
   return (
     <div>
-      {isOpen===true &&(
-        <div>
-          <div>
-            <ComboboxComponent listItems={listZone} params='district_name' onValueChange={handleZoneNameChange}/>
-          </div>
-
-          <div>
-            {listStationByZone && listStationByZone.length >0 && listStationByZone.map((item,index)=>(
-              // Xử lý onclick cho modal view detail station
-              <div key={index}>
-                <p>StationName</p>
-                <HiOutlinePlus className='hover: p-2 rounded-full bg-blue-500' onClick={getStationtoAdd(item)}/>
-              </div>
-            ))}
-          </div>
-
-          <div>
-            <button onClick={handleCloseButton} type='button' className='rounded-lg border border-blue-500 p-3'>Đóng</button>
-          </div>
-        </div>
-      )}
-      
-    </div>
+                <div className="bg-yellow-100 rounded-lg px-4 py-2">
+                    <div className=" mb-2 w-28">
+                        <span>Chọn quận</span>
+                    </div>
+                    <ComboboxComponent listItems={listZoneArray} params="district_name" onValueChange={setZoneChoozen}/>
+                </div>
+                <div className="h-96 overflow-auto mt-1 bg-sky-100 rounded-lg p-2">
+                    <div className="">
+                    <ComboboxComponent listItems={listStationbyZone} params="name" onValueChange={getStationtoAdd}/>
+                    </div>
+                    {listStationbyZone && listStationbyZone.length >0 && (listStationbyZone.map((item,index)=>(
+                        <div key={index} className="flex justify-between border-b-2 p-2 text-sm">
+                        <div className="ml-4">{index+1}- {item.name}</div>
+                        <HiOutlinePlus className="w-5 h-5 rounded-full bg-red-200 hover:opacity-95" onClick={async ()=>  addStationFunc(item)}/>
+                    </div>
+                    )))}
+                </div>
+                <div className="bg-violet-100 rounded-lg p-4 items-center flex justify-center">
+                    <button className="bg-violet-300 rounded-lg p-4" onClick={handleCloseButtonFunc}>Đóng</button>
+                </div>
+            </div>
   )
 }
 
 StationByZone.propTypes={
-  addStation:PropTypes.func
+  handleCloseButtonFunc:PropTypes.func,
+  addStationFunc:PropTypes.func,
+  listZoneArray:PropTypes.array
 }
 

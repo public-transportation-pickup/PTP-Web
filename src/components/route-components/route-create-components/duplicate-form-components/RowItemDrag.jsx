@@ -2,11 +2,15 @@ import PropTypes from 'prop-types'
 import {SortableContext, verticalListSortingStrategy} from '@dnd-kit/sortable'
 import ItemDrag from './ItemDrag'
 import { HiOutlineTrash } from "react-icons/hi";
+import { useEffect } from 'react';
 
 export default function RowItemDrag({listItem,deleteFunc}) {
   //console.log("Array rowItem",listItem);
+  useEffect(()=>{
+
+  },[listItem])
   return (
-    <div className=' p-2 '>
+    <div className=' p-2 h-[36rem] overflow-auto'>
     <SortableContext items={listItem} strategy={verticalListSortingStrategy}>
     {listItem && listItem.map((item)=>(
           <div key={item.id} className='flex items-center'>

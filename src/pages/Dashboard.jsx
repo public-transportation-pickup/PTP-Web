@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 export default function Dashboard() {
   const {currentUser}=useSelector(state=>state.user);
   const navigate=useNavigate()
-  console.log("Current user firebase", currentUser)
+  //console.log("Current user firebase", currentUser)
   useEffect(()=>{
     const storeUserLocal=async()=>{
       try {

@@ -1,5 +1,5 @@
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment } from 'react'
 import { HiDotsHorizontal } from "react-icons/hi";
 import PropTypes from 'prop-types'
 
@@ -78,7 +78,7 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                      onClick={()=>DeleteFunc()}
+                      onClick={()=>DeleteFunc}
                         className={`${
                           active ? 'bg-violet-500 text-white' : 'text-gray-900'
                         } group flex w-full items-center rounded-md px-2 py-2 text-xs`}

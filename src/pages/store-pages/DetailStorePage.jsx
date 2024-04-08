@@ -97,7 +97,7 @@ export default function DetailStorePage() {
              </div>
              <div>
                  {/*Import a location map of store by coordinate of store*/}
-                 <h1 className="pt-10 text-lg">Location maps</h1>
+                 {/* <h1 className="pt-10 text-lg">Location maps</h1> */}
                  <div className="flex justify-center" >
                      {/* <div className="w-3/4 items-center border border-s-slate-200">
                          <Map markers={markerStore}/>
