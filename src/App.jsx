@@ -1,28 +1,33 @@
 import {BrowserRouter, Routes,Route} from 'react-router-dom';
-import SignIn from './ptp-web-admin-pages/SignIn.jsx'
-import Layout from './ptp-web-admin-components/shared/Layout.jsx'
-import Dashboard from './ptp-web-admin-pages/Dashboard.jsx';
-import PrivateRoute from './ptp-web-admin-components/shared/PrivateRoute.jsx';
-import CreateStorePage from './ptp-web-admin-pages/store-pages/CreateStorePage.jsx';
-import StoreList from './ptp-web-admin-pages/StoreList.jsx';
-import UpdateStorePage from './ptp-web-admin-pages/store-pages/UpdateStorePage.jsx';
-import Map from './ptp-web-admin-pages/Map.jsx';
-import StorePageMain from './ptp-web-admin-pages/store-pages/StorePageMain.jsx';
-import DetailStorePage from './ptp-web-admin-pages/store-pages/DetailStorePage.jsx';
-import ScheduleMenuPage from './ptp-web-admin-pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
-import MenuMainPage from './ptp-web-admin-pages/store-pages/menu-pages/MenuMainPage.jsx';
-import RouteItem from './ptp-web-admin-components/route-components/RouteItem.jsx';
-import RouteMainPage from './ptp-web-admin-pages/route-pages/RouteMainPage.jsx';
-import MapStationPage from './ptp-web-admin-pages/route-pages/MapStationPage.jsx';
-import StationsList from './ptp-web-admin-components/route-components/StationsList.jsx';
-import DetailRoutePage from './ptp-web-admin-pages/route-pages/DetailRoutePage.jsx';
-import ProductItemModal from './ptp-web-admin-components/store-components/menu-components/ProductItemModal.jsx';
-import CategoryMainPage from './ptp-web-admin-pages/category-pages/CategoryMainPage.jsx';
-import CreateCategoryPage from './ptp-web-admin-pages/category-pages/CreateCategoryPage.jsx';
-import UserMainPage from './ptp-web-admin-pages/user-pages/UserMainPage.jsx';
-import CreateRoutePage from './ptp-web-admin-pages/route-pages/CreateRoutePage.jsx';
-import DuplicateForm from './ptp-web-admin-components/route-components/route-create-components/DuplicateForm.jsx';
-//import DragComponent from './ptp-web-admin-components/route-components/route-create-components/DragComponent.jsx';
+import SignIn from './pages/SignIn.jsx'
+import Layout from './components/shared/Layout.jsx'
+import Dashboard from './pages/Dashboard.jsx';
+import PrivateRoute from './components/shared/PrivateRoute.jsx';
+import CreateStorePage from './pages/store-pages/CreateStorePage.jsx';
+import StoreList from './pages/StoreList.jsx';
+import UpdateStorePage from './pages/store-pages/UpdateStorePage.jsx';
+import Map from './pages/Map.jsx';
+import StorePageMain from './pages/store-pages/StorePageMain.jsx';
+import DetailStorePage from './pages/store-pages/DetailStorePage.jsx';
+import ScheduleMenuPage from './pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
+import MenuMainPage from './pages/store-pages/menu-pages/MenuMainPage.jsx';
+// import RouteItem from './components/route-components/RouteItem.jsx';
+import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
+import MapStationPage from './pages/route-pages/MapStationPage.jsx';
+// import StationsList from './components/route-components/StationsList.jsx';
+import DetailRoutePage from './pages/route-pages/DetailRoutePage.jsx';
+// import ProductItemModal from './components/store-components/menu-components/ProductItemModal.jsx';
+import CategoryMainPage from './pages/category-pages/CategoryMainPage.jsx';
+import UserMainPage from './pages/user-pages/UserMainPage.jsx';
+import CreateRoutePage from './pages/route-pages/CreateRoutePage.jsx';
+// import DuplicateForm from './components/route-components/route-create-components/DuplicateForm.jsx';
+import ProductMainPage from './pages/store-pages/product-pages/ProductMainPage.jsx';
+//import DragComponent from './components/route-components/test-drag/DragComponent.jsx';
+import CreateRouteVarForm from './components/route-components/route-create-components/manual-form-components/CreateRouteVarForm.jsx';
+import DragDropImage from './components/category-components/DragDropImage.jsx';
+import DetailCategoryPage from './pages/category-pages/DetailCategoryPage.jsx';
+import UpdateCategoryPage from './pages/category-pages/UpdateCategoryPage.jsx';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -32,19 +37,32 @@ export default function App() {
             <Route index element={<Dashboard/>}/>
             
             <Route path='map' element={<Map/>}/>
+
             {/* url web for store */}
             <Route path='store'>
               <Route index element={<StorePageMain/>}/>
               <Route path='create' element={<CreateStorePage/>}/>
-              <Route path='update' element={<UpdateStorePage/>}/>
-              <Route path=':id' element={<DetailStorePage/>}/>
-              {/* url for menu of store */}
-              {/* url for product of menu of store */}
+              <Route path='update/:storeId' element={<UpdateStorePage/>}/>
+
+              <Route path=':storeId'>
+                {/* url for menu of store */}
+                <Route index element={<DetailStorePage/>}/>
+                <Route path='menu'>
+                  <Route index element={<MenuMainPage/>}/>
+                  <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
+                </Route>
+                  {/* end url for menu of store */}
+                {/* url for product of store */}
+                <Route path='product'>
+                  <Route index element={<ProductMainPage/>}/>
+                </Route>
+                {/* end for product of store */}
+              </Route>
             </Route>
-            <Route path='menu'>
-              <Route index element={<MenuMainPage/>}/>
-              <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
-            </Route>
+            {/* <Route path='/store/:storeId' element={<DetailStorePage/>}/> */}
+            {/* end url web for store */}
+
+            
 
             <Route path='route'>
               <Route index element={<RouteMainPage/>}/>
@@ -56,7 +74,9 @@ export default function App() {
             {/* url category */}
             <Route path='category'>
               <Route index element={<CategoryMainPage/>}/>
-              <Route path='create' element={<CreateCategoryPage/>}/>
+              <Route path=':categoryId' element={<DetailCategoryPage/>}/>
+              <Route path='update/:categoryId' element={<UpdateCategoryPage/>}/>
+              {/* <Route path='create' element={<CreateCategoryPage/>}/> */}
               
             </Route>
             {/* url user */}
@@ -65,16 +85,18 @@ export default function App() {
         </Route>
         
         <Route path='/sign-in' element={<SignIn/>}/>
-        <Route path='/getall' element={<StoreList/>}/>
-        <Route path='/routeItem' element={<RouteItem/>}/>
-        <Route path='/routes/:id' element={<DetailRoutePage/>}/>
+        <Route path='/test' element={<StoreList/>}/>
+        {/* <Route path='/routeItem' element={<RouteItem/>}/> */}
+        {/* <Route path='/routes/:id' element={<DetailRoutePage/>}/> */}
         {/* <Route path='/comboBox' element={<ComboBoxTes/>}/> */}
         {/* <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/> */}
-        <Route path='/stationList' element={<StationsList/>}/>
+        {/* <Route path='/stationList' element={<StationsList/>}/> */}
         {/* <Route path='/createmenu'element={<CreateMenuPage/>}/> */}
-        <Route path='/productitemmodal' element={<ProductItemModal/>}/>
-        <Route path='/duplicateroute' element={<DuplicateForm/>}/>
+        {/* <Route path='/productitemmodal' element={<ProductItemModal/>}/>
+        <Route path='/duplicateroute' element={<DuplicateForm/>}/> */}
         {/* <Route path='/drag' element={<DragComponent/>}/> */}
+        <Route path='/dragimage' element={<DragDropImage/>}/>
+        <Route path='/manual' element={<CreateRouteVarForm/>}/>
       </Routes>
     </BrowserRouter>
   )

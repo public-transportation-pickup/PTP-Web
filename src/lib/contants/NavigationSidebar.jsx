@@ -42,13 +42,14 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineUsers />,
 		flag:false
 	},
+	// {
+	// 	key: 'Map',
+	// 	label: 'Bản đồ',
+	// 	path: '/map',
+	// 	icon: <VscMapFilled />,
+	// 	flag:false
+	// },
 	{
-		key: 'Map',
-		label: 'Bản đồ',
-		path: '/map',
-		icon: <VscMapFilled />,
-		flag:false
-	},{
 		key: 'route',
 		label: 'Tuyến',
 		path: '/route',
