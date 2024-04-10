@@ -1,0 +1,14 @@
+# docker-compose.yml
+ 
+# Reference compose file version 3
+version: '3.5'
+services:
+# Service name is react-app
+  store-manager-web:
+    image: node:18-alpine
+  # build from Dockerfile
+    build: .
+  # expose 3000 as hosting port & 3000 in container port
+    ports:
+      - "8001:8001"
+    command: npm run dev -- --port 8001 --host 0.0.0.0
