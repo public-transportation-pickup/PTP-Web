@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 //import PaginationButton from "../../components/store-components/PaginationButton";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import {useNavigate} from 'react-router-dom'
-import { getStores } from "../../api/store-api";
+import { deleteStore, getStores } from "../../api/store-api";
 import classNames from 'classnames'
 import MenuDropDown from "../../components/shared/MenuDropDown";
 
@@ -16,11 +16,16 @@ export default function StorePageMain() {
     const ViewDetailFunc=(id)=>{
         navigate(`/store/${id}`)
     }
-    const DeleteFunc=(id)=>{
-        navigate(`/store/${id}`)
+    const DeleteFunc=async(id)=>{
+        try {
+            const responseAPI= await deleteStore(id);
+            console.log("Reponse api delete store",responseAPI);
+        } catch (error) {
+            console.error("Delete route store page",error)
+        }
     }
     const EditFunc=(id)=>{
-        navigate(`/store/${id}`)
+        navigate(`/store/update/${id}`)
     }
     
     
@@ -45,7 +50,7 @@ return (
     <>
         <h1 className="text-center mx-auto text-4xl">Danh sách cửa hàng</h1>
         <div className="flex justify-end mb-8">
-            <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new store</button>
+            <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Tạo mới cửa hàng</button>
         </div>
         
         <div className="">

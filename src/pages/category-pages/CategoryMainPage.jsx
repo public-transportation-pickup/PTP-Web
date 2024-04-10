@@ -3,18 +3,22 @@ import CategoryItem from "../../components/category-components/CategoryItem";
 import { useState } from "react";
 
 import CreateCategoryPage from "./CreateCategoryPage";
+import UpdateCategoryPage from "./UpdateCategoryPage";
 
 
 
 export default function CategoryMainPage() {
   const [modalCreate,setModalCreate]=useState(false);
 
+
     const handleCreateButtonClick=()=>{
         setModalCreate(true);
     }
 
-    const handleCloseModalCreate=()=>{
+    const handleCloseModal=()=>{
         setModalCreate(false);
+        
+        
     }
     
 
@@ -36,11 +40,17 @@ export default function CategoryMainPage() {
                     <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row ml-auto items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Tạo mới danh mục</button>
                 )}
                 {modalCreate===true && (
-            <div className=" bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
-                <HiOutlineXCircle className="ml-auto hover:cursor-pointer"size={40} onClick={handleCloseModalCreate}/>
-                <CreateCategoryPage/>
-            </div>
-            )}
+                <div className=" bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
+                    <HiOutlineXCircle className="ml-auto hover:cursor-pointer"size={40} onClick={handleCloseModal}/>
+                    <CreateCategoryPage/>
+                </div>
+                )}
+                {/* {editFlag===true && modalCreate===false && (
+                <div className=" bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
+                    <HiOutlineXCircle className="ml-auto hover:cursor-pointer"size={40} onClick={handleCloseModal("EDIT_CLOSE")}/>
+                    <UpdateCategoryPage/>
+                </div>
+                )} */}
             </div>
             
         </div>

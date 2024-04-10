@@ -51,13 +51,26 @@ export const CreateCategory=async (createModal)=>{
     }
 }
 
-// export const UpdateCategory=async (updateCate)=>{
-//     try {
-//         const res= await fetch(`${BASE_URL}/`)
-//     } catch (error) {
-//         console.log("Update category exception", error);
-//     }
-// }
+export const UpdateCategory=async (cateId,updateCate)=>{
+    try {
+        const formData= new FormData();
+        formData.append('Id',updateCate.Id)
+        formData.append('Name',updateCate.Name);
+        formData.append('Description',updateCate.Description)
+        formData.append('Status',updateCate.Status)
+        formData.append("Image",updateCate.Image)
+        const res= await axios.put(`${BASE_URL}/categories/${cateId}`,formData,{
+            headers:{
+                "Content-Type":"multipart/form-data",
+                Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+            },
+        });
+        if(res.status===204) return res.status;
+        else null;
+    } catch (error) {
+        console.log("Update category exception", error);
+    }
+}
 
 export const DeleteCategory =async (id)=>{
     try {

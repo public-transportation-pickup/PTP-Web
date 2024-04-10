@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {BASE_URL} from '../lib/contants/index'
-import { ACCESS_TOKEN, CURRENT_USER } from './auth-api';
+import { ACCESS_TOKEN} from './auth-api';
 
 export const getAllProvince= async ()=>{
     let res;
@@ -44,7 +44,8 @@ export const forwardGeocoding=async(address)=>{
         const data=await  response.json();
         console.log("Forward geocoding return",data);
         console.log("Forward geocoding", data.results[0].geometry.location);
-        return data.results[0].geometry.location;
+        if(response.status===200) return data.results[0].geometry.location;
+        else return null;
     } catch (error) {
         console.error("Forward geocoding exception", error);
     }
@@ -106,9 +107,10 @@ export const createStore = async (storeModel,file)=>{
     }
 }
 
-export const updateStore = async (storeModel,file)=>{
+export const updateStore = async (storeModel)=>{
     try {
         let formData= new FormData();
+        formData.append('Id',storeModel.Id)
         formData.append('Name',storeModel.Name);
         formData.append('Description',storeModel.Description);
         formData.append('PhoneNumber',storeModel.PhoneNumber);
@@ -120,31 +122,31 @@ export const updateStore = async (storeModel,file)=>{
         formData.append('Ward',storeModel.Ward);
         formData.append('AddressNo',storeModel.AddressNo);
         formData.append('Street',storeModel.Street);
-        formData.append('File',file);
+        formData.append('File',storeModel.file);
         formData.append('ActivationDate',storeModel.ActivationDate);
         formData.append('StationIds',storeModel.StationId);
-        const res= await fetch(`/api/store/${storeModel.Id}`,{
+        const res= await axios.put(`${BASE_URL}/stores`,formData,{
             headers:{
-                'method':'PUT'
+                Authorization:`Bearer ${ACCESS_TOKEN}`,
             },
-            body:formData
-        });
-        const data= await res.json();
-        return data;
+        })
+        console.log("Update store ", res);
+        if(res.status===204)return res.status;
+        else return null;
     } catch (error) {
-        console.log("Update store api wrong", error);
+        console.log("Update store exception", error);
     }
 }
 
 export const deleteStore=async (storeId)=>{
     try {
-        const res=await fetch(`/api/store/${storeId}`,{
+        const res= await axios.delete(`${BASE_URL}/stores/${storeId}`,{
             headers:{
-                'method':'DELETE'
+                Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
             }
         });
-        const data=res.json();
-        return data;
+    if(res.status===204) return res.data;
+    else return null;
     } catch (error) {
         console.log("Delete store api error",error);
     }
@@ -153,15 +155,6 @@ export const deleteStore=async (storeId)=>{
 export const getProductByStoreId=async (storeId)=>{
     try {
         console.log("Store id", storeId)
-        // const res= await fetch(`${BASE_URL}/stores/${storeId}/products`,{
-        //     headers:{
-        //         "Authorization":`Bearer ${ACCESS_TOKEN}`,
-        //     }
-        // });
-        // const data= await res.json();
-        // console.log("get product by store id data", data);
-        // if(res.status===200) return data;
-        // return null;
         const res= await axios.get(`${BASE_URL}/stores/${storeId}/products?pageNumber=-1&pageSize=100`,{
                 headers:{
                     Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
@@ -186,14 +179,3 @@ export const getMenuByStoreId=async (storeId)=>{
     }
 }
 
-// export const getProductByStoreId=async (storeId)=>{
-//     try {
-//         const res= await fetch(`${BASE_URL}/stores/${storeId}/products`);
-//         console.log("get product by store id res", res);
-//         const data= await res.json();
-//         if(res.status===200) return data;
-//         else return null;
-//     } catch (error) {
-//         console.error("get product by storeid exception ", error)
-//     }
-// }

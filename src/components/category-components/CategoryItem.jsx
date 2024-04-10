@@ -1,19 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
 import imgDefault from '../../assets/store-default-img.png'
-import PropTypes from 'prop-types'
+import {useNavigate} from 'react-router-dom'
 import {DeleteCategory, getCategories, getCategory} from '../../api/category-api.js'
-import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { HiOutlineTrash,HiPencil } from "react-icons/hi";
 import { toast } from "react-toastify";
 import CategoryDetailModal from './CategoryDetailModal.jsx';
-import DetailCategoryPage from '../../pages/category-pages/DetailCategoryPage.jsx';
 import Modal from '../shared/Modal.jsx';
 
 export default function CategoryItem() {
 const [loading,setLoading]=useState(false);
 const [listCategory,setListCategory]=useState([]);
 const [detailModal,setDetailModal]=useState(null);
+const navigate=useNavigate();
 console.log("detailModal", detailModal)
 const [detailCategory, setdetailCategory]=useState(null);
     console.log("List category", listCategory);
@@ -48,16 +47,19 @@ const [detailCategory, setdetailCategory]=useState(null);
         console.error("Delete category on categoryItem.jsx", error);
       }
     }
-    const editCategory =async (id)=>{
-      try {
-        const responseAPI= await DeleteCategory(id);
-        if (responseAPI==204) toast.success("Xóa thành công");
-        else toast.error("Xóa thất bại")
-        console.log("Response API delete category", responseAPI);
-      } catch (error) {
-        console.error("Delete category on categoryItem.jsx", error);
-      }
+    const navigateEditPage=(id)=>{
+      navigate(`update/${id}`)
     }
+    // const editCategory =async (id)=>{
+    //   try {
+    //     const responseAPI= await DeleteCategory(id);
+    //     if (responseAPI==204) toast.success("Xóa thành công");
+    //     else toast.error("Xóa thất bại")
+    //     console.log("Response API delete category", responseAPI);
+    //   } catch (error) {
+    //     console.error("Delete category on categoryItem.jsx", error);
+    //   }
+    // }
 
     useEffect(()=>{
         fetchData();
@@ -78,17 +80,16 @@ const [detailCategory, setdetailCategory]=useState(null);
                 {/* <Link to={`/category/${item.id}`} key={index}> */}
                   <div className='flex flex-row mr-auto items-center gap-2'>
                     <img className='h-10 w-10 rounded-full' src={item.imageURL===null? imgDefault:item.imageURL}/>
-                    <div className='flex flex-col gap-1 hover:cursor-pointer' onClick={()=>handleDetailModal(item.id)}>
-                      <p >{item.name}</p>
-                      <p>{item.Description}</p>
+                    <div className='flex flex-col gap-1 hover:font-bold cursor-pointer' onClick={()=>handleDetailModal(item.id)}>
+                      <p className=''>{item.name}</p>
+                      {/* <p>{item.Description}</p> */}
                     </div>
                   </div>
                 {/* </Link> */}
              
               <div className='ml-auto mr-2 flex flex-row items-center gap-3'>
-                <Modal buttonValue={<HiPencil className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteCategory(item.id)}/>
-                
-                <HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30} onClick={()=>deleteCategory(item.id)}/>
+                <HiPencil className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30} onClick={()=>navigateEditPage(item.id)}/>
+                <Modal buttonValue={<HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteCategory(item.id)}/>
               </div>
               </div>
            </div>
@@ -112,8 +113,3 @@ const [detailCategory, setdetailCategory]=useState(null);
     </div>
   )
 }
-
-CategoryItem.propTypes={
-  listCategory:PropTypes.array.isRequired
-}
-

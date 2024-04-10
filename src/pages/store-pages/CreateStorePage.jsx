@@ -19,6 +19,8 @@ export default function CreateStorePage() {
     const [districtId,setDistrictId]=useState('');
     // console.log("ProvinceID", provinceId);
     // console.log("DistrictId",districtId);
+    const [error, setError]=useState(false);
+    const [loading,setLoading]=useState(false);
 
     const [jsonForm,setJsonForm]=useState({
         Name:"",
@@ -39,15 +41,17 @@ export default function CreateStorePage() {
     const [file,setFile]=useState([]);
     //console.log("File ava", file);
 
-    const handleStationChange=async (value)=>{
-        await setJsonForm({...jsonForm,StationIds:value.id});
-        
-    }
-    // const handleCityChange=async (value)=>{
+        // const handleCityChange=async (value)=>{
     //     //await setJsonForm({...jsonForm,Zone:value.province_name});
     //     await setProvinceId(value.province_id)
         
     // }
+
+    const handleStationChange=async (value)=>{
+        await setJsonForm({...jsonForm,StationIds:value.id});
+        
+    }
+
     const handleZoneChange=async (value)=>{
         await setJsonForm({...jsonForm,Zone:value.district_name});
         await setDistrictId(value.district_id)
@@ -58,8 +62,7 @@ export default function CreateStorePage() {
         
     }
 
-    const [error, setError]=useState(false);
-    const [loading,setLoading]=useState(false);
+    
     
         
     const handleChange=(e)=>{
@@ -77,14 +80,19 @@ export default function CreateStorePage() {
             if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null){
                 let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
                 const geocoording= await forwardGeocoding(addressStore)
-                await setJsonForm({...jsonForm,Latitude:geocoording.lat})
-                await setJsonForm({...jsonForm,Longitude:geocoording.lng});
-            }
-            
-            const responseAPI= await createStore(jsonForm,file);
+                if(geocoording!==null){
+                    setJsonForm({...jsonForm,Latitude:geocoording.lat})
+                    setJsonForm({...jsonForm,Longitude:geocoording.lng});
+                    const responseAPI= await createStore(jsonForm,file);
             console.log("call api create store", responseAPI);
             if(responseAPI===null) toast("Tạo thất bại")
             else toast("Tạo thành công")
+                }
+                else toast("Kiểm tra lại địa chỉ")
+                
+            }
+            
+            
             setLoading(false);
         }catch(error){
             console.log("Catch:",error);

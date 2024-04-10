@@ -43,12 +43,12 @@ export default function StationByZone({handleCloseButtonFunc,addStationFunc,list
                 </div>
                 <div className="h-96 overflow-auto mt-1 bg-sky-100 rounded-lg p-2">
                     <div className="">
-                    <ComboboxComponent listItems={listStationbyZone} params="name" onValueChange={getStationtoAdd}/>
+                    <ComboboxComponent listItems={listStationbyZone} params="name" onValueChange={()=>addStationFunc}/>
                     </div>
                     {listStationbyZone && listStationbyZone.length >0 && (listStationbyZone.map((item,index)=>(
                         <div key={index} className="flex justify-between border-b-2 p-2 text-sm">
                         <div className="ml-4">{index+1}- {item.name}</div>
-                        <HiOutlinePlus className="w-5 h-5 rounded-full bg-red-200 hover:opacity-95" onClick={async ()=>  addStationFunc(item)}/>
+                        <HiOutlinePlus className="w-5 h-5 rounded-full bg-red-200 hover:opacity-95" onClick={()=>addStationFunc(item)}/>
                     </div>
                     )))}
                 </div>

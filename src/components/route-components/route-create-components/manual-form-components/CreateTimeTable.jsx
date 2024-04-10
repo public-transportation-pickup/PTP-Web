@@ -1,7 +1,45 @@
 import PropTypes from 'prop-types'
-
-export default function CreateTimeTable({routeId, routeVarId}) {
+import { useState } from 'react';
+import { createTimeTableManually } from '../../../../api/timetable-api';
+import {toast} from 'react-toastify'
+export default function CreateTimeTable({routeId, routeVarId,getTimeTableIdFunc}) {
     const dayOfWeek=["T2","T3","T4","T5","T6","T7","CN"]
+    const [dateApply,setDateApply]=useState([]);
+    console.log("Date apply",dateApply);
+    const handleChange=async (e)=>{
+        const { value, checked } = e.target;
+        console.log(`${value} is ${checked}`);
+        if (checked) {
+            setDateApply([...dateApply,value])
+        }
+ 
+        // Case 2  : The user unchecks the box
+        else {
+            setDateApply(
+                dateApply.filter(
+                    (e) => e !== value
+                ),
+                
+            );
+        }
+    };
+
+    const handleSubmit= async ()=>{
+        let dateApplyStr= dateApply.join(",");
+        const timeTableModel={
+            applyDates:dateApplyStr,
+            routeId:routeId,
+            routeVarId:routeVarId
+        }
+        try {
+            const responseAPI= await createTimeTableManually(timeTableModel);
+            if(responseAPI!==null) toast("Tạo thời khóa biểu thành công")
+            else toast("Tạo thời khóa biểu thất bại");
+        } catch (error) {
+            console.error("handle submit create time table page", error)
+        }
+    }
+    
   return (
     <div>
         {/* <div className="relative z-0 w-full mb-5 group">
@@ -20,7 +58,7 @@ export default function CreateTimeTable({routeId, routeVarId}) {
                 {dayOfWeek && dayOfWeek.length >0 && dayOfWeek.map((item,index)=>(
                     
                         <div key={index} className="flex gap-1 mr-4 items-center">
-                            <input key={index} type="checkbox" value={item} className="w-4 h-4"/>
+                            <input onChange={handleChange} key={index} type="checkbox" value={item} className="w-4 h-4"/>
                             <label htmlFor="dayOfWeek" className="">{item}</label>
                         </div>
                     
@@ -31,7 +69,7 @@ export default function CreateTimeTable({routeId, routeVarId}) {
             </div>
         </div>
         <div className="mt-4">
-        <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+        <button onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
 
         </div>
     </div>

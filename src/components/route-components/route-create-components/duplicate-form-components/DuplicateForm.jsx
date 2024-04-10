@@ -33,7 +33,7 @@ export default function DuplicateForm() {
             //await setListRouteVarStation(responseAPI)   
             responseAPI.forEach(async (element)=> {
                 //console.log("Element", element);
-                await listRouteVarStation.push({id:element.index,stationId:element.id,index:element.index,stationName:element.stationName});
+                listRouteVarStation.push({id:element.index,stationId:element.id,index:element.index,stationName:element.stationName});
             });  
             //await console.log("detail route var", listRouteVarStation);
         }

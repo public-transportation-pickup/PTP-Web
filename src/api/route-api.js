@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '../lib/contants/index'
+import { ACCESS_TOKEN } from './auth-api';
 
 export const getRoutes = async ()=>{
     try {
@@ -41,26 +42,27 @@ export const createRoute=async (createModel)=>{
 
 export const deleleRoute = async (routeId)=>{
     try {
-        const response= await fetch(`${BASE_URL}/routes/${routeId}`,{
+        const res= await axios.delete(`${BASE_URL}/routes/${routeId}`,{
             headers:{
-                'method':'DELETE'
+                Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
             }
         });
-        const data= await response.json();
-        console.log("Delete route data",data);
-        return data;
+    if(res.status===204) return res.status;
+    else return null;
     } catch (error) {
-        console.log("Get routes exception", error);
+        console.log("Delete route exception", error);
     }
 }
 export const updateRoute = async (routeModel)=>{
     try {
-        const response= await fetch(`${BASE_URL}/routes/${routeModel.Id}`);
-        const data= await response.json();
-        console.log("Get all route data",data);
-        return data;
+        const res= await axios.put(`${BASE_URL}/routes/${routeModel.id}`,routeModel,{
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        if(res.status===204) return res.status;
     } catch (error) {
-        console.log("Get routes exception", error);
+        console.error("Create Route exception", error);
     }
 }
 

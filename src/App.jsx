@@ -22,10 +22,11 @@ import UserMainPage from './pages/user-pages/UserMainPage.jsx';
 import CreateRoutePage from './pages/route-pages/CreateRoutePage.jsx';
 // import DuplicateForm from './components/route-components/route-create-components/DuplicateForm.jsx';
 import ProductMainPage from './pages/store-pages/product-pages/ProductMainPage.jsx';
-import DragComponent from './components/route-components/test-drag/DragComponent.jsx';
+//import DragComponent from './components/route-components/test-drag/DragComponent.jsx';
 import CreateRouteVarForm from './components/route-components/route-create-components/manual-form-components/CreateRouteVarForm.jsx';
 import DragDropImage from './components/category-components/DragDropImage.jsx';
 import DetailCategoryPage from './pages/category-pages/DetailCategoryPage.jsx';
+import UpdateCategoryPage from './pages/category-pages/UpdateCategoryPage.jsx';
 
 export default function App() {
   return (
@@ -41,7 +42,7 @@ export default function App() {
             <Route path='store'>
               <Route index element={<StorePageMain/>}/>
               <Route path='create' element={<CreateStorePage/>}/>
-              <Route path='update' element={<UpdateStorePage/>}/>
+              <Route path='update/:storeId' element={<UpdateStorePage/>}/>
 
               <Route path=':storeId'>
                 {/* url for menu of store */}
@@ -74,6 +75,7 @@ export default function App() {
             <Route path='category'>
               <Route index element={<CategoryMainPage/>}/>
               <Route path=':categoryId' element={<DetailCategoryPage/>}/>
+              <Route path='update/:categoryId' element={<UpdateCategoryPage/>}/>
               {/* <Route path='create' element={<CreateCategoryPage/>}/> */}
               
             </Route>
@@ -92,7 +94,7 @@ export default function App() {
         {/* <Route path='/createmenu'element={<CreateMenuPage/>}/> */}
         {/* <Route path='/productitemmodal' element={<ProductItemModal/>}/>
         <Route path='/duplicateroute' element={<DuplicateForm/>}/> */}
-        <Route path='/drag' element={<DragComponent/>}/>
+        {/* <Route path='/drag' element={<DragComponent/>}/> */}
         <Route path='/dragimage' element={<DragDropImage/>}/>
         <Route path='/manual' element={<CreateRouteVarForm/>}/>
       </Routes>

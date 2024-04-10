@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from "../lib/contants";
-import { CURRENT_USER } from './auth-api';
+import { ACCESS_TOKEN, CURRENT_USER } from './auth-api';
 import { updateDistanceRoute } from './route-api';
 
 export const getRouteVars=async (routeId)=>{
@@ -23,8 +23,6 @@ export const getRouteVarsById=async (routeId)=>{
         console.log("Get RouteVars by id exception",error);
     }
 }
-
-
 
 export const createRouteVarManually= async (RouteVarCreateModel)=>{
     try {
@@ -53,5 +51,19 @@ export const createRouteVarDuplicate=async(rouuteId, duplicateRouteVarModel)=>{
         else return null
     } catch (error) {
         console.error("Create route var duplicate exception: ", error);
+    }
+}
+
+export const deleleRouteVar = async (routeVarId)=>{
+    try {
+        const res= await axios.delete(`${BASE_URL}/routes/${routeVarId}`,{
+            headers:{
+                Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+            }
+        });
+    if(res.status===204) return res.status;
+    else return null;
+    } catch (error) {
+        console.log("Delete route var exception", error);
     }
 }

@@ -19,9 +19,9 @@ export default function SearchBar() {
 }
 
 SearchBar.propTypes={
-    listItem:PropTypes.array.isRequired,
-    param:PropTypes.string.isRequired,
-    onValueChange:PropTypes.func
+    // listItem:PropTypes.array.isRequired,
+    // param:PropTypes.string.isRequired,
+    // onValueChange:PropTypes.func
 
 }
 

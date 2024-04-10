@@ -4,8 +4,8 @@ import CreateRouteForm from "../../components/route-components/route-create-comp
 import CreateRouteVarForm from "../../components/route-components/route-create-components/manual-form-components/CreateRouteVarForm";
 import DuplicateForm from "../../components/route-components/route-create-components/duplicate-form-components/DuplicateForm";
 import { DUPLICATE, MANUAL } from "../../lib/enums/RouteEnums";
-import CreateTimeTable from "../../components/route-components/route-create-components/CreateTimeTable";
-import CreateTrip from "../../components/route-components/route-create-components/CreateTrip";
+import CreateTimeTable from "../../components/route-components/route-create-components/manual-form-components/CreateTimeTable";
+import CreateTrip from "../../components/route-components/route-create-components/manual-form-components/CreateTrip";
 import Modal from "../../components/shared/Modal";
 import {ToastContainer} from 'react-toastify'
 
@@ -33,6 +33,14 @@ export default function CreateRoutePage() {
     
   }
 
+  const handleSubmit=async ()=>{
+    try {
+      
+    } catch (error) {
+      console.error("handle submit create route page", error);
+    }
+  }
+
   return (
     <div>
       <ToastContainer/>
@@ -57,9 +65,13 @@ export default function CreateRoutePage() {
         </div>
         <div className="p-4 flex flex-col gap-5">
           <Accordion title="Bước 1: Tạo thông tin tuyến" component={<CreateRouteForm getRouteFunc={routeIdReturn}/>}/> 
-          <Accordion title="Bước 2: Tạo thông tin các lượt" component={<CreateRouteVarForm/>}/>
-          <Accordion title="Bước 3: Tạo thời khóa biểu" component={<CreateTimeTable/>}/>
+          <Accordion title="Bước 2: Tạo thông tin các lượt" component={<CreateRouteVarForm getRouteVarId={setRouteVarId}/>}/>
+          <Accordion title="Bước 3: Tạo thời khóa biểu" component={<CreateTimeTable routeId={routeId} routeVarId={routeVarId}/>}/>
           <Accordion title="Bước 4: Tạo thông tin chuyến" component={<CreateTrip/>}/>
+        </div>
+        <div>
+        <button onClick={()=>handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+          
         </div>
       </div>
       )}
