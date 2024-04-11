@@ -60,8 +60,8 @@ export default function CreateTripForm() {
       {timetableInfo && timetableInfo.length >0 && timetableInfo.map((item,index)=>(
                     
                     <div key={index} className="flex gap-1 mr-4 items-center">
-                        <input onChange={handleChange} key={index} type="radio" value={item.applyDates} className="w-4 h-4"/>
-                        <label htmlFor="dayOfWeek" className="">{item}</label>
+                        <input onChange={handleChange} id="timeTableId" key={index} type="radio" value={item.applyDates} className="w-4 h-4"/>
+                        <label htmlFor="timeTableId" className="">{item}</label>
                     </div>
                 
                 

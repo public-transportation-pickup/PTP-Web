@@ -1,5 +1,5 @@
 //import React from 'react'
-import {Outlet, useNavigate} from 'react-router-dom'
+import {Outlet} from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header'
 import { useSelector } from 'react-redux';
@@ -8,7 +8,7 @@ import { authenticationV2 } from '../../api/auth-api';
 
 export default function Layout() {
 	const {currentUser}=useSelector(state=>state.user);
-  const navigate=useNavigate()
+  //const navigate=useNavigate()
   //console.log("Current user firebase", currentUser)
   useEffect(()=>{
     const storeUserLocal=async()=>{
@@ -17,10 +17,10 @@ export default function Layout() {
         const dataFetch=await authenticationV2(currentUser.stsTokenManager.accessToken);
         
         // console.log("admin storage", localStorage.getItem("admin"));
-        // console.log("DataFetch",JSON.stringify(dataFetch));
+         console.log("DataFetch",JSON.stringify(dataFetch));
         // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
-        if(dataFetch!==null) localStorage.setItem("admin",JSON.stringify(dataFetch));
-        else navigate('/sign-in');
+        //if(dataFetch!==null) localStorage.setItem("admin",JSON.stringify(dataFetch));
+        //else navigate('/sign-in');
       } catch (error) {
         console.log("Exception useEffect Dashboard",error)
       }

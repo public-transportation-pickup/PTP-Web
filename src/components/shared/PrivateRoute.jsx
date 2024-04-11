@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux"
 import {Outlet,Navigate} from 'react-router-dom'
+import { ACCESS_TOKEN } from "../../api/auth-api";
 
 
 export default function PrivateRoute() {
@@ -15,6 +16,6 @@ export default function PrivateRoute() {
   // },[adminStorage])
   
   return (
-    currentUser ?<Outlet/>:<Navigate to={'/sign-in'}/>
+    currentUser||ACCESS_TOKEN ?<Outlet/>:<Navigate to={'/sign-in'}/>
   )
 }

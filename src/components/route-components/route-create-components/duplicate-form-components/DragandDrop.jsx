@@ -99,7 +99,7 @@ const handleConfirmButton=async ()=>{
         if(duplicateRouteVarModel.length === listRouteStationUpdate.length){
             const responseAPI= await createRouteVarDuplicate(routeId,routevarId,duplicateRouteVarModel);
             console.log("Handle confirm on drag.jsx reponse",responseAPI);
-            if(!responseAPI===null || !responseAPI ===undefined) toast("Tạo thành công");
+            if(responseAPI!==null || responseAPI !==undefined) toast("Tạo thành công");
             else toast("Tạo thất bại");
         } else toast("Chưa thêm xong");
         setLoading(false);
@@ -167,5 +167,6 @@ return (
 
 DragandDrop.propTypes={
   listRouteVarStation:PropTypes.array,
-  routevarId:PropTypes.string
+  routevarId:PropTypes.string,
+  routeId:PropTypes.string
 }
