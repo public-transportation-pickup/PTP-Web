@@ -1,9 +1,10 @@
-import { useSelector } from "react-redux"
+//import { useSelector } from "react-redux"
 import {Outlet,Navigate} from 'react-router-dom'
+import { ACCESS_TOKEN } from "../../api/auth-api";
 
 
 export default function PrivateRoute() {
-  const {currentUser}= useSelector(state=>state.user);
+  //const {currentUser}= useSelector(state=>state.user);
   // const adminStorage= localStorage.getItem("admin")? JSON.parse(localStorage.getItem("admin")):null;
   // useEffect(()=>{
   //   const refresh=async()=>{
@@ -15,6 +16,6 @@ export default function PrivateRoute() {
   // },[adminStorage])
   
   return (
-    currentUser ?<Outlet/>:<Navigate to={'/sign-in'}/>
+    ACCESS_TOKEN ?<Outlet/>:<Navigate to={'/sign-in'}/>
   )
 }

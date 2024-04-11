@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {BASE_URL} from '../lib/contants/index.js'
-import  {toast} from 'react-toastify'
 
 
 export const refreshToken=async (oldAccessToken)=>{
@@ -23,7 +22,7 @@ export const refreshToken=async (oldAccessToken)=>{
         } else window.location.href(`/sign-in`)
         return res.status;
     } catch (error) {
-        
+        localStorage.clear();
         console.error("Exception refreshToken",error)
     }
 }
@@ -47,11 +46,11 @@ export const authenticationV2=async (tokenFirebase)=>{
         return res.status;
     
     } catch (error) {
-        localStorage.clear();
+        
         //toast.warning("Phiên đăng nhập hết hạn");
-        //    let oldToken=  await localStorage.getItem("accessToken");
+            let oldToken=  await localStorage.getItem("accessToken");
         // // console.log("old Token param", JSON.parse(oldToken))
-        //    await refreshToken(oldToken);
+            await refreshToken(oldToken);
         //console.log("Exception authenV2",error)
 
     }
