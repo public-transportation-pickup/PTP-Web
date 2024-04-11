@@ -5,6 +5,8 @@ import {useNavigate} from 'react-router-dom'
 import { deleteStore, getStores } from "../../api/store-api";
 import classNames from 'classnames'
 import MenuDropDown from "../../components/shared/MenuDropDown";
+import { ToastContainer,toast } from "react-toastify";
+import { HiOutlineTrash,HiPencil } from "react-icons/hi";
 
 export default function StorePageMain() {
     const navigate=useNavigate();
@@ -20,6 +22,8 @@ export default function StorePageMain() {
         try {
             const responseAPI= await deleteStore(id);
             console.log("Reponse api delete store",responseAPI);
+            if(responseAPI===204) toast("Xóa thành công")
+            else toast("Xóa thất bại")
         } catch (error) {
             console.error("Delete route store page",error)
         }
@@ -48,6 +52,7 @@ export default function StorePageMain() {
 
 return (
     <>
+    <ToastContainer/>
         <h1 className="text-center mx-auto text-4xl">Danh sách cửa hàng</h1>
         <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Tạo mới cửa hàng</button>
@@ -60,6 +65,7 @@ return (
                     <th className="px-4">#</th>
                     <th>Tên cửa hàng</th>
                     <th>Số điện thoại</th>
+                    <th>Email</th>
                     <th>Địa chỉ</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -72,12 +78,17 @@ return (
                             <td className="px-4">{index+1}</td>
                             <td>{item.name}</td>
                             <td>{item.phoneNumber}</td>
+                            <td>{item.email}</td>
                             <td>{item.addressNo}, Đường {item.street}, {item.ward}, {item.zone}, TPHCM</td>
                             
                             <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status}</span></td>
                             {/* </div> */}
                             
                             <td><MenuDropDown EditFunc={()=>EditFunc(item.id)} DeleteFunc={()=>DeleteFunc(item.id)} ViewDetailFunc={()=>ViewDetailFunc(item.id)}/></td>
+                            {/* <td>
+                                <HiPencil/>
+                                <HiOutlineTrash/>
+                            </td> */}
                         </tr>
                     ))):(<></>)}
                    

@@ -26,12 +26,12 @@ export const getRouteVarsById=async (routeId)=>{
 
 export const createRouteVarManually= async (RouteVarCreateModel)=>{
     try {
-        const res= await axios.post(`${BASE_URL}/routevars`,{
+        const res= await axios.post(`${BASE_URL}/routevars`,
             // headers:{
             //     Authorization:`Bearer ${CURRENT_USER.token}`,
             // },
-            body: RouteVarCreateModel
-        })
+            RouteVarCreateModel
+        )
         console.log("Create route var manuall res: ",res)
         return await res.data;
     } catch (error) {
@@ -39,15 +39,19 @@ export const createRouteVarManually= async (RouteVarCreateModel)=>{
     }
 }
 
-export const createRouteVarDuplicate=async(rouuteId, duplicateRouteVarModel)=>{
+export const createRouteVarDuplicate=async(routeId,routevarId, duplicateRouteVarModel)=>{
     try {
-        const res=await axios.post(`${BASE_URL}/routevars/${rouuteId}/duplicate`,{
-            body:duplicateRouteVarModel
+        // console.log("createRouteVarDuplicate-duplicateRouteVarModel",rouuteId);
+        // console.log("createRouteVarDuplicate-duplicateRouteVarModel",duplicateRouteVarModel);
+        const res=await axios.post(`${BASE_URL}/routevars/${routevarId}/duplicate`,duplicateRouteVarModel,{
+            headers:{
+                "Content-Type":"application/json"
+            }
         })
         console.log("create route var duplicate res: ", res);
-        const resUpdateRouteDistance= await updateDistanceRoute(rouuteId);
+        const resUpdateRouteDistance= await updateDistanceRoute(routeId);
         console.log("resUpdateRouteDistance status",resUpdateRouteDistance);
-        if(resUpdateRouteDistance===200) return await res.data;
+        if(resUpdateRouteDistance===204 && res.status===200) return await res.data;
         else return null
     } catch (error) {
         console.error("Create route var duplicate exception: ", error);

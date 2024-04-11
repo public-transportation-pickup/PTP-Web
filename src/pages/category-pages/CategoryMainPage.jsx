@@ -1,6 +1,6 @@
 import { HiOutlinePlusSm,HiOutlineXCircle } from "react-icons/hi";
 import CategoryItem from "../../components/category-components/CategoryItem";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import CreateCategoryPage from "./CreateCategoryPage";
 import UpdateCategoryPage from "./UpdateCategoryPage";
@@ -21,7 +21,9 @@ export default function CategoryMainPage() {
         
     }
     
+    useEffect(()=>{
 
+    },[handleCloseModal()])
     
     
   return (

@@ -29,7 +29,7 @@ export const getRouteById=async (routeId)=>{
 
 export const createRoute=async (createModel)=>{
     try {
-        const res= await axios.post(`${BASE_URL}/routes`,createModel,{
+        const res= await axios.post(`${BASE_URL}/routes`,{model:createModel},{
             headers:{
                 "Content-Type":"application/json"
             }

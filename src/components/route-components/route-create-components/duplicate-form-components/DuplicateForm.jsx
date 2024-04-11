@@ -85,7 +85,7 @@ export default function DuplicateForm() {
         {duplicate===true &&  (
             <div>
                 <h2>{routeVarInfo.RouteVarName }</h2>
-                <DragandDrop listRouteVarStation={listRouteVarStation}/>
+                <DragandDrop listRouteVarStation={listRouteVarStation} routevarId={routeVarInfo.id} routeId={routeId}/>
             </div>
         )}
             

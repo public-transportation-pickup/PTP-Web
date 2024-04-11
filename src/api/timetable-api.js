@@ -4,8 +4,8 @@ import { ACCESS_TOKEN } from './auth-api.js';
 //viết code get time table bằng route var và routeid zô đây
 export const getTimeTableByRouteIdandRouteVarId=async(routeId, routeVarId)=>{
     try {
-        const res= await fetch (`${BASE_URL}/routes/${routeId}/route-vars/${routeVarId}`);
-        const data = res.json();
+        const res= await fetch (`${BASE_URL}/routes/${routeId}/route-vars/${routeVarId}/timetables`);
+        const data =await res.json();
         console.log("GetTimeTableByRouteIdandRouteVarId",data);
         return data;
     } catch (error) {
@@ -18,7 +18,7 @@ export const createTimeTableManually=async (timeTableModel)=>{
         const res= await axios.post(`${BASE_URL}/timetables`,timeTableModel,{
             headers:{
                 "Content-Type":"application/json"
-            }
+            },
         })
         console.log("Create timetable res",res);
         if (res.status===201) return res.data;

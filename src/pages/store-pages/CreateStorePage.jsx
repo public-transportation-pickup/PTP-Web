@@ -21,7 +21,8 @@ export default function CreateStorePage() {
     // console.log("DistrictId",districtId);
     const [error, setError]=useState(false);
     const [loading,setLoading]=useState(false);
-
+    const [addressStation,setAddressStation]=useState('');
+    console.log("addressStation",addressStation)
     const [jsonForm,setJsonForm]=useState({
         Name:"",
         Description:"",
@@ -37,7 +38,7 @@ export default function CreateStorePage() {
         ActivationDate: new Date().toISOString(),
         StationIds:[]
     })
-    //console.log("Json form: ",jsonForm);
+    console.log("Json form: ",jsonForm);
     const [file,setFile]=useState([]);
     //console.log("File ava", file);
 
@@ -49,6 +50,7 @@ export default function CreateStorePage() {
 
     const handleStationChange=async (value)=>{
         await setJsonForm({...jsonForm,StationIds:value.id});
+        setAddressStation(JSON.stringify(value.address))
         
     }
 
@@ -80,15 +82,23 @@ export default function CreateStorePage() {
             if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null){
                 let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
                 const geocoording= await forwardGeocoding(addressStore)
-                if(geocoording!==null){
-                    setJsonForm({...jsonForm,Latitude:geocoording.lat})
-                    setJsonForm({...jsonForm,Longitude:geocoording.lng});
+                console.log("Geocooording",geocoording)
+                // await setJsonForm({...jsonForm,Latitude:geocoording.lat});
+                // await setJsonForm({...jsonForm,Longitude:geocoording.lng});
+                await setJsonForm(prevJsonForm => ({
+                    ...prevJsonForm,
+                    Latitude: geocoording.lat,
+                    Longitude: geocoording.lng
+                  }));
+                console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
+                if(jsonForm.Latitude !==0 && jsonForm.Longitude!==0){
                     const responseAPI= await createStore(jsonForm,file);
-            console.log("call api create store", responseAPI);
-            if(responseAPI===null) toast("Tạo thất bại")
-            else toast("Tạo thành công")
-                }
-                else toast("Kiểm tra lại địa chỉ")
+                    console.log("call api create store", responseAPI);
+                    if(responseAPI===null) toast("Tạo thất bại")
+                    else toast("Tạo thành công")
+                }else toast("Đang cập nhật địa chỉ. Xin chờ chút ạ!")
+                
+                
                 
             }
             
@@ -140,7 +150,7 @@ return (
     <>
     <ToastContainer/>
         <main className='p-3 max-w-6xl mx-auto'>
-            <h1 className='text-3xl font-semibold text-center my-7'>Create Store</h1>
+            <h1 className='text-3xl font-semibold text-center my-7'>Tạo Cửa Hàng Mới</h1>
             <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
                 <div className="flex flex-col gap-8 items-start pb-4">
                     <div className="flex flex-row gap-3 items-center">
@@ -155,10 +165,14 @@ return (
                         <ComboboxComponent listItems={listWard} params="ward_name" onValueChange={handleWardChange}/>
                         <p>Chọn Trạm</p>
                         <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                        
+                      
+                        
                         {/* </div> */}
                         
                        
                     </div>
+                    <p>{addressStation}</p>
                     <div className="flex flex-row gap-1 items-center w-full">
                         <label className="w-1/3" htmlFor="Address">Địa chỉ (Số nhà, tổ, đường, khu phố):</label>
                         <input
@@ -219,7 +233,7 @@ return (
                         ):(<>
                             <div className="rounded-full bg-purple-300 w-28 h-28 mx-auto"></div>
                         </>)}
-                        <button onClick={handleSubmit} disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading?'Creating ....':'Create Store'}</button>
+                        <button onClick={handleSubmit} disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading===true?'Tạo Cửa hàng ....':'Tạo Cửa hàng'}</button>
                         {error&& <p className="text-red-700 text-sm">{error}</p>}
                     </div>
                 </form>

@@ -69,7 +69,7 @@ export default function ProductMainPage() {
                 </tbody>
             </table>
             <div>
-                <PaginationButton setCurrentPage={5} currentPage={5} totalPages={5}/>
+                {/* <PaginationButton setCurrentPage={5} currentPage={5} totalPages={5}/> */}
             </div>
         </div>
     </>

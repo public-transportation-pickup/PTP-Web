@@ -25,10 +25,11 @@ const ViewDetailFunc=(userId)=>{
     fetchData()
   },[])
   return (
-    <div>
-      <div>Search</div>
-      <div>
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <div className="">
+      {/* <div>Search</div> */}
+
+        <h1 className="py-8 text-xl font-bold text-center">Danh Sách Người Dùng Trong Hệ Thống</h1>
+      <table className=" w-full h-96 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-auto">
                 <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
                     <tr>
                     <th className="px-4">#</th>
@@ -39,7 +40,7 @@ const ViewDetailFunc=(userId)=>{
                     <th>Thao tác</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="h-96 overflow-auto">
                     {listUser && listUser.length >0 ? (listUser.map((item,index)=>(
                         <tr key={index} className=" h-8 border-b dark:bg-gray-800 dark:border-gray-700 text-xs">
                              <td className="px-4">{index+1}</td>
@@ -54,8 +55,7 @@ const ViewDetailFunc=(userId)=>{
                    
                 </tbody>
             </table>
-      </div>
-      <div>Pagination</div>
+      {/* <div>Pagination</div> */}
     </div>
   )
 }
