@@ -23,7 +23,7 @@ export default function Dashboard() {
         console.log("DataFetch",JSON.stringify(dataFetch));
         // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
         //if(dataFetch===null) navigate('/sign-in');
-        if(dataFetch===500) await navigate('/sign-in');
+        if(dataFetch===500 || dataFetch===undefined)  navigate('/sign-in');
         // else navigate('/sign-in');
       } catch (error) {
         console.log("Exception useEffect Dashboard",error)

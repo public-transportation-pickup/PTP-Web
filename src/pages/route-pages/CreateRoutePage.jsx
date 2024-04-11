@@ -1,11 +1,7 @@
 import { useState } from "react";
-import Accordion from "../../components/route-components/route-create-components/Accordion";
 import CreateRouteForm from "../../components/route-components/route-create-components/manual-form-components/CreateRouteForm";
-import CreateRouteVarForm from "../../components/route-components/route-create-components/manual-form-components/CreateRouteVarForm";
 import DuplicateForm from "../../components/route-components/route-create-components/duplicate-form-components/DuplicateForm";
 import { DUPLICATE, MANUAL } from "../../lib/enums/RouteEnums";
-import CreateTimeTable from "../../components/route-components/route-create-components/manual-form-components/CreateTimeTable";
-import CreateTrip from "../../components/route-components/route-create-components/manual-form-components/CreateTrip";
 import Modal from "../../components/shared/Modal";
 import {ToastContainer} from 'react-toastify'
 
@@ -14,17 +10,15 @@ import {ToastContainer} from 'react-toastify'
 export default function CreateRoutePage() {
   const [flag, setFlag]= useState(null);
   const [enumRoute, setEnumRoute]=useState('');
-  const [routeId,setRouteId]=useState(null);
-  const [routeVarId, setRouteVarId]=useState(null);
+  //const [routeId,setRouteId]=useState(null);
+  // const [routeVarId, setRouteVarId]=useState(null);
+  // const [timetableId,setTimetableId]=useState('');
   console.log("Enum route",enumRoute);
-  console.log("Route Id return", routeId);
+  // console.log("Route Id return", routeId);
   const handleDuplicateChoice=async ()=>{
     await setEnumRoute(DUPLICATE);
     setFlag(true);
     
-  }
-  const routeIdReturn=async (value)=>{
-    await setRouteId(value.id);
   }
 
   const handleManuallyChoice= async()=>{
@@ -33,13 +27,14 @@ export default function CreateRoutePage() {
     
   }
 
-  const handleSubmit=async ()=>{
-    try {
+  // const handleSubmit=async ()=>{
+  //   try {
       
-    } catch (error) {
-      console.error("handle submit create route page", error);
-    }
-  }
+  //   } catch (error) {
+  //     console.error("handle submit create route page", error);
+  //   }
+  // }
+
 
   return (
     <div>
@@ -61,17 +56,16 @@ export default function CreateRoutePage() {
         <div className="mt-10">
         <div className="py-2 border border-indigo-200 rounded-lg">
           <p className="text-red-400 text-lg">Chú ý: </p>
-          <p>- Bạn cần điền đầy đủ thông tin và xác nhận theo thứ tự các bước</p>
+          <p>- Bạn cần điền đầy đủ thông tin và xác nhận. Tuyến sẽ được tạo theo thứ tự Tuyến-Lượt-Thời khóa biểu-Chuyến</p>
         </div>
         <div className="p-4 flex flex-col gap-5">
-          <Accordion title="Bước 1: Tạo thông tin tuyến" component={<CreateRouteForm getRouteFunc={routeIdReturn}/>}/> 
+          <CreateRouteForm/>
+          {/* <Accordion title="Bước 1: Tạo thông tin tuyến" component={}/> 
           <Accordion title="Bước 2: Tạo thông tin các lượt" component={<CreateRouteVarForm getRouteVarId={setRouteVarId}/>}/>
-          <Accordion title="Bước 3: Tạo thời khóa biểu" component={<CreateTimeTable routeId={routeId} routeVarId={routeVarId}/>}/>
-          <Accordion title="Bước 4: Tạo thông tin chuyến" component={<CreateTrip/>}/>
+          <Accordion title="Bước 3: Tạo thời khóa biểu" component={<CreateTimeTable routeId={routeId} routeVarId={routeVarId} getTimeTableIdFunc={setTimetableId}/>}/>
+          <Accordion title="Bước 4: Tạo thông tin chuyến" component={<CreateTrip TimetableIdStr={timetableId}/>}/> */}
         </div>
-        <div>
-        <button onClick={()=>handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
-          
+        <div>          
         </div>
       </div>
       )}

@@ -4,7 +4,7 @@ import Layout from './components/shared/Layout.jsx'
 import Dashboard from './pages/Dashboard.jsx';
 import PrivateRoute from './components/shared/PrivateRoute.jsx';
 import CreateStorePage from './pages/store-pages/CreateStorePage.jsx';
-import StoreList from './pages/StoreList.jsx';
+//import StoreList from './pages/StoreList.jsx';
 import UpdateStorePage from './pages/store-pages/UpdateStorePage.jsx';
 import Map from './pages/Map.jsx';
 import StorePageMain from './pages/store-pages/StorePageMain.jsx';
@@ -12,8 +12,8 @@ import DetailStorePage from './pages/store-pages/DetailStorePage.jsx';
 import ScheduleMenuPage from './pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
 import MenuMainPage from './pages/store-pages/menu-pages/MenuMainPage.jsx';
 // import RouteItem from './components/route-components/RouteItem.jsx';
-import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
-import MapStationPage from './pages/route-pages/MapStationPage.jsx';
+//import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
+//import MapStationPage from './pages/route-pages/MapStationPage.jsx';
 // import StationsList from './components/route-components/StationsList.jsx';
 import DetailRoutePage from './pages/route-pages/DetailRoutePage.jsx';
 // import ProductItemModal from './components/store-components/menu-components/ProductItemModal.jsx';
@@ -23,10 +23,16 @@ import CreateRoutePage from './pages/route-pages/CreateRoutePage.jsx';
 // import DuplicateForm from './components/route-components/route-create-components/DuplicateForm.jsx';
 import ProductMainPage from './pages/store-pages/product-pages/ProductMainPage.jsx';
 //import DragComponent from './components/route-components/test-drag/DragComponent.jsx';
-import CreateRouteVarForm from './components/route-components/route-create-components/manual-form-components/CreateRouteVarForm.jsx';
-import DragDropImage from './components/category-components/DragDropImage.jsx';
+//import CreateRouteVarForm from './components/route-components/route-create-components/manual-form-components/CreateRouteVarForm.jsx';
+//import DragDropImage from './components/category-components/DragDropImage.jsx';
 import DetailCategoryPage from './pages/category-pages/DetailCategoryPage.jsx';
 import UpdateCategoryPage from './pages/category-pages/UpdateCategoryPage.jsx';
+import CreateRouteVarPage from './pages/route-pages/route-var-pages/CreateRouteVarPage.jsx';
+//import CreateTimeTable from './components/route-components/route-create-components/manual-form-components/CreateTimeTable.jsx';
+import CreateTimetablePage from './pages/route-pages/timetable-pages/CreateTimetablePage.jsx';
+//import CreateTrip from './components/route-components/route-create-components/manual-form-components/CreateTrip.jsx';
+import CreateTripPage from './pages/route-pages/trip-pages/CreateTripPage.jsx';
+import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 
 export default function App() {
   return (
@@ -63,40 +69,36 @@ export default function App() {
             {/* end url web for store */}
 
             
-
+            {/* url route */}
             <Route path='route'>
               <Route index element={<RouteMainPage/>}/>
-              <Route path='routes/:id' element={<DetailRoutePage/>}>
-                <Route path='stations/:routeId' element={<MapStationPage/>}/>
-              </Route>
               <Route path='create' element={<CreateRoutePage/>}/>
+              <Route path=':routeId'>
+                <Route index element={<DetailRoutePage/>}/>
+                <Route path='routevar'>
+                  <Route path='create' element={<CreateRouteVarPage/>}/>
+                  <Route path=':routevarId'>
+                    <Route path='timetable/create' element={<CreateTimetablePage/>}/>
+                    <Route path='timetable/:timetableId/trip/create' element={<CreateTripPage/>}/>
+                  </Route>
+                </Route>
+              </Route>
             </Route>
+            {/* end route */}
+
+              
             {/* url category */}
             <Route path='category'>
               <Route index element={<CategoryMainPage/>}/>
               <Route path=':categoryId' element={<DetailCategoryPage/>}/>
               <Route path='update/:categoryId' element={<UpdateCategoryPage/>}/>
-              {/* <Route path='create' element={<CreateCategoryPage/>}/> */}
-              
             </Route>
+             {/* end url category */}
             {/* url user */}
             <Route path='user' element={<UserMainPage/>}/>
           </Route>
         </Route>
-        
         <Route path='/sign-in' element={<SignIn/>}/>
-        <Route path='/test' element={<StoreList/>}/>
-        {/* <Route path='/routeItem' element={<RouteItem/>}/> */}
-        {/* <Route path='/routes/:id' element={<DetailRoutePage/>}/> */}
-        {/* <Route path='/comboBox' element={<ComboBoxTes/>}/> */}
-        {/* <Route path='/scheduleMenu' element={<ScheduleMenuPage/>}/> */}
-        {/* <Route path='/stationList' element={<StationsList/>}/> */}
-        {/* <Route path='/createmenu'element={<CreateMenuPage/>}/> */}
-        {/* <Route path='/productitemmodal' element={<ProductItemModal/>}/>
-        <Route path='/duplicateroute' element={<DuplicateForm/>}/> */}
-        {/* <Route path='/drag' element={<DragComponent/>}/> */}
-        <Route path='/dragimage' element={<DragDropImage/>}/>
-        <Route path='/manual' element={<CreateRouteVarForm/>}/>
       </Routes>
     </BrowserRouter>
   )

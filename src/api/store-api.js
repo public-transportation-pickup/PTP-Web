@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {BASE_URL} from '../lib/contants/index'
 import { ACCESS_TOKEN} from './auth-api';
+import {toast} from 'react-toastify'
 
 export const getAllProvince= async ()=>{
     let res;
@@ -42,12 +43,14 @@ export const forwardGeocoding=async(address)=>{
         console.log("Địa chỉ",address)
         const response=await fetch(`https://rsapi.goong.io/geocode?address=${address}&api_key=ka4NS75APZqask5yCroepr7BBc5DU1JirJvp9ZFQ`)
         const data=await  response.json();
+        console.log("Forward geocoding return res",response);
         console.log("Forward geocoding return",data);
         console.log("Forward geocoding", data.results[0].geometry.location);
         if(response.status===200) return data.results[0].geometry.location;
         else return null;
     } catch (error) {
         console.error("Forward geocoding exception", error);
+        toast(`${error.response.data.error}`)
     }
 }
 
@@ -67,7 +70,8 @@ export const getStoreById=async(storeId)=>{
         const res= await fetch(`${BASE_URL}/stores/${storeId}`);
         const data = await res.json();
         console.log("data get store by id",data);
-        return data;
+        if(res.status===200) return data;
+        else return null;
     } catch (error) {
         console.log("Get store by id error",error);
     }
@@ -103,6 +107,7 @@ export const createStore = async (storeModel,file)=>{
         
     } catch (error) {
         console.log("Create store api wrong", error);
+        console.log("Error data", error.response.data.error);
         return null;
     }
 }
@@ -125,7 +130,7 @@ export const updateStore = async (storeModel)=>{
         formData.append('File',storeModel.file);
         formData.append('ActivationDate',storeModel.ActivationDate);
         formData.append('StationIds',storeModel.StationId);
-        const res= await axios.put(`${BASE_URL}/stores`,formData,{
+        const res= await axios.put(`${BASE_URL}/stores/${storeModel.Id}`,formData,{
             headers:{
                 Authorization:`Bearer ${ACCESS_TOKEN}`,
             },
@@ -145,7 +150,8 @@ export const deleteStore=async (storeId)=>{
                 Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
             }
         });
-    if(res.status===204) return res.data;
+        console.log("delete store status",res.status)
+    if(res.status===204) return res.status;
     else return null;
     } catch (error) {
         console.log("Delete store api error",error);
