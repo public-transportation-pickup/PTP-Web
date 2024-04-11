@@ -35,9 +35,9 @@ export default function Dashboard() {
   return (
     <div className="flex gap-4 flex-col">
         <DashboardStartsGrid/>
-        <div className="flex flex-row gap-4 w-full">
+        <div className="w-full">
           <TransactionChart/>
-          <BuyerProfileChart/>
+          {/* <BuyerProfileChart/> */}
         </div>
         <div className="flex flex-row gap-4 w-full">
           <RecentOrdrers/>
