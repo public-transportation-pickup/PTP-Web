@@ -49,7 +49,7 @@ export default function CreateTimeTableForm() {
         try {
             const responseAPI= await createTimeTableManually(timeTableModel);
             if(responseAPI!==null){
-                toast("Tạo thời khóa biểu thành công")
+                await toast("Tạo thời khóa biểu thành công")
                 setTimetableId(responseAPI.id);
                 setButtonSubmit(true);
             } 

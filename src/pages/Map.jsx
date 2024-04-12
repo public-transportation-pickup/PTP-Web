@@ -1,64 +1,71 @@
-import {MapContainer, TileLayer,Popup} from 'react-leaflet'
+import {MapContainer, TileLayer,Popup, Polyline} from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 import { Marker } from 'react-leaflet';
 import { Icon, divIcon, point } from 'leaflet';
-import MarkerClusterGroup from "react-leaflet-cluster";
+//import MarkerClusterGroup from "react-leaflet-cluster";
 import busStationIcon from '../assets/bus_station_icon.png';
+import locationIcon from '../assets/locationIconImage.png'
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types'
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
 
-export default function Map({markers}) {
-  console.log("Marker on map component",markers)
-  // const markers =  [
-  //   {
-  //     geocode: ["10.836530227310535", "106.80836723756903"],
-  //     popUp: "FPT Software FTown 3"
-  //   },
-  //   {
-  //     geocode: [10.851130840419415, 106.79884167932613],
-  //     popUp: "FPT Software FTown 1"
-  //   },
-  //   {
-  //     geocode: [10.842470210132719, 106.80913639097463],
-  //     popUp: "HPT Vietnam Corporation"
-  //   }, 
-  //   {
-  //     geocode:[10.957718022113736, 106.84300482222983],
-  //     popUp:"Vincom Plaza Bien Hoa"
-  //   }
-  // ]
+export default function Map() {
+  //console.log("Marker on map component",markers)
+  const markers =  [
+    {
+      id:1,
+      geocode: ["10.836530227310535", "106.80836723756903"],
+      popUp: "FPT Software FTown 3"
+    },
+    {
+      id:2,
+      geocode: [10.851130840419415, 106.79884167932613],
+      popUp: "FPT Software FTown 1"
+    },
+    {
+      id:3,
+      geocode: [10.842470210132719, 106.80913639097463],
+      popUp: "HPT Vietnam Corporation"
+    }, 
+    {
+      id:4,
+      geocode:[10.957718022113736, 106.84300482222983],
+      popUp:"Vincom Plaza Bien Hoa"
+    }
+  ]
+
+  //console.log("Geocode[0]",markers.find((item)=>item.id==1).geocode)
 
 const customIcon=new Icon({
   iconUrl:busStationIcon,
-  iconSize:[38,38]
+  iconSize:[33,33]
 })
 
-const createCustomClusterIcon =(cluster)=>{
-  return new divIcon({
-    html:`<div class='cluster-icon'>${cluster.getChildCount()}</div>`,
-    className:"custom-marker-cluster",
-    iconSize:point(33,33,true)
-  });
-}
-const navigate= useNavigate();
-const handleClick=()=>{
+// const createCustomClusterIcon =(cluster)=>{
+//   return new divIcon({
+//     html:`<div class='cluster-icon'>${cluster.getChildCount()}</div>`,
+//     className:"custom-marker-cluster",
+//     iconSize:point(33,33,true)
+//   });
+// }
+//const navigate= useNavigate();
+// const handleClick=()=>{
   
-  navigate("/");
-}
+//   navigate("/");
+// }
 
 
 
 return (
-  <MapContainer center={[10.841348873649608, 106.80988299523939]} zoom={13}>
+  <MapContainer center={markers.find((item)=>item.id==1).geocode} zoom={13}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'
     />
-    <MarkerClusterGroup
+    {/* <MarkerClusterGroup
       chunkedLoading
-      iconCreateFunction={createCustomClusterIcon} onClick={handleClick}>
+      iconCreateFunction={createCustomClusterIcon} onClick={handleClick}> */}
       {
         markers&& markers.map((marker,index)=>{
           return (
@@ -71,12 +78,13 @@ return (
           );
         })
       }
-    </MarkerClusterGroup>
+      {/* <Polyline positions={markers.map(marker => marker.geocode)} color="green" /> */}
+    {/* </MarkerClusterGroup> */}
     
   </MapContainer>
 );
 }
 
-Map.propTypes={
-  markers:PropTypes.array
-}
+// Map.propTypes={
+//   markers:PropTypes.array
+// }

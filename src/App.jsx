@@ -99,6 +99,7 @@ export default function App() {
           </Route>
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
+        <Route path='/map' element={<Map/>}/>
       </Routes>
     </BrowserRouter>
   )

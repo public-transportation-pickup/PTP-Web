@@ -17,6 +17,13 @@ export default function RouteItem() {
         navigate(`/route/${id}`)
     }
     
+    const deleteRoute=async (id)=>{
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
     useEffect(()=>{
         
         async function fetchData(){
@@ -51,7 +58,7 @@ return (
                 <div className="">{item.name}</div>
                 <div className='ml-auto mr-2 flex flex-row items-center gap-3'>
                     <HiPencil className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30} onClick={()=>navigateDetailPage(item.id)}/>
-                    <Modal buttonValue={<HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteCategory(item.id)}/>
+                    <Modal buttonValue={<HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteRoute(item.id)}/>
               </div>
                 </div>
             </Link>
