@@ -28,15 +28,14 @@ export default function CategoryMainPage() {
   return (
     <>
         <h1 className="text-center mx-auto text-4xl">Danh sách danh mục</h1>
-       
         <div className="flex justify-between gap-1">
-            <div className="w-2/3 mt-20">
+            <div className="w-2/3 mt-14">
                     <CategoryItem/>
                 <div>
                     {/* <PaginationButton/> */}
                 </div>
             </div>
-            <div className="w-1/3 mt-16">
+            <div className="w-1/3 mt-10">
                 {modalCreate===false&& (
                     <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row ml-auto items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Tạo mới danh mục</button>
                 )}

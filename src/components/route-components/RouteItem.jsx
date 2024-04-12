@@ -44,7 +44,7 @@ export default function RouteItem() {
 return (
     <main>
         {/* <div><ComboboxComponent listItems={listRoute} params="Name" /></div> */}
-        <div className="py-8 px-px items-center">
+        <div className="pb-4 px-px items-center">
             <SearchBar/>
         </div>
         {loading && <p className="text-center my-7 text-2xl">Loading...</p>}

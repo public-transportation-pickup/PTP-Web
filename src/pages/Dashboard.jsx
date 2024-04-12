@@ -7,9 +7,12 @@ import TransactionChart from "../components/TransactionChart";
 import { useEffect } from "react";
 import { ACCESS_TOKEN, authenticationV2, refreshToken } from "../api/auth-api";
 import { useNavigate } from "react-router-dom";
-
+import { getReport } from "../api/user-api";
+import { useAPIRequest,Actions } from "../lib/utils/api-request";
 
 export default function Dashboard() {
+
+  
   const {currentUser}=useSelector(state=>state.user);
   const navigate=useNavigate()
   //console.log("Current user firebase", currentUser)
@@ -35,16 +38,36 @@ export default function Dashboard() {
      }
      storeUserLocal();
   },[currentUser])
+
+  //#region request API
+    const [reportState,requestReport]=useAPIRequest(getReport);
+    const [report,setReport]=useState(null);
+    useEffect( ()=>{
+      requestReport();
+    },[])
+  
+    useEffect(()=>{
+      if(reportState.status===Actions.success){
+        setReport(reportState.payload);
+        // console.log("Report: ",reportState.payload)
+      }
+      if(reportState.status===Actions.failure){
+        console.log("Get report errors:",reportState.error);
+      }
+    },[reportState]);
+  //#region 
+
+
   return (
     <div className="flex gap-4 flex-col">
-        <DashboardStartsGrid/>
+        <DashboardStartsGrid data={report}/>
         <div className="w-full">
-          <TransactionChart/>
+          <TransactionChart param={report}/>
           {/* <BuyerProfileChart/> */}
         </div>
         <div className="flex flex-row gap-4 w-full">
-          <RecentOrdrers/>
-          <PopularProducts/>
+          <RecentOrdrers param={report}/>
+          <PopularProducts param={report}/>
         </div>
         
     </div>
