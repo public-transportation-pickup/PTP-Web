@@ -1,100 +1,50 @@
 import {Link} from 'react-router-dom'
 
-export default function RecentOrdrers() {
-  const recentOrderData = [
-    {
-      id: '1',
-      product_id: '4324',
-      customer_id: '23143',
-      customer_name: 'Shirley A. Lape',
-      order_date: '2022-05-17T03:24:00',
-      order_total: '$435.50',
-      current_order_status: 'PLACED',
-      shipment_address: 'Cottage Grove, OR 97424'
-    },
-    {
-      id: '7',
-      product_id: '7453',
-      customer_id: '96453',
-      customer_name: 'Ryan Carroll',
-      order_date: '2022-05-14T05:24:00',
-      order_total: '$96.35',
-      current_order_status: 'CONFIRMED',
-      shipment_address: 'Los Angeles, CA 90017'
-    },
-    {
-      id: '2',
-      product_id: '5434',
-      customer_id: '65345',
-      customer_name: 'Mason Nash',
-      order_date: '2022-05-17T07:14:00',
-      order_total: '$836.44',
-      current_order_status: 'SHIPPED',
-      shipment_address: 'Westminster, CA 92683'
-    },
-    {
-      id: '3',
-      product_id: '9854',
-      customer_id: '87832',
-      customer_name: 'Luke Parkin',
-      order_date: '2022-05-16T12:40:00',
-      order_total: '$334.50',
-      current_order_status: 'SHIPPED',
-      shipment_address: 'San Mateo, CA 94403'
-    },
-    {
-      id: '4',
-      product_id: '8763',
-      customer_id: '09832',
-      customer_name: 'Anthony Fry',
-      order_date: '2022-05-14T03:24:00',
-      order_total: '$876.00',
-      current_order_status: 'OUT_FOR_DELIVERY',
-      shipment_address: 'San Mateo, CA 94403'
-    },
-    {
-      id: '5',
-      product_id: '5627',
-      customer_id: '97632',
-      customer_name: 'Ryan Carroll',
-      order_date: '2022-05-14T05:24:00',
-      order_total: '$96.35',
-      current_order_status: 'DELIVERED',
-      shipment_address: 'Los Angeles, CA 90017'
-    }
-  ]
+export default function  RecentOrdrers({param}) {
+  // console.log(param);
+  const formatNumber = (number) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  
+    return formatter.format(number);
+  };
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 flex-1">
       <strong>Recent Orders</strong>
+      {param!==null?
       <div className="mt-3">
         <table className="w-full text-gray-700 border-x border-gray-200 rounded-sm">
           <thead>
             <tr>
-              <td>ID</td>
-              <td>Product ID</td>
-              <td>Customer Name</td>
-              <td>Order Date</td>
-              <td>Order Total</td>
-              <td>Shipping Address</td>
-              <td>Order Status</td>
+              <td ></td>
+              <td>Name</td>
+              {/* <td>Address</td> */}
+              <td>Orders Successfull</td>
+              {/* <td>Orders Cancelled</td> */}
+              <td>Other Orders</td>
+              <td>Revenue</td>
               
             </tr>
           </thead>
           <tbody>
-            {recentOrderData.map((order)=>(
-              <tr key={order.id}>
-                <td><Link to={`/order/${order.id}`}>{order.id}</Link></td>
-                <td><Link to={`/product/${order.product_id}`}>{order.product_id}</Link></td>
-                <td><Link to={`/customer/${order.customer_id}`}>{order.customer_name}</Link></td>
-                <td>{new Date(order.order_date).toLocaleDateString()}</td>
-                <td>{order.order_total}</td>
-                <td>{order.shipment_address}</td>
-                <td>{order.current_order_status}</td>
+            {param.topOrderStores.map((store,index)=>(
+              <tr key={index}>
+                <td className='pr-3'>{index}</td>
+                <td>{store.name}</td>
+                {/* <td>{store.name}</td> */}
+                <td className='px-10'>{store.orderCompleted}</td>
+                {/* <td></td> */}
+                <td className='px-10'>{store.orderCanceled + store.orderOthers}</td>
+                <td>{formatNumber(store.revenue)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      :
+      <></>}
     </div>
   )
 }
