@@ -4,7 +4,7 @@ import DashboardStartsGrid from "../components/DashboardStartsGrid";
 import PopularProducts from "../components/PopularProducts";
 import RecentOrdrers from "../components/RecentOrdrers";
 import TransactionChart from "../components/TransactionChart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ACCESS_TOKEN, authenticationV2, refreshToken } from "../api/auth-api";
 import { useNavigate } from "react-router-dom";
 import { getReport } from "../api/user-api";
@@ -24,13 +24,16 @@ export default function Dashboard() {
     if(ACCESS_TOKEN!==null){ 
       const dataFetch=await refreshToken(ACCESS_TOKEN)
       console.log("DataFetch",JSON.stringify(dataFetch));
-    }
+    }else if(ACCESS_TOKEN===null){
+      const dataFetch=await authenticationV2(currentUser.stsTokenManager.accessToken);
+      console.log("DataFetch",JSON.stringify(dataFetch));
+    }else navigate('/sign-in')
     //     // console.log("admin storage", localStorage.getItem("admin"));
     //     console.log("DataFetch",JSON.stringify(dataFetch));
     //     // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
     //     //if(dataFetch===null) navigate('/sign-in');
     //     if(dataFetch===500 || dataFetch===undefined)  navigate('/sign-in');
-   else navigate('/sign-in');
+   //else navigate('/sign-in');
       } catch (error) {
     //     console.log("Exception useEffect Dashboard",error)
        }

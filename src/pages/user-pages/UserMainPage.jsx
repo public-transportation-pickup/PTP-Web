@@ -50,9 +50,9 @@ const ViewDetailFunc=(userId)=>{
                     <th></th>
                     </tr>
                 </thead>
-                <tbody className="h-96 overflow-auto">
+                <tbody className="overflow-auto">
                     {listUser && listUser.length >0 ? (listUser.slice(currentPage*10, currentPage*10+10).map((item,index)=>(
-                        <tr key={index} className=" h-8 border-b dark:bg-gray-800 dark:border-gray-700 text-xs">
+                        <tr key={index} className=" border-b dark:bg-gray-800 dark:border-gray-700 text-xs">
                              <td className="px-4">{index+1}</td>
                             <td>{item.fullName}</td>
                             <td>{item.email}</td>

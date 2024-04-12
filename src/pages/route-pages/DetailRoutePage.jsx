@@ -6,6 +6,7 @@ import { getRouteVars } from "../../api/route-var-api";
 import { ToastContainer,toast } from "react-toastify";
 import { getRouteStation } from "../../api/route-station-api";
 import { HiArrowRight } from "react-icons/hi";
+import Map from '../../pages/Map.jsx';
 
 export default function DetailRoutePage() {
   const params=useParams();
@@ -15,16 +16,18 @@ export default function DetailRoutePage() {
   const [routeStationList2,setRouteStationList2]=useState([])
   const [coorList1, setCoorList1]=useState([]);
   const [coorList2, setCoorList2]=useState([]);
-  const [MapType,setMapType]=useState('');
+  const [MapType,setMapType]=useState(null);
   //{id, geocode:[lat,long],popup}
   console.log("routeStationList1",routeStationList1)
   console.log("routeStationList2",routeStationList2)
   console.log("coorList 1",coorList1)
   console.log("coorList 2",coorList2)
 
-  const handleViewMap=async(enum)=>{
-    if(enum ==="Var1"){
-      setMapType("Var1")
+  const handleViewMap = (enumType)=>{
+    if(enumType === true){
+      setMapType(true)
+    }else if (enumType===false){
+      setMapType(false)
     }
   }
 
@@ -62,6 +65,7 @@ export default function DetailRoutePage() {
 
   return (
     <div>
+      <ToastContainer/>
       <div>
         <p>Thông tin của tuyến: <span>{routeInfo.routeNo}</span></p>
         <p>Tên tuyến: <span>{routeInfo.name}</span></p>
@@ -76,6 +80,7 @@ export default function DetailRoutePage() {
       </div>
       
       <div className="flex flex-col gap-4">
+      {/* Lượt  */}
       <div>
       <HiOutlineEye/>
         <div>
@@ -106,7 +111,9 @@ export default function DetailRoutePage() {
       {/*End Lượt về */}
       {/* Map của lượt */}
       <div>
-        
+        {MapType===true && (
+          <Map />
+        )}
       </div>
       {/*End Map của lượt */}
     </div>

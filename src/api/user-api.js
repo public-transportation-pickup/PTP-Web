@@ -4,7 +4,7 @@ import axios from "axios";
 export const getUsers = async (roleName) => {
   try {
     // console.log("api - " + roleName);
-    const res = await fetch(`${BASE_URL}/users`);
+    const res = await fetch(`${BASE_URL}/users?RoleName=${roleName}`);
     const data = await res.json();
     console.log("Get user list", res);
     return data;

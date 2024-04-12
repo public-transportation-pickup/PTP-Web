@@ -4,10 +4,6 @@ import { Marker } from 'react-leaflet';
 import { Icon, divIcon, point } from 'leaflet';
 //import MarkerClusterGroup from "react-leaflet-cluster";
 import busStationIcon from '../assets/bus_station_icon.png';
-import locationIcon from '../assets/locationIconImage.png'
-import { useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types'
-import { HiOutlineLocationMarker } from "react-icons/hi";
 
 
 export default function Map() {
