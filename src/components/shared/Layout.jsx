@@ -17,7 +17,7 @@ export default function Layout() {
         const dataFetch=await authenticationV2(currentUser.stsTokenManager.accessToken);
         
         // console.log("admin storage", localStorage.getItem("admin"));
-         console.log("DataFetch",JSON.stringify(dataFetch));
+        //  console.log("DataFetch",JSON.stringify(dataFetch));
         // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
         //if(dataFetch!==null) localStorage.setItem("admin",JSON.stringify(dataFetch));
         //else navigate('/sign-in');

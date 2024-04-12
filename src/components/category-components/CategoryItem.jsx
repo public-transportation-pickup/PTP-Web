@@ -65,7 +65,7 @@ const [detailCategory, setdetailCategory]=useState(null);
         fetchData();
     },[])
 
-    const commonProperty= 'flex border gap-2 p-2 ';
+    const commonProperty= 'flex border gap-2 px-2 py-1 h-20';
     const inactiveProperty='border-dashed border-rose-500 border-4 hover:bg-rose-200'
     const activeProperty= 'border-solid  border-green-500 border-4 hover:bg-green-200'
     //className='flex flex-row border border-dashed border-green-100 border-4 gap-2
@@ -78,7 +78,7 @@ const [detailCategory, setdetailCategory]=useState(null);
            <div key={index}>
               <div key={index}  className={ classNames(item.status.toUpperCase() ==="ACTIVE"? activeProperty:inactiveProperty,commonProperty)}>
                 {/* <Link to={`/category/${item.id}`} key={index}> */}
-                  <div className='flex flex-row mr-auto items-center gap-2'>
+                  <div className='flex flex-row mr-auto  items-center gap-2'>
                     <img className='h-10 w-10 rounded-full' src={item.imageURL===null? imgDefault:item.imageURL}/>
                     <div className='flex flex-col gap-1 hover:font-bold cursor-pointer' onClick={()=>handleDetailModal(item.id)}>
                       <p className=''>{item.name}</p>
@@ -93,13 +93,6 @@ const [detailCategory, setdetailCategory]=useState(null);
               </div>
               </div>
            </div>
-            
-              
-
-            
-              
-           
-          
         ))
         )}
       </div>

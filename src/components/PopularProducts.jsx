@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom'
 
 
 
-export default function PopularProducts() {
+export default function PopularProducts({param}) {
+  console.log(param);
   const popularProducts = [
     {
       id: '3432',
@@ -52,31 +53,33 @@ export default function PopularProducts() {
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 w-[20rem]">
       <strong>Popular products</strong>
+      {param!==null?
       <div className='mt-4 flex flex-col gap-3'>
-        {popularProducts.map(product=>(
-          <Link key={product.id} to={`/product/${product.id}`} className='flex hover:no-underline'>
+        {param.categories.map((category,index)=>(
+          <Link key={index} to={`/category`} className='flex hover:no-underline'>
             <div className='w-10 h-10 min-w-10 bg-gray-200 rounded-sm overflow-hidden'>
               <img className='w-full h-full object-cover'
-              src={product.product_thumbnail}
-              alt={product.product_name}/>
+              src={category.imageURL}
+              alt="cate image"/>
             </div>
             <div className='ml-4 flex-1'>
-              <p className='text-sm text-gray-800'>{product.product_name}</p>
+              <p className='text-sm text-gray-800'>{category.name}</p>
               <span className={classNames(
-									product.product_stock === 0
+									category.products === 0
 										? 'text-red-500'
-										: product.product_stock > 50
+										: category.products > 50
 										? 'text-green-500'
 										: 'text-orange-500',
 									'text-xs font-medium'
 								)}>
-                {product.product_stock ===0 ? 'Out of stock': product.product_stock+' in stock'}
+                {category.products ===0 ? 'not have any products': category.products+' products'}
               </span>
             </div>
             <div className='text-xs text-gray-400 pl-2'></div>
           </Link>
         ))}
       </div>
+      :<></>}
     </div>
   )
 }

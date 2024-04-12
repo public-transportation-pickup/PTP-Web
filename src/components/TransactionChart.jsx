@@ -1,66 +1,42 @@
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts'
 
-export default function TransactionChart() {
+export default function TransactionChart({param}) {
+  // console.log(param);
   const data = [
     {
-      name: 'Jan',
-      Expense: 4000,
-      Income: 2400
+      name: 'Monday',
+      New: param!==null? param.saleValueCurrent[0]:4000,
+      Last: param!==null? param.saleValueLast[0]:2400
     },
     {
-      name: 'Feb',
-      Expense: 3000,
-      Income: 1398
+      name: 'Tuesday',
+      New: param!==null? param.saleValueCurrent[1]:4000,
+      Last: param!==null? param.saleValueLast[1]:2400
     },
     {
-      name: 'Mar',
-      Expense: 2000,
-      Income: 9800
+      name: 'Wednesday',
+      New: param!==null? param.saleValueCurrent[2]:4000,
+      Last: param!==null? param.saleValueLast[2]:2400
     },
     {
-      name: 'Apr',
-      Expense: 2780,
-      Income: 3908
+      name: 'Thursday',
+      New: param!==null? param.saleValueCurrent[3]:4000,
+      Last: param!==null? param.saleValueLast[3]:2400
     },
     {
-      name: 'May',
-      Expense: 1890,
-      Income: 4800
+      name: 'Friday',
+      New: param!==null? param.saleValueCurrent[4]:4000,
+      Last: param!==null? param.saleValueLast[4]:2400
     },
     {
-      name: 'Jun',
-      Expense: 2390,
-      Income: 3800
+      name: 'Saturday',
+      New: param!==null? param.saleValueCurrent[5]:4000,
+      Last: param!==null? param.saleValueLast[5]:2400
     },
     {
-      name: 'July',
-      Expense: 3490,
-      Income: 4300
-    },
-    {
-      name: 'Aug',
-      Expense: 2000,
-      Income: 9800
-    },
-    {
-      name: 'Sep',
-      Expense: 2780,
-      Income: 3908
-    },
-    {
-      name: 'Oct',
-      Expense: 1890,
-      Income: 4800
-    },
-    {
-      name: 'Nov',
-      Expense: 2390,
-      Income: 3800
-    },
-    {
-      name: 'Dec',
-      Expense: 3490,
-      Income: 4300
+      name: 'Sunday',
+      New: param!==null? param.saleValueCurrent[6]:4000,
+      Last: param!==null? param.saleValueLast[6]:2400
     }
   ];
       
@@ -85,8 +61,8 @@ export default function TransactionChart() {
 						<YAxis />
 						<Tooltip />
 						<Legend />
-						<Bar dataKey="Income" fill="#0ea5e9" />
-						<Bar dataKey="Expense" fill="#ea580c" />
+						<Bar dataKey="Last" fill="#0ea5e9" />
+						<Bar dataKey="New" fill="#ea580c" />
 					</BarChart>
     </ResponsiveContainer>
   
