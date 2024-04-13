@@ -10,9 +10,9 @@ export default function StationByZone({handleCloseButtonFunc,addStationFunc,list
   const [zoneChoosen, setZoneChoozen]=useState(null);
   const [listStationbyZone, setListStationbyZone]=useState([]);
   //const [stationChoose,setStationChoose]=useState({});
-  const getStationtoAdd=async (value)=>{
-      console.log("Station choose",value);
-  }
+//   const getStationtoAdd=async (value)=>{
+//       console.log("Station choose",value);
+//   }
     useEffect(()=>{
       const fetchData= async ()=>{
         if(zoneChoosen!==null){
