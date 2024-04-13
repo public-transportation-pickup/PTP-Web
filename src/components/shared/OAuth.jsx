@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from 'react-redux'
 import { signInStart, signInSuccess,signInFailure } from '../../redux/user/userSlice.js';
 import { ToastContainer, toast } from "react-toastify";
-import { authenticationV2 } from "../../api/auth-api.js";
 
 
 export default function OAuth({formData}) {
   const navigate=useNavigate();
   const dispatch=useDispatch();
-  const {loading,currentUser}=useSelector((state)=>state.user);
+  const {loading}=useSelector((state)=>state.user);
+  //const [tokenFirebase, setTokenFirebase]=useState('')
   //console.log("FormData send to OAuth:",formData);
   const handleSignIn=async()=>{
     try {
@@ -26,8 +26,8 @@ export default function OAuth({formData}) {
       toast("Đăng nhập thất bại")
     }
     await dispatch(signInSuccess(user));
-    const authenData=await authenticationV2(currentUser.stsTokenManager.accessToken);
-    console.log('authen Data',authenData)
+    // const authenData=await authenticationV2(currentUser.stsTokenManager.accessToken);
+    // console.log('authen Data',authenData)
 
     // await authentication(currentUser.stsTokenManager.accessToken);
     // await console.log("Authentication call api return", authentication)
