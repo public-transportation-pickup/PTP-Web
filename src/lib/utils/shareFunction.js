@@ -18,6 +18,8 @@ export const ConvertVIEtoEN=async (str)=> {
     return str;
 }
 
-// export const splitStr=async(str,character)=>{
-
-// }
+export const splitStr=(str,character)=>{
+    const strReturn= (str.split(character)).join(' ');
+    console.log("Split str",strReturn)
+    return strReturn;
+}

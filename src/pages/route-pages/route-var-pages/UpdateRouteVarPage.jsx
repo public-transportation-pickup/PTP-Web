@@ -1,22 +1,17 @@
-import PropTypes from 'prop-types'
-import { useEffect, useState } from 'react'
-import { HiArrowRight } from "react-icons/hi";
-import StationByZone from '../StationByZone';
-import { getDistrictByProvinceId } from '../../../../api/store-api';
-import { HiOutlineTrash} from "react-icons/hi";
-import {toast} from 'react-toastify'
-import { createRouteVarManually } from '../../../../api/route-var-api';
-import {useNavigate, useParams} from 'react-router-dom'
-import { getRouteById } from '../../../../api/route-api';
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { getRouteById } from '../../../api/route-api';
+import { getDistrictByProvinceId } from '../../../api/store-api';
+import { toast } from 'react-toastify';
+import { createRouteVarManually } from '../../../api/route-var-api';
 
-
-export default function CreateRouteVarForm() {
-  const navigate=useNavigate();
+export default function UpdateRouteVarPage() {
+    const navigate=useNavigate();
   const params=useParams();
   const [listRouteStation,setListRouteStation]=useState([]);
   const [isOpen,setIsOpen]=useState(false);
   const [listZone,setListZone]=useState([]);
-  const [createRouteVarModel,setCreateRouteVarModel]=useState({
+  const [updateRouteVarModel,setUpdateRouteVarModel]=useState({
       routeVarId:0,
       routeVarName:'',
       routeVarShortName:'',
@@ -33,12 +28,12 @@ export default function CreateRouteVarForm() {
   const [buttonSubmit,setButtonSubmit]=useState(false);
 
   console.log("List route var", listRouteStation)
-  console.log("Create route var model", createRouteVarModel);
+  console.log("Update route var model", updateRouteVarModel);
   console.log("RouteInfo", routeInfo)
   const handleAddStation=async (station)=>{
-    let lenngthArray= createRouteVarModel.routeStations.length;
+    let lenngthArray= updateRouteVarModel.routeStations.length;
     setListRouteStation(listRouteStation.concat(station))
-    setCreateRouteVarModel({...createRouteVarModel,routeStations: createRouteVarModel.routeStations.concat({stationId:station.id,index:lenngthArray, description:""})})
+    setUpdateRouteVarModel({...updateRouteVarModel,routeStations: updateRouteVarModel.routeStations.concat({stationId:station.id,index:lenngthArray, description:""})})
   }
 
   const handleCloseButton=async ()=>{
@@ -47,23 +42,23 @@ export default function CreateRouteVarForm() {
 
   const handleRemoveStation= (id)=>{
     setListRouteStation(listRouteStation.filter((station)=>station.id!==id))
-    setCreateRouteVarModel(createRouteVarModel.routeStations.filter((station)=>station.stationId!==id));
+    setUpdateRouteVarModel(updateRouteVarModel.routeStations.filter((station)=>station.stationId!==id));
   }
 
   const handleChange=async(e)=>{
-    setCreateRouteVarModel({...createRouteVarModel,[e.target.id]:e.target.value,})
+    setUpdateRouteVarModel({...updateRouteVarModel,[e.target.id]:e.target.value,})
   }
 
   const handleContinueButton=async ()=>{
-    navigate(`/route/${params.routeId}/routevar/${routevarId}/timetable/create`)
+    navigate(`/route/${params.routeId}/routevar/${routevarId}/timetable/update`)
   }
 
   const handleSubmit=async ()=>{
-    setCreateRouteVarModel({...createRouteVarModel,routeId:params.routeId});
+    setUpdateRouteVarModel({...updateRouteVarModel,routeId:params.routeId});
     try {
       if(params.routeId!==null && params.routeId){
-        const responseAPI= await createRouteVarManually(createRouteVarModel);
-        console.log("Reponse api create route manuall",responseAPI);
+        const responseAPI= await createRouteVarManually(updateRouteVarModel);
+        console.log("Reponse api update route manuall",responseAPI);
         if(responseAPI!==null || responseAPI !==undefined){
           
           toast("Tạo lượt thành công");
@@ -73,7 +68,7 @@ export default function CreateRouteVarForm() {
         else toast("Tạo lượt thất bại");
       }
     } catch (error) {
-      console.error("Handle submit create route var",error);
+      console.error("Handle submit update route var",error);
     }
   }
   useEffect(()=>{
@@ -84,11 +79,11 @@ export default function CreateRouteVarForm() {
         setListZone(responseAPI);
         setRouteInfo(responseRouteInfo);
       } catch (error) {
-        console.error("Fetch data create routevar page",error)
+        console.error("Fetch data update routevar page",error)
       }
     }
     fetchData();
-    setCreateRouteVarModel({...createRouteVarModel,routeId:params.routeId})
+    setUpdateRouteVarModel({...updateRouteVarModel,routeId:params.routeId})
   },[listRouteStation])
   return (
     <div>
@@ -184,8 +179,3 @@ export default function CreateRouteVarForm() {
     </div>
   )
 }
-
-// CreateRouteVarForm.propTypes={
-//   routeIdReturn:PropTypes.string,
-//   getRouteVarId:PropTypes.func
-// }

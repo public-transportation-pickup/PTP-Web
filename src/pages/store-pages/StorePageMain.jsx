@@ -79,7 +79,7 @@ return (
                             <td>{item.name}</td>
                             <td>{item.phoneNumber}</td>
                             <td>{item.email}</td>
-                            <td>{item.addressNo}, Đường {item.street}, {item.ward}, {item.zone}, TPHCM</td>
+                            <td>{item.addressNo}, {item.street==="null"? "":`Đường ${item.street},`} {item.ward}, {item.zone}, TPHCM</td>
                             
                             <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status}</span></td>
                             {/* </div> */}

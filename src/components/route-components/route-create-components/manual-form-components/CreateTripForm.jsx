@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 import {useNavigate, useParams} from 'react-router-dom'
 import { getRouteById } from "../../../../api/route-api";
 import { getRouteVarsById } from "../../../../api/route-var-api";
-import { getTimeTableByRouteIdandRouteVarId } from "../../../../api/timetable-api";
+import { createTimeTableManually, getTimeTableByRouteIdandRouteVarId } from "../../../../api/timetable-api";
 
 export default function CreateTripForm() {
   //const navigate=useNavigate();
@@ -13,6 +13,8 @@ export default function CreateTripForm() {
   const [routeInfo,setRouteInfo]=useState({})
   const [routevarInfo,setRoutevarInfo]=useState({})
   const [timetableInfo,setTimetableInfo]=useState([])
+  const [buttonSubmit,setButtonSubmit]=useState(false);
+
   const [timeTableModel,setTimetableModel]=useState({
     name:'',
     description:'',
@@ -27,11 +29,14 @@ export default function CreateTripForm() {
   const handleSubmit=async ()=>{
     try {
       const responseAPI= await createTrip(timeTableModel);
-      console.log("Reponse api create trip form page", responseAPI);
-      if (responseAPI!==null){
+      await console.log("Reponse api create trip form page", responseAPI);
+      if (responseAPI===null){
+        toast("Tạo chuyến thất bại")
+      } 
+      else{
+        setButtonSubmit(true);
         toast.success("Tạo chuyến thành công")
       } 
-      else toast("Tạo chuyến thất bại")
     } catch (error) {
       console.error("handle submit create trip form", error);
     }
@@ -79,7 +84,18 @@ export default function CreateTripForm() {
             <textarea onChange={handleChange} type="text" name="description" id="description" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
             <label htmlFor="description" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mô tả chuyến</label>
         </div>
-        <button onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+        {/* <button onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+         */}
+          <div className="mt-4">
+        <div className="flex flex-row gap-4">
+        <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+        {buttonSubmit===true&&(
+          <div className="flex flex-row gap-3 items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <button  onClick={handleContinueButton} type="button" className="">Tiếp tục tạo chuyến </button><HiArrowRight className="" size={20}/>
+          </div>
+        ) }
+        </div>
+        </div>
 
     </main>
   )

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {BASE_URL} from '../lib/contants/index'
-import { ACCESS_TOKEN} from './auth-api';
+import { ACCESS_TOKEN, refreshToken} from './auth-api';
 import {toast} from 'react-toastify'
 
 export const getAllProvince= async ()=>{
@@ -137,6 +137,9 @@ export const updateStore = async (storeModel)=>{
         })
         console.log("Update store ", res);
         if(res.status===204)return res.status;
+        else if (res.status===401){
+            await refreshToken(ACCESS_TOKEN)
+        } 
         else return null;
     } catch (error) {
         console.log("Update store exception", error);

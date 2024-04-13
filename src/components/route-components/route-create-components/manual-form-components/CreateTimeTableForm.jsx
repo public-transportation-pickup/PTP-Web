@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react';
-import { createTimeTableManually } from '../../../../api/timetable-api';
+import { applyTimetableFortrip, createTimeTableManually } from '../../../../api/timetable-api';
 import {toast} from 'react-toastify'
-import {useNavigate, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import { HiArrowRight } from 'react-icons/hi';
 import { getRouteById } from '../../../../api/route-api';
 import { getRouteVarsById } from '../../../../api/route-var-api';
+
 export default function CreateTimeTableForm() {
-    const navigate=useNavigate();
+    //const navigate=useNavigate();
     const params=useParams();
     const dayOfWeek=["T2","T3","T4","T5","T6","T7","CN"]
     const [dateApply,setDateApply]=useState([]);
@@ -15,6 +16,9 @@ export default function CreateTimeTableForm() {
     const [routeVarInfo,setRouteVarInfo]=useState({})
     const [timetableId,setTimetableId]=useState('');
     const [buttonSubmit,setButtonSubmit]=useState(false);
+    console.log("timetableId",timetableId);
+
+    console.log("button submit",buttonSubmit)
 
     console.log("Date apply",dateApply);
     const handleChange=async (e)=>{
@@ -35,9 +39,15 @@ export default function CreateTimeTableForm() {
         }
     };
 
-    const handleContinueButton=async ()=>{
-        navigate(`/route/${params.routeId}/routevar/${params.routevarId}/timetable/${timetableId}/trip/create`)
-      }
+    const handleApplyTimetable=async ()=>{
+        const responseAPI= await applyTimetableFortrip(timetableId);
+        if(responseAPI===200) toast("Áp dụng thời khóa biếu thành công")
+        else toast("Áp dụng thời khóa biếu thất bại")
+    }
+
+    // const handleContinueButton=async ()=>{
+    //     navigate(`/route/${params.routeId}/routevar/${params.routevarId}/timetable/${timetableId}/trip/create`)
+    //   }
 
     const handleSubmit= async ()=>{
         let dateApplyStr= dateApply.join(",");
@@ -49,9 +59,11 @@ export default function CreateTimeTableForm() {
         try {
             const responseAPI= await createTimeTableManually(timeTableModel);
             if(responseAPI!==null){
-                await toast("Tạo thời khóa biểu thành công")
-                setTimetableId(responseAPI.id);
+                console.log("responseAPI[0].id",responseAPI[0].id)
+                setTimetableId(responseAPI[0].id);
                 setButtonSubmit(true);
+                toast("Tạo thời khóa biểu thành công")
+                
             } 
             else toast("Tạo thời khóa biểu thất bại");
         } catch (error) {
@@ -100,7 +112,8 @@ export default function CreateTimeTableForm() {
         <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
         {buttonSubmit===true&&(
           <div className="flex flex-row gap-3 items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            <button  onClick={handleContinueButton} type="button" className="">Tiếp tục tạo chuyến </button><HiArrowRight className="" size={20}/>
+            {/* <button  onClick={handleContinueButton} type="button" className="">Tiếp tục tạo chuyến </button><HiArrowRight className="" size={20}/> */}
+            <button  onClick={handleApplyTimetable} type="button" className="">Áp dụng thời khóa biểu </button><HiArrowRight className="" size={20}/>
           </div>
         ) }
         </div>

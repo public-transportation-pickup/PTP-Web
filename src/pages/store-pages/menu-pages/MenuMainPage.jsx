@@ -62,6 +62,7 @@ export default function MenuMainPage() {
         
         <div className="border-2 rounded-lg  h-4/5">
             <table className="h-full w-full">
+                <tbody>
                 <tr className="">
                     <td className="content-start border-r-4 border-orange-100 w-1/3">
                     <div className="p-2 mx-3">
@@ -110,6 +111,8 @@ export default function MenuMainPage() {
                 
                 
                 </tr>
+                </tbody>
+                
                 
             </table>
             <div>

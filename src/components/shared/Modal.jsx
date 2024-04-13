@@ -27,15 +27,6 @@ export default function Modal({buttonValue,title,EnumHandler}) {
             {buttonValue}
           </button>
           )}
-          {typeof buttonValue==='string' && (
-            <button
-            type="button"
-            onClick={openModal}
-            className="rounded-md bg-black/20 px-4 py-2 text-sm font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
-          >
-            {buttonValue}
-          </button>
-          )}
           
         </div>
   
@@ -107,7 +98,7 @@ export default function Modal({buttonValue,title,EnumHandler}) {
 }
 
 Modal.propTypes={
-    buttonValue:PropTypes.string || PropTypes.element,
+    buttonValue:PropTypes.element,
     title:PropTypes.string,
     status: PropTypes.bool,
     EnumHandler:PropTypes.func
