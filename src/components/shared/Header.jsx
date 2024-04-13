@@ -4,14 +4,26 @@ import classNames from 'classnames'
 import { Fragment } from 'react'
 import {useNavigate} from 'react-router-dom'
 import { HiArrowLeftOnRectangle } from "react-icons/hi2";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOutUserFailre, signOutUserStart, signOutUserSuccess } from '../../redux/user/userSlice'
 
 
 export default function Header() {
   const navigate= useNavigate();
+  const dispatch=useDispatch();
   const {currentUser}=useSelector(state=>state.user);
 //   console.log("Current user",currentUser);
 //   console.log("Token", currentUser.stsTokenManager.accessToken)
+const handleSignout= async ()=>{
+    try{
+      dispatch(signOutUserStart)
+      
+      await localStorage.clear();
+      dispatch(signOutUserSuccess(currentUser));
+    }catch(error){
+      dispatch(signOutUserFailre(error.message));
+    }
+  }
     return (
         <div className='bg-white h-16 px-4 flex justify-between items-center left-3 border-b border-gray-200'>
 			<div className='relative'>
@@ -137,6 +149,7 @@ export default function Header() {
 											active && 'bg-gray-100',
 											'active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200'
 										)}
+										onClick={()=>handleSignout}
 									>
 										Sign out
 									</div>

@@ -17,3 +17,9 @@ export const ConvertVIEtoEN=async (str)=> {
     str = str.replace(/  +/g, ' ');
     return str;
 }
+
+export const splitStr=(str,character)=>{
+    const strReturn= (str.split(character)).join(' ');
+    console.log("Split str",strReturn)
+    return strReturn;
+}

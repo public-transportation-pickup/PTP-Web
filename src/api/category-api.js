@@ -1,6 +1,6 @@
 import { BASE_URL } from "../lib/contants";
 import axios from 'axios'
-import { ACCESS_TOKEN } from "./auth-api";
+import { ACCESS_TOKEN, refreshToken } from "./auth-api";
 export const getCategories=async ()=>{
     try {
         const res=  await fetch(`${BASE_URL}/categories`);
@@ -45,7 +45,9 @@ export const CreateCategory=async (createModal)=>{
             },
         })
         console.log("Create Category res", res);
-        return res.status;
+
+        if(res.status===201)return res.status;
+        else if(res.status===401) await refreshToken(ACCESS_TOKEN);
     } catch (error) {
         console.log("Get all category error: ",error);
     }
@@ -66,6 +68,7 @@ export const UpdateCategory=async (cateId,updateCate)=>{
             },
         });
         if(res.status===204) return res.status;
+        else if(res.status===401) await refreshToken(ACCESS_TOKEN);
         else null;
     } catch (error) {
         console.log("Update category exception", error);
@@ -82,6 +85,8 @@ export const DeleteCategory =async (id)=>{
     );
         console.log("Delete category", res)
         if(res.status===204) return res.status;
+        else if(res.status===401) await refreshToken(ACCESS_TOKEN);
+        else return null
     } catch (error) {
         console.log("Delete Category API", error);
     }

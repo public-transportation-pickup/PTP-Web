@@ -8,7 +8,8 @@ export const getRouteVars=async (routeId)=>{
         const res = await fetch(`${BASE_URL}/routes/${routeId}/route-vars`);
         const data= await res.json();
         console.log("Get route vars data: ",data);
-        return data;
+        if(res.status===200)return data;
+        else return null
     } catch (error) {
         console.log("Get RouteVars exception",error);
     }
@@ -33,7 +34,8 @@ export const createRouteVarManually= async (RouteVarCreateModel)=>{
             RouteVarCreateModel
         )
         console.log("Create route var manuall res: ",res)
-        return await res.data;
+        if(res.status===201)return await res.data;
+        else return null;
     } catch (error) {
         console.error("create route var manually exception: ", error)
     }

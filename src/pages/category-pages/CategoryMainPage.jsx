@@ -17,7 +17,6 @@ export default function CategoryMainPage() {
     const handleCloseModal=()=>{
         setModalCreate(false);
         
-        
     }
     
     useEffect(()=>{

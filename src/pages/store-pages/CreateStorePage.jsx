@@ -39,6 +39,7 @@ export default function CreateStorePage() {
         StationIds:[]
     })
     console.log("Json form: ",jsonForm);
+    console.log("Station id", jsonForm.StationIds)
     const [file,setFile]=useState([]);
     //console.log("File ava", file);
 
@@ -49,7 +50,7 @@ export default function CreateStorePage() {
     // }
 
     const handleStationChange=async (value)=>{
-        await setJsonForm({...jsonForm,StationIds:value.id});
+        await setJsonForm({...jsonForm,StationIds:[...jsonForm.StationIds, value.id]});
         setAddressStation(JSON.stringify(value.address))
         
     }
@@ -185,6 +186,7 @@ return (
                         />
                         
                     </div>
+                    {loading===true && (<p>Chờ chút để hệ thống cập nhật địa chỉ của bạn....</p>)}
                 </div>
             </div>
             <div>

@@ -47,8 +47,8 @@ export default function CreateRoutePage() {
         {/* <button onClick={handleDuplicateChoice} className="bg-sky-400 hover:bg-opacity-90 p-4 rounded-lg mr-6">Dựa trên bản sao của tuyến có sẵn</button>
         <button onClick={handleManuallyChoice} className="bg-sky-400 hover:bg-opacity-90 p-4 rounded-lg">Tạo mới tuyến thủ công</button> */}
         <div className="flex flex-row gap-4">
-        <Modal buttonValue="Tạo bản sao" title="Tạo mới tuyến dựa trên tuyến có sẵn" EnumHandler={handleDuplicateChoice}/>
-        <Modal buttonValue="Tạo thủ công" title="Tạo mới tuyến bằng cách thủ công" EnumHandler={handleManuallyChoice}/>
+        <Modal buttonValue={<p className="bg-amber-400 rounded-lg p-2 hover:bg-amber-200">Tạo bản sao</p>} title="Tạo mới tuyến dựa trên tuyến có sẵn" EnumHandler={handleDuplicateChoice}/>
+        <Modal buttonValue={<p className="bg-amber-400 rounded-lg p-2 hover:bg-amber-200">Tạo thủ công</p>} title="Tạo mới tuyến bằng cách thủ công" EnumHandler={handleManuallyChoice}/>
         </div>
         
       </div>
@@ -60,10 +60,6 @@ export default function CreateRoutePage() {
         </div>
         <div className="p-4 flex flex-col gap-5">
           <CreateRouteForm/>
-          {/* <Accordion title="Bước 1: Tạo thông tin tuyến" component={}/> 
-          <Accordion title="Bước 2: Tạo thông tin các lượt" component={<CreateRouteVarForm getRouteVarId={setRouteVarId}/>}/>
-          <Accordion title="Bước 3: Tạo thời khóa biểu" component={<CreateTimeTable routeId={routeId} routeVarId={routeVarId} getTimeTableIdFunc={setTimetableId}/>}/>
-          <Accordion title="Bước 4: Tạo thông tin chuyến" component={<CreateTrip TimetableIdStr={timetableId}/>}/> */}
         </div>
         <div>          
         </div>

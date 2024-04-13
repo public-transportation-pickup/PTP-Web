@@ -16,6 +16,7 @@ export default function UpdateStorePage() {
   const [districtId,setDistrictId]=useState('');
 
   const [preview,setPreview]=useState();
+  console.log("Preview",preview)
 
   const [error, setError]=useState(false);
   const [loading,setLoading]=useState(false);
@@ -94,10 +95,11 @@ const handleSubmit =async (e)=>{
   e.preventDefault();
   try{
       //if(jsonForm.File.length <1 ) return setError('You must upload at least one image');
-      setLoading(true);
+      
       setError(false);
       if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null && jsonForm.AddressNo!=store.addressNo && jsonForm.Ward!=store.ward && jsonForm.Zone!=store.zone){
-          let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
+        setLoading(true);  
+        let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
           const geocoording= await forwardGeocoding(addressStore)
           if(geocoording===null){
               toast("Kiểm tra lại địa chỉ")
@@ -144,7 +146,7 @@ const handleSubmit =async (e)=>{
         if(params.storeId){
             const responseAPI= await getStoreById(params.storeId);
             setStore(responseAPI);
-            setPreview(store.imageURL);
+            setPreview(responseAPI.imageURL);
             setJsonForm({...jsonForm,
               Id:params.storeId,
               Name:responseAPI.name,
@@ -165,7 +167,7 @@ const handleSubmit =async (e)=>{
     }
     fetchData();
     
-},[districtId]);
+},[districtId,loading]);
 
     return (
       <>

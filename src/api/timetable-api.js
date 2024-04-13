@@ -7,9 +7,11 @@ export const getTimeTableByRouteIdandRouteVarId=async(routeId, routeVarId)=>{
         const res= await fetch (`${BASE_URL}/routes/${routeId}/route-vars/${routeVarId}/timetables`);
         const data =await res.json();
         console.log("GetTimeTableByRouteIdandRouteVarId",data);
-        return data;
+        if(res.status===200) return data;
+        else return null;
     } catch (error) {
-        console.log("getTimeTableByRouteIdandRouteVarId exception",error)
+        //console.log("getTimeTableByRouteIdandRouteVarId exception",error)
+        return null;
     }
 }
 
@@ -20,8 +22,8 @@ export const createTimeTableManually=async (timeTableModel)=>{
                 "Content-Type":"application/json"
             },
         })
-        console.log("Create timetable res",res);
-        if (res.status===201) return res.data;
+        console.log("Create timetable res",res.data);
+        if (res.status===200) return res.data;
         else return null;
     } catch (error) {
         console.error("create time table exception", error);
@@ -67,5 +69,15 @@ export const deleleTimeTable = async (timetableId)=>{
     else return null;
     } catch (error) {
         console.log("Delete timetable exception", error);
+    }
+}
+
+export const applyTimetableFortrip=async (timetableId)=>{
+    try {
+        const res= await axios.post(`${BASE_URL}/timetables/${timetableId}/trips`,{id:timetableId});
+        if(res.status===200) return res.status;
+        return null
+    } catch (error) {
+        console.error('Apply timetable for trip exception', error)
     }
 }
