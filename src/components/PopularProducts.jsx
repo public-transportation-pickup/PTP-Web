@@ -52,7 +52,7 @@ export default function PopularProducts({param}) {
   ]
   return (
     <div className="bg-white px-4 pt-3 pb-4 rounded-sm border border-gray-200 w-[20rem]">
-      <strong>Popular products</strong>
+      <strong>Danh mục đồ ăn </strong>
       {param!==null?
       <div className='mt-4 flex flex-col gap-3'>
         {param.categories.map((category,index)=>(
@@ -72,7 +72,7 @@ export default function PopularProducts({param}) {
 										: 'text-orange-500',
 									'text-xs font-medium'
 								)}>
-                {category.products ===0 ? 'not have any products': category.products+' products'}
+                {category.products ===0 ? '0 sản phẩm': category.products+' sản phẩm'}
               </span>
             </div>
             <div className='text-xs text-gray-400 pl-2'></div>

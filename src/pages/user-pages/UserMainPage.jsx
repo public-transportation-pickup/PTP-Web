@@ -35,7 +35,7 @@ const ViewDetailFunc=(userId)=>{
 
       <h1 className="text-xl font-bold text-center">Danh Sách Người Dùng Trong Hệ Thống</h1>
       <div className="flex flex-row">
-      <p className="my-auto pr-3 text-lg font-semibold text-center">Filter: </p>
+      <p className="my-auto pr-3 text-base font-semibold text-center">Bộ lọc: </p>
       <ComboBox setRoleName={setRoleName} ></ComboBox>
       </div>
       <table className=" w-full h-96 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-auto">
@@ -43,10 +43,10 @@ const ViewDetailFunc=(userId)=>{
                     <tr>
                     <th className="px-4">#</th>
                     <th>Họ và tên</th>
-                    <th>Mail</th>
+                    <th>EMail</th>
                     <th>Số điện thoại</th>
                     <th>Ngày sinh</th>
-                    <th>Quyền</th>
+                    <th>Chức vụ</th>
                     <th></th>
                     </tr>
                 </thead>
@@ -59,7 +59,9 @@ const ViewDetailFunc=(userId)=>{
                             <td>{item.phoneNumber}</td>
                             <td><GetDate date={item.dateOfBirth}></GetDate></td>
                             
-                            <td>{item.roleName}</td>
+                            <td>{item.roleName==='StoreManager'?
+                              'Quản lý'
+                              :(item.roleName=='Admin')?'Quản trị viên':'Khách hàng'}</td>
                             <td><MenuDropDown/></td>
                         </tr>
                     ))):(<></>)}
