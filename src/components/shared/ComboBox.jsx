@@ -3,9 +3,9 @@ import { Combobox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 
 const people = [
-  { id: 1, name: 'StoreManager' },
-  { id: 2, name: 'Customer' },
-  { id: 3, name: 'Admin' },
+  { id: 1, name: 'StoreManager',sub:'Quản lý' },
+  { id: 2, name: 'Customer',sub:'Khách hàng' },
+  { id: 3, name: 'Admin',sub:'Quản trị viên' },
 ]
 
 export default function ComboBox({setRoleName}) {
@@ -31,7 +31,7 @@ export default function ComboBox({setRoleName}) {
           <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
               className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
-              displayValue={(person) => person.name}
+              displayValue={(person) => person.sub}
               onChange={(event) => setQuery(event.target.value)}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
@@ -71,7 +71,7 @@ export default function ComboBox({setRoleName}) {
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
-                          {person.name}
+                          {person.sub}
                         </span>
                         {selected ? (
                           <span

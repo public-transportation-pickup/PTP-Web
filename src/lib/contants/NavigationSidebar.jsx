@@ -11,7 +11,7 @@ import { CiRoute,CiShop } from "react-icons/ci";
 export const DASHBOARD_SIDEBAR_LINKS = [
 	{
 		key: 'dashboard',
-		label: 'Dashboard',
+		label: 'Thống kê',
 		path: '/',
 		icon: <HiOutlineViewGrid />,
 		flag: false
@@ -69,13 +69,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
 	{
 		key: 'settings',
-		label: 'Settings',
+		label: 'Cài đặt',
 		path: '/settings',
 		icon: <HiOutlineCog />
 	},
 	{
 		key: 'support',
-		label: 'Help & Support',
+		label: 'Trợ giúp',
 		path: '/support',
 		icon: <HiOutlineQuestionMarkCircle />
 	}
