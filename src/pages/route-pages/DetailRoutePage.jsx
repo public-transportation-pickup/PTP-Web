@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiOutlineEye,HiOutlineMap,HiOutlineXCircle, HiArrowRight  } from "react-icons/hi";
-import {useParams} from 'react-router-dom'
+import {useParams,useNavigate} from 'react-router-dom'
 import { getRouteById } from "../../api/route-api";
 import { getRouteVars } from "../../api/route-var-api";
 import { ToastContainer,toast } from "react-toastify";
@@ -10,6 +10,7 @@ import { getTimeTableByRouteIdandRouteVarId } from "../../api/timetable-api.js";
 
 export default function DetailRoutePage() {
   const params=useParams();
+  const navigate=useNavigate();
   const [routeInfo,setRouteInfo]=useState({});
   const [routeStationList1,setRouteStationList1]=useState([])
   const [routeStationList2,setRouteStationList2]=useState([])
@@ -17,6 +18,8 @@ export default function DetailRoutePage() {
   const [timetable2,setTimetable2]=useState(null)
   const [isOpenMap,setIsOpenMap]=useState(false);
   const [MapType,setMapType]=useState(null);
+  const [flagCreateRoutevar,setFlagCreateRoutevar]=useState(true);
+
 
   console.log("routeStationList1",routeStationList1)
   console.log("routeStationList2",routeStationList2)
@@ -32,6 +35,10 @@ export default function DetailRoutePage() {
 
   const handleCloseMap=()=>{
     setIsOpenMap(false);
+  }
+
+  const handleCreateAnotherRoutevar=async ()=>{
+    
   }
 
 
@@ -118,6 +125,13 @@ export default function DetailRoutePage() {
               {index===routeStationList2.length-1?(<></>):<HiArrowRight className="mr-2"/>} 
             </div>
           ))}
+          {routeStationList2.length===0&&(
+            <div>
+              <p>Lượt về này hiện chưa có dữ liệu. Bạn có muốn tạo dữ liệu cho lượt về này không?</p>
+              <button>Có</button>
+              <button>Không</button>
+            </div>
+          )}
         </div>
         
       </div>

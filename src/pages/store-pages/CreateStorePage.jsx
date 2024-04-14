@@ -50,8 +50,8 @@ export default function CreateStorePage() {
     // }
 
     const handleStationChange=async (value)=>{
-        await setJsonForm({...jsonForm,StationIds:[...jsonForm.StationIds, value.id]});
-        setAddressStation(JSON.stringify(value.address))
+        await setJsonForm((listStationId)=>[listStationId,value.id]);
+        setAddressStation(JSON.stringify(value.addressNo))
         
     }
 
@@ -65,13 +65,25 @@ export default function CreateStorePage() {
         
     }
 
-    
-    
         
-    const handleChange=(e)=>{
+    const handleChange=async(e)=>{
         if(e.target.type==='time' || e.target.type ==='text' || e.target.type==='textarea'|| e.target.type==='number'){
             setJsonForm({...jsonForm,[e.target.id]:e.target.value,});
+            if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null){
+                console.log("bắt đầu lấy địa chỉ")
+                let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
+                const geocoording= await forwardGeocoding(addressStore)
+                console.log("Geocooording",geocoording)
+                // await setJsonForm({...jsonForm,Latitude:geocoording.lat});
+                // await setJsonForm({...jsonForm,Longitude:geocoording.lng});
+                setJsonForm(prevJsonForm => ({
+                    ...prevJsonForm,
+                    Latitude: geocoording.lat,
+                    Longitude: geocoording.lng
+                  }));
+                  console.log("Đã lấy xong")
         }
+    }
     }
 
     const handleSubmit =async (e)=>{
@@ -80,28 +92,27 @@ export default function CreateStorePage() {
             if(file.length<1) return setError('You must upload at least one image');
             setLoading(true);
             setError(false);
-            if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null){
-                let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
-                const geocoording= await forwardGeocoding(addressStore)
-                console.log("Geocooording",geocoording)
-                // await setJsonForm({...jsonForm,Latitude:geocoording.lat});
-                // await setJsonForm({...jsonForm,Longitude:geocoording.lng});
-                await setJsonForm(prevJsonForm => ({
-                    ...prevJsonForm,
-                    Latitude: geocoording.lat,
-                    Longitude: geocoording.lng
-                  }));
-                console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
-                if(jsonForm.Latitude !==0 && jsonForm.Longitude!==0){
-                    const responseAPI= await createStore(jsonForm,file);
-                    console.log("call api create store", responseAPI);
-                    if(responseAPI===null) toast("Tạo thất bại")
-                    else toast("Tạo thành công")
-                }else toast("Đang cập nhật địa chỉ. Xin chờ chút ạ!")
-                
-                
-                
-            }
+            // if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null){
+            //     let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
+            //     const geocoording= await forwardGeocoding(addressStore)
+            //     console.log("Geocooording",geocoording)
+            //     // await setJsonForm({...jsonForm,Latitude:geocoording.lat});
+            //     // await setJsonForm({...jsonForm,Longitude:geocoording.lng});
+            //     setJsonForm(prevJsonForm => ({
+            //         ...prevJsonForm,
+            //         Latitude: geocoording.lat,
+            //         Longitude: geocoording.lng
+            //       }));
+            //     console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
+               
+            // }
+
+            if(jsonForm.Latitude !==0 && jsonForm.Longitude!==0){
+                const responseAPI= await createStore(jsonForm,file);
+                console.log("call api create store", responseAPI);
+                if(responseAPI===null) toast("Tạo thất bại")
+                else toast("Tạo thành công")
+            }else toast("Đang cập nhật địa chỉ. Xin chờ chút ạ!")
             
             
             setLoading(false);
@@ -166,12 +177,22 @@ return (
                         <ComboboxComponent listItems={listWard} params="ward_name" onValueChange={handleWardChange}/>
                         <p>Chọn Trạm</p>
                         <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
-                        
-                      
-                        
                         {/* </div> */}
                         
                        
+                    </div>
+                    <div>
+                        <div>
+                        <p>Chọn Trạm</p>
+                        <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                        </div>
+                        <div>
+                            {jsonForm.StationIds && jsonForm.StationIds.length >0 && jsonForm.StationIds.map((item,index)=>(
+                                <div key={index}>
+
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <p>{addressStation}</p>
                     <div className="flex flex-row gap-1 items-center w-full">
