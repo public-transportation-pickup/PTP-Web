@@ -5,6 +5,8 @@ import {
 	HiOutlineQuestionMarkCircle,
 	HiOutlineCog
 } from 'react-icons/hi'
+import { FaChartBar,FaMapLocation  } from "react-icons/fa6";
+
 import { VscMapFilled } from "react-icons/vsc";
 import { CiRoute,CiShop } from "react-icons/ci";
 
@@ -54,6 +56,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		label: 'Tuyến',
 		path: '/route',
 		icon: <CiRoute />,
+		flag:false
+	},
+	{
+		key: 'station',
+		label: 'Doanh thu theo trạm',
+		path: '/station',
+		icon: <FaMapLocation />,
 		flag:false
 	},
 	{
