@@ -93,7 +93,8 @@ export const createStore = async (storeModel,file)=>{
         formData.append('Street',storeModel.Street);
         formData.append('File',file[0]);
         formData.append('ActivationDate',storeModel.ActivationDate);
-        formData.append('StationIds',storeModel.StationIds);
+        //formData.append('StationIds',JSON.stringify(storeModel.StationIds));
+        storeModel.StationIds.forEach((item) => formData.append("StationIds", item))
         // console.log("FormData req: ",file[0]);
         // console.log("Current user token",CURRENT_USER.token)
         const res= await axios.post(`${BASE_URL}/stores`,formData,{
@@ -103,6 +104,7 @@ export const createStore = async (storeModel,file)=>{
         })
         console.log("Create store dâta", res.data);
         if(res.status===201)return res.data;
+        else if(res.status===500) return res.status;
         else return null;
         
     } catch (error) {

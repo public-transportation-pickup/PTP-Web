@@ -11,27 +11,27 @@ export default function Layout() {
   const navigate=useNavigate()
   //console.log("Current user firebase", currentUser)
   useEffect(()=>{
-     //const storeUserLocal=async()=>{
-    //   try {
-    //     //const dataFetch=await authentication(currentUser.stsTokenManager.accessToken);
-          //const dataFetchToken=await authenticationV2(currentUser.stsTokenManager.accessToken);
-        //  if(ACCESS_TOKEN!==null){ 
-        //    const dataFetchRefresh=await refreshToken(ACCESS_TOKEN)
-        //    console.log("DataFetchRefresh",JSON.stringify(dataFetchRefresh));
-        //  }
+     const storeUserLocal=async()=>{
+      try {
+        //const dataFetch=await authentication(currentUser.stsTokenManager.accessToken);
+          const dataFetchToken=await authenticationV2(currentUser.stsTokenManager.accessToken);
+         if(ACCESS_TOKEN!==null){ 
+           const dataFetchRefresh=await refreshToken(ACCESS_TOKEN)
+           console.log("DataFetchRefresh",JSON.stringify(dataFetchRefresh));
+         }
         
-    //     // console.log("admin storage", localStorage.getItem("admin"));
+        // console.log("admin storage", localStorage.getItem("admin"));
          
-    //     // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
-    //     //if(dataFetch!==null) localStorage.setItem("admin",JSON.stringify(dataFetch));
-         //else navigate('/sign-in');
-         //console.log("DataFetchToken",JSON.stringify(dataFetchToken));
-    //   } catch (error) {
-    //     console.log("Exception useEffect Dashboard",error)
-    //   }
+        // console.log("Currenet user", (JSON.parse(localStorage.getItem("admin"))).token);
+        //if(dataFetch!==null) localStorage.setItem("admin",JSON.stringify(dataFetch));
+         else navigate('/sign-in');
+         console.log("DataFetchToken",JSON.stringify(dataFetchToken));
+      } catch (error) {
+        console.log("Exception useEffect Dashboard",error)
+      }
       
-     //}
-     //storeUserLocal();
+     }
+     storeUserLocal();
   },[currentUser])
   return (
     <div className="bg-neutral-100 h-screen w-screen overflow-hidden flex flex-row">
