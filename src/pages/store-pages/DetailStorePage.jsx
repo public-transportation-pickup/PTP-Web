@@ -52,8 +52,8 @@ export default function DetailStorePage() {
                                              {/* <button type="button" className="p-3 text-red-700 rounded-lg uppercase hover: opacity-65">Delete</button> */}
              </div>
              <div className="items-center flex justify-center gap-14 pt-4 pb-8">
-                 <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-green-200 rounded-lg w-32 h-8 hover:opacity-70">View products</button>
-                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-green-400 rounded-lg w-32 h-8 hover:opacity-70">View menu</button>
+                 <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-green-200 rounded-lg w-32 h-8 hover:opacity-70">Sản phẩm</button>
+                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-green-400 rounded-lg w-32 h-8 hover:opacity-70">Lịch bán</button>
              </div>
              <div className='p-3 max-w-6xl mx-auto'>
                  {/* xem detail store như create store, cho thêm thuộc tính

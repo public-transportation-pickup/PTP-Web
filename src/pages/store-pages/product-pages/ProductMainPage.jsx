@@ -2,7 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import PaginationButton from "../../../components/store-components/PaginationButton";
 import { useNavigate,useParams } from "react-router-dom";
 import { getProductByStoreId } from "../../../api/store-api";
-
+import NumberFormat from "../../../lib/utils/NumberFormat";
+import {GetDayOfWeek,DateTimeFormat} from "../../../lib/utils/DateFormat"
 
 export default function ProductMainPage() {
     const params= useParams();
@@ -43,7 +44,7 @@ export default function ProductMainPage() {
                         <th>Hình_Tên sản phẩm</th>
                         <th>Giá</th>
                         <th>Thời gian chuẩn bị</th>
-                        <th>Số lượng món đồng thời</th>
+                        <th>Số lượng xử lý đồng thời</th>
                         <th>Ngày sản xuất</th>
                         <th>Ngày hết hạn</th>
                     </tr>
@@ -57,11 +58,11 @@ export default function ProductMainPage() {
                                 <p>{item.name}</p>
                             </div>
                         </td>
-                        <td className="text-center py-2">{item.price}</td>
+                        <td className="text-center py-2"><NumberFormat number={item.price}/> VNĐ</td>
                         <td className="text-center py-2">{item.preparationTime}</td>
                         <td className="text-center py-2">{item.numProcessParallel}</td>
-                        <td className="text-center py-2">{item.manufacturingDate}</td>
-                        <td className="text-center py-2">{item.expirationDate}</td>
+                        <td className="text-center py-2"> <DateTimeFormat date={item.manufacturingDate}/> </td>
+                        <td className="text-center py-2"><DateTimeFormat date={item.expirationDate}/></td>
                     </tr>
                     )))}
                     
