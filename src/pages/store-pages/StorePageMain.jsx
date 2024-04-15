@@ -22,7 +22,10 @@ export default function StorePageMain() {
         try {
             const responseAPI= await deleteStore(id);
             console.log("Reponse api delete store",responseAPI);
-            if(responseAPI===204) toast("Xóa thành công")
+            if(responseAPI===204){
+                toast("Xóa thành công")
+                fetchData();
+            } 
             else toast("Xóa thất bại")
         } catch (error) {
             console.error("Delete route store page",error)
