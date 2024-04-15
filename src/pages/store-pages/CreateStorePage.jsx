@@ -3,6 +3,7 @@ import { createStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictI
 import ComboboxComponent from "../../components/store-components/ComboboxComponent";
 import {ToastContainer, toast } from "react-toastify";
 import { getStations } from "../../api/station-api";
+import { HiOutlineTrash} from "react-icons/hi";
 
 
 export default function CreateStorePage() {
@@ -21,14 +22,15 @@ export default function CreateStorePage() {
     // console.log("DistrictId",districtId);
     const [error, setError]=useState(false);
     const [loading,setLoading]=useState(false);
-    const [addressStation,setAddressStation]=useState('');
-    console.log("addressStation",addressStation)
+    //const [addressStation,setAddressStation]=useState('');
+    const [stationListInfo,setStationListInfo]=useState([]);
+    //console.log("addressStation",addressStation)
     const [jsonForm,setJsonForm]=useState({
         Name:"",
         Description:"",
         PhoneNumber:"",
         OpenedTime:"06:00",
-        ClosedTime:"22:00",
+        ClosedTime:"23:59",
         Latitude:0,
         Longitude: 0,
         Zone:"",
@@ -40,6 +42,7 @@ export default function CreateStorePage() {
     })
     console.log("Json form: ",jsonForm);
     console.log("Station id", jsonForm.StationIds)
+    console.log("Station list info", stationListInfo);
     const [file,setFile]=useState([]);
     //console.log("File ava", file);
 
@@ -50,8 +53,11 @@ export default function CreateStorePage() {
     // }
 
     const handleStationChange=async (value)=>{
-        await setJsonForm((listStationId)=>[listStationId,value.id]);
-        setAddressStation(JSON.stringify(value.addressNo))
+        //await setJsonForm((listStationId)=>[listStationId,value.id]);
+        console.log("station change",value);
+        await setJsonForm({...jsonForm,StationIds:[...jsonForm.StationIds, value.id]});
+        await setStationListInfo(prev=>[...prev, value]);
+        //setAddressStation(JSON.stringify(value.addressNo))
         
     }
 
@@ -86,6 +92,13 @@ export default function CreateStorePage() {
     }
     }
 
+    const handleRemoveStation=async (id)=>{
+        //console.log("station id remove", station!==id)
+        setJsonForm({...jsonForm, StationIds:jsonForm.StationIds.filter((station)=>station!==id)})
+        setStationListInfo(stationListInfo.filter((station)=>station.id!==id))
+
+    }
+
     const handleSubmit =async (e)=>{
         e.preventDefault();
         try{
@@ -111,6 +124,7 @@ export default function CreateStorePage() {
                 const responseAPI= await createStore(jsonForm,file);
                 console.log("call api create store", responseAPI);
                 if(responseAPI===null) toast("Tạo thất bại")
+                else if (responseAPI===500) toast("Đang trong quá trình tạo tài khoản cho store");
                 else toast("Tạo thành công")
             }else toast("Đang cập nhật địa chỉ. Xin chờ chút ạ!")
             
@@ -136,12 +150,8 @@ export default function CreateStorePage() {
 
     useEffect(()=>{
         async function fetchData() {
-        
-            
                 const responseDistrict=await getDistrictByProvinceId("79");
                 await setListDistrict(responseDistrict);
-    
-
             if(districtId){
                 const responseWard=await getWardByDistrictId(districtId);
                 const responseRouteStationAPI= await getStations(jsonForm.Zone);
@@ -149,9 +159,7 @@ export default function CreateStorePage() {
                 await setListStation(responseRouteStationAPI)
             }else{
                 setListWard([]);
-            }
-           
-                
+            }   
         }
         fetchData();
         
@@ -164,7 +172,7 @@ return (
         <main className='p-3 max-w-6xl mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Tạo Cửa Hàng Mới</h1>
             <div className="flex flex-row gap-4 pb-8  items-center py-2 ">
-                <div className="flex flex-col gap-8 items-start pb-4">
+                <div className="flex flex-col gap-8 items-start pb-4 mx-auto">
                     <div className="flex flex-row gap-3 items-center">
                         {/* <div className="flex flex-row gap-3 items-center"> */}
                         {/*<p>Chọn Thành Phố</p>
@@ -173,29 +181,38 @@ return (
                         <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleZoneChange}/>
                         {/* </div> */}
                         {/* <div className="flex flex-row gap-3 items-center"> */}
-                        <p>Chọn Phường</p>
+                        <p className="ml-24">Chọn Phường</p>
                         <ComboboxComponent listItems={listWard} params="ward_name" onValueChange={handleWardChange}/>
-                        <p>Chọn Trạm</p>
-                        <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                        {/* <p>Chọn Trạm</p>
+                        <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/> */}
                         {/* </div> */}
                         
                        
                     </div>
-                    <div>
-                        <div>
+                    <div className="flex flex-row gap-8">
+                        <div className="flex flex-row gap-4 items-center">
                         <p>Chọn Trạm</p>
                         <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
                         </div>
                         <div>
-                            {jsonForm.StationIds && jsonForm.StationIds.length >0 && jsonForm.StationIds.map((item,index)=>(
-                                <div key={index}>
-
+                            {stationListInfo && stationListInfo.length >0 && stationListInfo.map((item,index)=>(
+                                //storeId="00000000-0000-0000-0000-000000000000"
+                                <div key={index} className="flex flex-row gap-4 items-center border-y-2 justify-between">
+                                    <div className="flex flex-row gap-2">
+                                    <p>{index+1} - </p>
+                                    <div>
+                                        <p>Tên trạm: {item.name}</p>
+                                        <p>Địa chỉ: {item.address}</p>
+                                    </div>
+                                    </div>
+                                   
+                                    <HiOutlineTrash className="cursor-pointer" onClick={()=>handleRemoveStation(item.id)}/>
                                 </div>
                             ))}
                         </div>
                     </div>
-                    <p>{addressStation}</p>
-                    <div className="flex flex-row gap-1 items-center w-full">
+                    {/* <p>{addressStation}</p> */}
+                    <div className="flex flex-row items-center w-full">
                         <label className="w-1/3" htmlFor="Address">Địa chỉ (Số nhà, tổ, đường, khu phố):</label>
                         <input
                         type="text"
@@ -213,10 +230,10 @@ return (
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
                     <div className='w-3/4 flex flex-col gap-4 flex-1'>
-                        <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Name' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
-                        <textarea onChange={handleChange} value={jsonForm.Description} type='text' placeholder='Description' className='border p-3 rounded-lg'id='Description' required/>
+                        <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Tên cửa hàng' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
+                        <textarea onChange={handleChange} value={jsonForm.Description} type='text' placeholder='Mô tả' className='border p-3 rounded-lg'id='Description' required/>
                         {/* <input onChange={handleChange} value={formData.Address} type='text' placeholder='Address' className='border p-3 rounded-lg'id='Address'  required/> */}
-                        <input onChange={handleChange} value={jsonForm.PhoneNumber} type='text' placeholder='PhoneNumber' className='border p-3 rounded-lg'id='PhoneNumber'  required/>
+                        <input onChange={handleChange} value={jsonForm.PhoneNumber} type='text' placeholder='Số điện thoại' className='border p-3 rounded-lg'id='PhoneNumber'  required/>
                         {/* <div className='flex gap-5 flex-row'>
                             <div className='flex gap-2'>
                                 <span>Open Time</span>
@@ -236,13 +253,13 @@ return (
                             {/* <input onChange={handleInputImgChange} className='hidden' type='file' id='images' accept='image/*'/>
                             <button className='p-1 text-green-700 border border-green-700 rounded uppercase hover: shadow-lg disabled:opacity-80'>Select Image</button> */}
                             <label htmlFor="images" className="p-1 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80">
-                                Select Image
+                                Chọn ảnh
                                 <input onChange={handleInputImgChange} className="hidden" type="file" id="images" name="File" accept="image/*" multiple={false}/>
                             </label>
                             
                         </div>
                         
-                            <span className='font-normal text-gray-600 ml-2'> Only 1 image</span>
+                            <span className='font-normal text-gray-600 ml-2'> Chỉ 1 ảnh</span>
                         
                         </div>
                         

@@ -25,7 +25,7 @@ export default function ComboboxComponent({listItems,params,onValueChange}) {
             .includes(query.toLowerCase().replace(/\s+/g, ''))
         )
   return (
-    <div className="border border-2 rounded-lg border-solid border-indigo-600">
+    <div className="w-96">
     <Combobox value={selected} onChange={(e)=>handeleChange(e)}>
         <div className="relative">
         <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
