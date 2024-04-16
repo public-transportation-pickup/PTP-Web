@@ -4,7 +4,7 @@ import { updateStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictI
 import ComboboxComponent from "../../components/store-components/ComboboxComponent";
 import { getStations } from "../../api/station-api";
 import {useParams} from 'react-router-dom'
-import {HiPencil,HiOutlineXCircle } from "react-icons/hi";
+import {HiPencil,HiOutlineXCircle, HiOutlineTrash } from "react-icons/hi";
 
 export default function UpdateStorePage() {
   const params=useParams();
@@ -22,12 +22,14 @@ export default function UpdateStorePage() {
   const [loading,setLoading]=useState(false);
   const [changeAddress,setChangeAddress]=useState(false);
 
-  const [addressStation,setAddressStation]=useState('');
+  //const [addressStation,setAddressStation]=useState('');
+
+  const [stationListInfo,setStationListInfo]=useState([]);
 
   const [store,setStore]=useState({});
 
   const handleInputImgChange = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     setPreview(URL.createObjectURL(e.target.files[0]))
     setJsonForm((prevFormData) => ({
         ...prevFormData,
@@ -57,9 +59,21 @@ export default function UpdateStorePage() {
 console.log("Jsonform",jsonForm)
 
   const handleStationChange=async (value)=>{
-    await setJsonForm({...jsonForm,StationIds:value.id});
-    setAddressStation(JSON.stringify(value.address))
+    console.log("station change",value);
+    if(value.storeId!=="00000000-0000-0000-0000-000000000000") await toast("Trạm đã được đăng kí store")
+    else{
+        await setJsonForm({...jsonForm,StationIds:[...jsonForm.StationIds, value.id]});
+    await setStationListInfo(prev=>[...prev, value]);
+    // await setJsonForm({...jsonForm,StationIds:value.id});
+    // setAddressStation(JSON.stringify(value.address))
+    }
     
+}
+const handleRemoveStation=async (id)=>{
+  //console.log("station id remove", station!==id)
+  setJsonForm({...jsonForm, StationIds:jsonForm.StationIds.filter((station)=>station!==id)})
+  setStationListInfo(stationListInfo.filter((station)=>station.id!==id))
+
 }
 
 const handleZoneChange=async (value)=>{
@@ -72,9 +86,28 @@ const handleWardChange=async (value)=>{
     
 }
 
-const handleChange=(e)=>{
+const handleChange=async (e)=>{
   //if(e.target.type==='time' || e.target.type ==='text' || e.target.type==='textarea'|| e.target.type==='number'){
       setJsonForm({...jsonForm,[e.target.id]:e.target.value,});
+      if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null && jsonForm.AddressNo!=store.addressNo && jsonForm.Ward!=store.ward && jsonForm.Zone!=store.zone){
+        setLoading(true);  
+        let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
+          const geocoording= await forwardGeocoding(addressStore)
+          if(geocoording===null){
+              toast("Kiểm tra lại địa chỉ")
+          }
+          else{
+            const geocoording= await forwardGeocoding(addressStore)
+            console.log("Geocooording",geocoording)
+            await setJsonForm(prevJsonForm => ({
+                ...prevJsonForm,
+                Latitude: geocoording.lat,
+                Longitude: geocoording.lng
+              }));
+            console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
+          } 
+          
+      }
  // }
 }
 
@@ -97,28 +130,10 @@ const handleSubmit =async (e)=>{
       //if(jsonForm.File.length <1 ) return setError('You must upload at least one image');
       
       setError(false);
-      if(jsonForm.AddressNo!==null && jsonForm.Ward!==null && jsonForm.Zone!==null && jsonForm.AddressNo!=store.addressNo && jsonForm.Ward!=store.ward && jsonForm.Zone!=store.zone){
-        setLoading(true);  
-        let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
-          const geocoording= await forwardGeocoding(addressStore)
-          if(geocoording===null){
-              toast("Kiểm tra lại địa chỉ")
-          }
-          else{
-            const geocoording= await forwardGeocoding(addressStore)
-            console.log("Geocooording",geocoording)
-            await setJsonForm(prevJsonForm => ({
-                ...prevJsonForm,
-                Latitude: geocoording.lat,
-                Longitude: geocoording.lng
-              }));
-            console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
-          } 
-          
-      }
       const responseAPI= await updateStore(jsonForm);
               console.log("call api update store", responseAPI);
               if(responseAPI===204) toast("Cập nhật thành công")
+              else if(responseAPI===401) toast("Vui lòng đăng nhập")
               else toast("Cập nhật thất bại")
       
       
@@ -167,7 +182,7 @@ const handleSubmit =async (e)=>{
     }
     fetchData();
     
-},[districtId,loading]);
+},[districtId,loading,params.storeId]);
 
     return (
       <>
@@ -175,17 +190,36 @@ const handleSubmit =async (e)=>{
           <main className='p-3 max-w-6xl mx-auto'>
               <h1 className='text-3xl font-semibold text-center my-7'>Cập nhật cửa hàng</h1>
               <div className="flex flex-row gap-2 mb-6 w-full">
-                <div className="flex flex-row gap-3 items-center w-full">
-                          <label className="" htmlFor="Address">Địa chỉ hiện tại</label>
-                          <input
-                          type="text"
-                          className="rounded-lg w-3/5 h-12"
-                          value={`${store.addressNo}, ${store.street!==null?store.street:""}, ${store.ward}, ${store.zone}`}
-                          readOnly
-                          />
-                <HiPencil onClick={handleOpenChangeAddress} size={30} className="z-10 bg-blue-300 cursor-pointer rounded-full p-1 hover:bg-blue-400"/>
-                          
+                <div>
+                  <div className="flex flex-row gap-3 items-center w-full">
+                            <label className="" htmlFor="Address">Địa chỉ hiện tại</label>
+                            <input
+                            type="text"
+                            className="rounded-lg w-3/5 h-12"
+                            value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
+                            readOnly
+                            />
+                  <HiPencil onClick={handleOpenChangeAddress} size={30} className="z-10 bg-blue-300 cursor-pointer rounded-full p-1 hover:bg-blue-400"/>        
+                  </div>
+                  <div>
+                  <div>
+                            {jsonForm.StationIds && stationListInfo.length >0 && stationListInfo.map((item,index)=>(
+                                //storeId="00000000-0000-0000-0000-000000000000"
+                                        <div key={index} className="flex flex-row gap-4 items-center border-y-2 justify-between">
+                                        <div className="flex flex-row gap-2">
+                                        <p>{index+1} - </p>
+                                        <div>
+                                            <p>Tên trạm: {item.name}</p>
+                                            <p>Địa chỉ: {item.address}</p>
+                                        </div>
+                                        </div>
+                                        <HiOutlineTrash className="cursor-pointer" onClick={()=>handleRemoveStation(item.id)}/>
+                                        </div>
+                            ))}
+                        </div>
+                  </div>
                 </div>
+                
               </div>
 
               {
@@ -196,17 +230,38 @@ const handleSubmit =async (e)=>{
                       <HiOutlineXCircle size={30} onClick={handleCloseChangeAddress} className="z-10 bg-rose-300 cursor-pointer rounded-full p-1 hover:bg-rose-400"/>
                     </div>
                     <div className="flex flex-row gap-4 pb-4  items-center py-2 ">
-                  <div className="flex flex-col gap-8 items-start pb-4">
+                  <div className="flex flex-col gap-8 items-start pb-4 mx-auto">
                       <div className="flex flex-row gap-3 items-center">
                           <p className="">Chọn Quận</p>
                           <ComboboxComponent listItems={listDistrict} params="district_name" onValueChange={handleZoneChange}/>
                           <p>Chọn Phường</p>
                           <ComboboxComponent listItems={listWard} params="ward_name" onValueChange={handleWardChange}/>
-                          <p>Chọn Trạm</p>
-                          <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                          {/* <p>Chọn Trạm</p>
+                          <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/> */}
                        
                       </div>
-                      <p>{addressStation}</p>
+                      <div className="flex flex-row gap-8">
+                        <div className="flex flex-row gap-4 items-center">
+                        <p>Chọn Trạm</p>
+                        <ComboboxComponent listItems={listStation} params="name" onValueChange={handleStationChange}/>
+                        </div>
+                        <div>
+                            {stationListInfo && stationListInfo.length >0 && stationListInfo.map((item,index)=>(
+                                //storeId="00000000-0000-0000-0000-000000000000"
+                                        <div key={index} className="flex flex-row gap-4 items-center border-y-2 justify-between">
+                                        <div className="flex flex-row gap-2">
+                                        <p>{index+1} - </p>
+                                        <div>
+                                            <p>Tên trạm: {item.name}</p>
+                                            <p>Địa chỉ: {item.address}</p>
+                                        </div>
+                                        </div>
+                                        <HiOutlineTrash className="cursor-pointer" onClick={()=>handleRemoveStation(item.id)}/>
+                                        </div>
+                            ))}
+                        </div>
+                    </div>
+                      {/* <p>{addressStation}</p> */}
                       <div className="flex flex-row gap-1 items-center w-full">
                           <label className="w-1/3" htmlFor="Address">Địa chỉ (Số nhà, tổ, đường, khu phố):</label>
                           <input
@@ -228,11 +283,21 @@ const handleSubmit =async (e)=>{
               
               <div>
                   <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
-                      <div className='w-3/4 flex flex-col gap-4 flex-1'>
-                          <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Name' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
-                          <textarea onChange={handleChange} value={jsonForm.Description} type='text' placeholder='Description' className='border p-3 rounded-lg'id='Description' required/>
-                          {/* <input onChange={handleChange} value={formData.Address} type='text' placeholder='Address' className='border p-3 rounded-lg'id='Address'  required/> */}
-                          <input onChange={handleChange} value={jsonForm.PhoneNumber} type='text' placeholder='PhoneNumber' className='border p-3 rounded-lg'id='PhoneNumber'  required/>
+                      <div className='w-2/3 flex flex-col gap-6 flex-1'>
+                      <div className="flex flex-col gap-1">
+                            <label htmlFor="Name" className="">Tên cửa hàng</label>
+                            <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Tên cửa hàng' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
+                        </div>
+
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="Description" className="">Mô tả</label>
+                            <textarea onChange={handleChange} value={jsonForm.Description} type='text' placeholder='Mô tả' className='border p-3 rounded-lg'id='Description' required/>
+                        </div>
+                        
+                        <div className="flex flex-col gap-1">
+                            <label htmlFor="PhoneNumber" className="">Số điện thoại</label>
+                            <input onChange={handleChange} value={jsonForm.PhoneNumber} type='text' placeholder='Số điện thoại' className='border p-3 rounded-lg'id='PhoneNumber'  required/>
+                        </div>
                           {/* <div className='flex gap-5 flex-row'>
                               <div className='flex gap-2'>
                                   <span>Open Time</span>
@@ -246,17 +311,17 @@ const handleSubmit =async (e)=>{
                               </div>
                           </div> */}
                       </div>
-                      <div className='w-3/12 flex flex-col flex-1 gap-2'>
+                      <div className='w-1/3 flex flex-col flex-1 gap-2'>
                           <div className="flex justify-center flex-row gap-2 ">
                           <div className='flex gap-4'>
                               <label htmlFor="File" className="p-1 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80">
-                                  Select Image
+                                  Chọn ảnh
                                   <input onChange={handleInputImgChange} className="hidden" type="file" id="File" name="File" accept="image/*" multiple={false}/>
                               </label>
                               
                           </div>
                           
-                              <span className='font-normal text-gray-600 ml-2'> Only 1 image</span>
+                              <span className='font-normal text-gray-600 ml-2'> Chỉ 1 ảnh</span>
                           
                           </div>
                           

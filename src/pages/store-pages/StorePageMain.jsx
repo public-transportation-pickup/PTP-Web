@@ -84,7 +84,7 @@ return (
                             <td>{item.email}</td>
                             <td>{item.addressNo}, {item.street==="null"? "":`Đường ${item.street},`} {item.ward}, {item.zone}, TPHCM</td>
                             
-                            <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status}</span></td>
+                            <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status==='ACTIVE'?'ĐANG HOẠT ĐỘNG':'DỪNG HOẠT ĐỘNG'}</span></td>
                             {/* </div> */}
                             
                             <td><MenuDropDown EditFunc={()=>EditFunc(item.id)} DeleteFunc={()=>DeleteFunc(item.id)} ViewDetailFunc={()=>ViewDetailFunc(item.id)}/></td>

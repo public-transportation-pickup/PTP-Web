@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react'
 import { HiArrowRight } from "react-icons/hi";
 import StationByZone from '../StationByZone';
@@ -9,8 +8,7 @@ import { createRouteVarManually } from '../../../../api/route-var-api';
 import {useNavigate, useParams} from 'react-router-dom'
 import { getRouteById } from '../../../../api/route-api';
 
-
-export default function CreateRouteVarForm() {
+export default function CreateRouteVarForm2() {
   const navigate=useNavigate();
   const params=useParams();
   const [listRouteStation,setListRouteStation]=useState([]);
@@ -22,18 +20,18 @@ export default function CreateRouteVarForm() {
       routeVarShortName:'',
       startStop:'',
       endStop:'',
-      outBound:true,
+      outBound:false,
       runningTime:0,
       routeStations:[],
       routeId:'',
   })
-
   const [routeInfo,setRouteInfo]=useState({});
   const [routevarId,setRoutevarId]=useState('');
   const [buttonSubmit,setButtonSubmit]=useState(false);
 
   console.log("List route var", listRouteStation)
   console.log("Create route var model", createRouteVarModel);
+  //console.log("Create route var model", createRouteVarModel2);
   console.log("RouteInfo", routeInfo)
   const handleAddStation=async (station)=>{
     let lenngthArray= createRouteVarModel.routeStations.length;
@@ -128,12 +126,13 @@ export default function CreateRouteVarForm() {
           </div>
           <div className="relative z-0 w-full mb-5 group">
               
-              <label htmlFor="outBound" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Chọn lượt</label>
+          <input value="Lượt đi" type="text"  name="outBound" id="outBound" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " readOnly />
+              <label htmlFor="outBound" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lượt về</label>
 
-                <select name="outBound" id="outBound" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                {/* <select name="outBound" id="outBound" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                   <option value={true}>Lượt đi</option>
                   <option value={false}>Lượt về</option>
-                </select>
+                </select> */}
           </div>
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
@@ -184,8 +183,3 @@ export default function CreateRouteVarForm() {
     </div>
   )
 }
-
-// CreateRouteVarForm.propTypes={
-//   routeIdReturn:PropTypes.string,
-//   getRouteVarId:PropTypes.func
-// }
