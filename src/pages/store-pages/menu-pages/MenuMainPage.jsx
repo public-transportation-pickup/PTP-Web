@@ -53,7 +53,7 @@ export default function MenuMainPage() {
         <span className="px-2">&gt;</span>
         <span className="hover:underline">Lịch bán</span>
     </p>
-        <h1 className="text-center mx-auto text-4xl mb-10">Lịch bán</h1>
+        <h1 className="text-center mx-auto text-4xl mb-20">Danh sách lịch bán</h1>
         {/* <button className="">Create Menu</button> */}
         {/* <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new product</button>

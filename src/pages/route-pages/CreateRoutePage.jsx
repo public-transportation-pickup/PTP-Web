@@ -41,15 +41,16 @@ export default function CreateRoutePage() {
       <ToastContainer/>
       <h2 className="text-pretty text-xl text-center py-8 uppercase font-semibold">Tạo mới tuyến</h2>
       {/* {enumRoute &&} */}
-      <div>
-        <p className="text-lg">Hiện nay hệ thống hỗ trợ 2 cách để tạo tuyến là <span className="text-xl text-cyan-400">Chỉnh sửa trên tuyến có sẵn</span> và <span className="text-xl text-cyan-400">Tạo thủ công tuyến mới </span></p>
-        <p>Chọn cách để tạo: </p>
-        {/* <button onClick={handleDuplicateChoice} className="bg-sky-400 hover:bg-opacity-90 p-4 rounded-lg mr-6">Dựa trên bản sao của tuyến có sẵn</button>
-        <button onClick={handleManuallyChoice} className="bg-sky-400 hover:bg-opacity-90 p-4 rounded-lg">Tạo mới tuyến thủ công</button> */}
-        <div className="flex flex-row gap-4">
-        <Modal buttonValue={<p className="bg-amber-400 rounded-lg p-2 hover:bg-amber-200">Tạo bản sao</p>} title="Tạo mới tuyến dựa trên tuyến có sẵn" EnumHandler={handleDuplicateChoice}/>
-        <Modal buttonValue={<p className="bg-amber-400 rounded-lg p-2 hover:bg-amber-200">Tạo thủ công</p>} title="Tạo mới tuyến bằng cách thủ công" EnumHandler={handleManuallyChoice}/>
+      <div className="mx-auto items-center">
+        <p className="text-lg">Hiện nay hệ thống hỗ trợ 2 cách để tạo tuyến là <span className="text-lg text-cyan-500 uppercase font-bold">Chỉnh sửa trên tuyến có sẵn</span> và <span className="text-lg text-cyan-500 uppercase font-bold">Tạo thủ công tuyến mới </span></p>
+        <div>
+          <p className="text-lg">Chọn cách để tạo: </p>
+          <div className="flex flex-row gap-4">
+            <Modal buttonValue={<p className="bg-orange-400 rounded-lg p-2 hover:bg-amber-200">Tạo bản sao</p>} title="Tạo mới tuyến dựa trên tuyến có sẵn" EnumHandler={handleDuplicateChoice}/>
+            <Modal buttonValue={<p className="bg-orange-400 rounded-lg p-2 hover:bg-amber-200">Tạo thủ công</p>} title="Tạo mới tuyến bằng cách thủ công" EnumHandler={handleManuallyChoice}/>
+          </div>
         </div>
+       
         
       </div>
       {flag===false && (

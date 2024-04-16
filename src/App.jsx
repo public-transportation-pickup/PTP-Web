@@ -101,6 +101,7 @@ export default function App() {
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/map' element={<Map/>}/>
+        <Route path='/createRoutevar' element={<CreateRouteVarPage/>}/>
       </Routes>
     </BrowserRouter>
   )

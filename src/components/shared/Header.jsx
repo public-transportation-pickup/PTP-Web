@@ -18,7 +18,7 @@ const handleSignout= async ()=>{
     try{
       dispatch(signOutUserStart)
       
-      await localStorage.clear();
+      localStorage.clear();
       dispatch(signOutUserSuccess(currentUser));
     }catch(error){
       dispatch(signOutUserFailre(error.message));
@@ -40,7 +40,7 @@ const handleSignout= async ()=>{
 									'group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100'
 								)}
 							>
-								<HiOutlineChatAlt fontSize={24} />
+								{/* <HiOutlineChatAlt fontSize={24} /> */}
 							</Popover.Button>
 							<Transition
 								as={Fragment}
@@ -70,7 +70,7 @@ const handleSignout= async ()=>{
 									'group inline-flex items-center rounded-sm p-1.5 text-gray-700 hover:text-opacity-100 focus:outline-none active:bg-gray-100'
 								)}
 							>
-								<HiOutlineBell fontSize={24}/>
+								{/* <HiOutlineBell fontSize={24}/> */}
 							</Popover.Button>
 							<Transition
 								as={Fragment}
@@ -98,7 +98,8 @@ const handleSignout= async ()=>{
 							{currentUser ? (
 								<div
 								className="h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center"
-								style={{ backgroundImage: 'url("https://source.unsplash.com/80x80?face")' }}
+								//style={{ backgroundImage: 'url("https://source.unsplash.com/80x80?face")' }}
+								style={{ backgroundImage: 'url("https://t4.ftcdn.net/jpg/02/27/45/09/360_F_227450952_KQCMShHPOPebUXklULsKsROk5AvN6H1H.jpg")'}}
 							>
 								<span className="sr-only">Marc Backes</span>
 							</div>

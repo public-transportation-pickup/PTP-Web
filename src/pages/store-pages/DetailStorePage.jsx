@@ -40,9 +40,9 @@ export default function DetailStorePage() {
 
   return (
     <div>
-        <div>
+        {/* <div>
             <button onClick={handleStoreAllButton} className="hover:underline cursor-pointer">Cửa hàng</button>
-        </div>
+        </div> */}
         {detailStore&&(
              <div>
         
@@ -52,8 +52,9 @@ export default function DetailStorePage() {
                                              {/* <button type="button" className="p-3 text-red-700 rounded-lg uppercase hover: opacity-65">Delete</button> */}
              </div>
              <div className="items-center flex justify-center gap-14 pt-4 pb-8">
-                 <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-green-200 rounded-lg w-32 h-8 hover:opacity-70">Sản phẩm</button>
-                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-green-400 rounded-lg w-32 h-8 hover:opacity-70">Lịch bán</button>
+                 <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-amber-200 rounded-lg w-32 h-8 hover:opacity-70">Sản phẩm</button>
+                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-amber-400 rounded-lg w-32 h-8 hover:opacity-70">Lịch bán</button>
+                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-amber-400 rounded-lg w-auto h-8 hover:opacity-70 px-2">Thống kê cửa hàng</button>
              </div>
              <div className='p-3 max-w-6xl mx-auto'>
                  {/* xem detail store như create store, cho thêm thuộc tính
@@ -83,8 +84,16 @@ export default function DetailStorePage() {
                    </div>
                    <div>
                        <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trạng thái</label>
-                       <input type="text" name="status" id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.status} required=""/>
+                       <input type="text" name="status" id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.status==="ACTIVE"?'Đang hoạt động':'Dừng hoạt động'} required=""/>
                    </div> 
+                   <div className="sm:col-span-2">
+                       <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cửa hàng đã được đăng kí tại trạm</label>
+                        {detailStore.stationName && detailStore.stationName.length >0&& detailStore.stationName.map((item,index)=>(
+                            <div key={index} className="flex flex-row gap-4 ml-8">
+                                <div className="bg-gray-50 rounded-lg p-2 mb-2 border border-gray-400 w-full">{index+1} - {item}</div>
+                            </div>
+                        ))}
+                   </div>
                    <div className="sm:col-span-2">
                        <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mô tả</label>
                        <textarea id="description" rows="8" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.description}></textarea>

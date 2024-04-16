@@ -46,7 +46,7 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
                             aria-hidden="true"
                           />
                         )}
-                        Edit
+                        Chỉnh sửa
                       </button>
                     )}
                   </Menu.Item>
@@ -69,7 +69,7 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
                             aria-hidden="true"
                           />
                         )}
-                        View Detail
+                        Xem chi tiết
                       </button>
                     )}
                   </Menu.Item>
@@ -94,7 +94,7 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
                             aria-hidden="true"
                           />
                         )}
-                        Delete
+                        Xóa
                       </button>
                     )}
                   </Menu.Item>

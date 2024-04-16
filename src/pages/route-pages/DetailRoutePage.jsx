@@ -7,6 +7,7 @@ import { ToastContainer,toast } from "react-toastify";
 import { getRouteStation } from "../../api/route-station-api";
 import Map from '../../pages/Map.jsx';
 import { getTimeTableByRouteIdandRouteVarId } from "../../api/timetable-api.js";
+import classNames from "classnames";
 
 export default function DetailRoutePage() {
   const params=useParams();
@@ -36,11 +37,6 @@ export default function DetailRoutePage() {
   const handleCloseMap=()=>{
     setIsOpenMap(false);
   }
-
-  const handleCreateAnotherRoutevar=async ()=>{
-    
-  }
-
 
   useEffect(()=>{
     const fetchData=async ()=>{
@@ -80,10 +76,9 @@ export default function DetailRoutePage() {
       <ToastContainer/>
       <div className="mb-2">
         <p className="text-center text-2xl pb-6 text-amber-500 font-bold">
-
           {routeInfo.name}
-          
         </p>
+        <div>
         <p><span className="text-amber-500 font-bold" >Mã số tuyến:</span> <span>{routeInfo.routeNo}</span></p>
         <p><span className="text-amber-500 font-bold" >Khoảng cách:</span> <span>{routeInfo.distance} mét</span></p>
         <p><span className="text-amber-500 font-bold" >Thời gian của 1 chuyến:</span> <span>{routeInfo.timeOfTrip} phút</span></p>
@@ -95,9 +90,11 @@ export default function DetailRoutePage() {
         <p><span className="text-amber-500 font-bold" >Thời khóa biểu - lượt đi:</span> <span>{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
         <p><span className="text-amber-500 font-bold" >Thời khóa biểu - lượt về:</span> <span>{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
         <p><span className="text-amber-500 font-bold" >Trạng thái:</span> <span>{routeInfo.status}</span></p>
+        </div>
+        
       </div>
       
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 pt-8">
       {/* Lượt  */}
       <div className="border-2 border-amber-200 p-4 rounded-lg">
         <HiOutlineEye className="bg-amber-400 rounded-full cursor-pointer hover:bg-amber-200 ml-auto" onClick={()=>handleViewMap(true)} size={25}/>
@@ -106,7 +103,7 @@ export default function DetailRoutePage() {
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList1&& routeStationList1.length>0&&routeStationList1.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
-              <p className="mr-2">{item.stationName}</p>
+               <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2")}>{item.stationName}</p>
               {index===routeStationList1.length-1?(<></>):<HiArrowRight className="mr-2 font-bold"/>} 
             </div>
           ))}
@@ -121,7 +118,8 @@ export default function DetailRoutePage() {
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList2&& routeStationList2.length>0&&routeStationList2.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
-              <p className="mr-2">{item.stationName}</p>
+              {/* <p className="mr-2">{item.stationName}</p> */}
+              <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2")}>{item.stationName}</p>
               {index===routeStationList2.length-1?(<></>):<HiArrowRight className="mr-2"/>} 
             </div>
           ))}
