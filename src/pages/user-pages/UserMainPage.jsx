@@ -68,13 +68,13 @@ const ViewDetailFunc=(userId)=>{
                    
                 </tbody>
             </table>
+            {listUser && listUser.length >0?
             <div className="bg-white items-center  align-middle dark:bg-gray-800 dark:border-gray-700 border-0 border-slate-300 ">
-                <PaginationButton
-                    setCurrentPage={setCurrentPage}
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(listUser.length/10)}/>
-              </div>
-      {/* <div>Pagination</div> */}
+            <PaginationButton
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                totalPages={Math.ceil(listUser.length/10)}/>
+          </div>:<></>}
     </div>
   )
 }

@@ -33,7 +33,7 @@ import CreateTimetablePage from './pages/route-pages/timetable-pages/CreateTimet
 //import CreateTrip from './components/route-components/route-create-components/manual-form-components/CreateTrip.jsx';
 import CreateTripPage from './pages/route-pages/trip-pages/CreateTripPage.jsx';
 import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
-
+import StationMainPage from './pages/station-pages/StationMainPage.jsx';
 export default function App() {
   return (
     <BrowserRouter>
@@ -96,6 +96,7 @@ export default function App() {
              {/* end url category */}
             {/* url user */}
             <Route path='user' element={<UserMainPage/>}/>
+            <Route path='station' element={<StationMainPage/>}/>
           </Route>
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
