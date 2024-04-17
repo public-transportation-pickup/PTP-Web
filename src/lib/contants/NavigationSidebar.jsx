@@ -58,13 +58,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <CiRoute />,
 		flag:false
 	},
-	{
-		key: 'station',
-		label: 'Doanh thu theo trạm',
-		path: '/station',
-		icon: <FaMapLocation />,
-		flag:false
-	},
+	// {
+	// 	key: 'station',
+	// 	label: 'Doanh thu theo trạm',
+	// 	path: '/station',
+	// 	icon: <FaMapLocation />,
+	// 	flag:false
+	// },
 	{
 		key: 'category',
 		label: 'Danh mục',

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { HiOutlineEye,HiOutlineMap,HiOutlineXCircle, HiArrowRight  } from "react-icons/hi";
-import {useParams,useNavigate} from 'react-router-dom'
+import { HiOutlineEye,HiOutlineXCircle, HiArrowRight  } from "react-icons/hi";
+import {useParams} from 'react-router-dom'
 import { getRouteById } from "../../api/route-api";
 import { getRouteVars } from "../../api/route-var-api";
 import { ToastContainer,toast } from "react-toastify";
@@ -8,36 +8,55 @@ import { getRouteStation } from "../../api/route-station-api";
 import Map from '../../pages/Map.jsx';
 import { getTimeTableByRouteIdandRouteVarId } from "../../api/timetable-api.js";
 import classNames from "classnames";
+import { getStationByStationId } from "../../api/station-api.js";
+import StationDetailModal from "../../components/route-components/StationDetailModal.jsx";
 
 export default function DetailRoutePage() {
   const params=useParams();
-  const navigate=useNavigate();
+  //const navigate=useNavigate();
   const [routeInfo,setRouteInfo]=useState({});
   const [routeStationList1,setRouteStationList1]=useState([])
   const [routeStationList2,setRouteStationList2]=useState([])
+  // const [routeVar1,setRouteVar1]=useState('')
+  // const [routeVar2,setRouteVar2]=useState('')
   const [timetable1,setTimetable1]=useState(null)
   const [timetable2,setTimetable2]=useState(null)
-  const [isOpenMap,setIsOpenMap]=useState(false);
+  const [isOpenMap,setIsOpenMap]=useState(null);
   const [MapType,setMapType]=useState(null);
-  const [flagCreateRoutevar,setFlagCreateRoutevar]=useState(true);
+  const [detailStation,setDetailStation]=useState(null);
+  const [isOpenDetailModal,setIsOpenDetailModal]=useState(null);
 
 
   console.log("routeStationList1",routeStationList1)
   console.log("routeStationList2",routeStationList2)
 
   const handleViewMap = (enumType)=>{
-    setIsOpenMap(true);
+   
     if(enumType === true){
+      setIsOpenMap(true);
       setMapType(true)
     }else if (enumType===false){
+      setIsOpenMap(false);
       setMapType(false)
     }
   }
 
   const handleCloseMap=()=>{
-    setIsOpenMap(false);
+    setIsOpenMap(null);
   }
 
+  const handleViewStationDetail=async(stationId)=>{
+    try {
+      const responseAPI= await getStationByStationId(stationId);
+      console.log("Response detail station",responseAPI);
+      if(responseAPI!==null){
+        setDetailStation(responseAPI);
+        setIsOpenDetailModal(true);
+      } 
+    } catch (error) {
+      console.error("view station detail exception",error);
+    }
+  }
   useEffect(()=>{
     const fetchData=async ()=>{
       try {
@@ -50,11 +69,13 @@ export default function DetailRoutePage() {
             if(index===0 && Array.isArray(responseRouteStation)===true){
               setRouteStationList1(responseRouteStation)
               console.log("Luot 1",item.id)
+              //setRouteVar1(item.id)
               const responseTimetable1= await getTimeTableByRouteIdandRouteVarId(params.routeId, item.id);
               if(responseTimetable1!==null) setTimetable1(responseTimetable1[0])
             }else{
               setRouteStationList2(responseRouteStation);
               console.log("Luot 2",item.id)
+              //setRouteVar2(item.id);
               const responseTimetable2= await getTimeTableByRouteIdandRouteVarId(params.routeId, item.id);
               if(responseTimetable2!==null) setTimetable2(responseTimetable2[0])
             }
@@ -103,7 +124,9 @@ export default function DetailRoutePage() {
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList1&& routeStationList1.length>0&&routeStationList1.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
-               <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2")}>{item.stationName}</p>
+              <div onClick={()=>handleViewStationDetail(item.stationId)} className="hover:cursor-pointer">
+                <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2 hover:font-bold")}>{item.stationName}</p>
+              </div>
               {index===routeStationList1.length-1?(<></>):<HiArrowRight className="mr-2 font-bold"/>} 
             </div>
           ))}
@@ -119,7 +142,11 @@ export default function DetailRoutePage() {
           {routeStationList2&& routeStationList2.length>0&&routeStationList2.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
               {/* <p className="mr-2">{item.stationName}</p> */}
-              <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2")}>{item.stationName}</p>
+              {/* <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2")}>{item.stationName}</p>
+               */}
+              <div onClick={()=>handleViewStationDetail(item.stationId)} className="hover:cursor-pointer">
+                <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2 hover:font-bold")}>{item.stationName}</p>
+              </div>
               {index===routeStationList2.length-1?(<></>):<HiArrowRight className="mr-2"/>} 
             </div>
           ))}
@@ -144,7 +171,7 @@ export default function DetailRoutePage() {
         )}
       </div>
       )}
-      {isOpenMap===true &&(
+      {isOpenMap===false &&(
         <div className="border-2 border-amber-200 rounded-lg p-4 mx-auto">
           <h1>Bản đồ lượt về</h1>
         <HiOutlineXCircle onClick={handleCloseMap} className="cursor-pointer ml-auto" size={30}/>
@@ -155,6 +182,14 @@ export default function DetailRoutePage() {
       )}
       
       {/*End Map của lượt */}
+
+      {/* Modal detail station */}
+      {
+        isOpenDetailModal===true && (
+          <StationDetailModal buttonCheck={isOpenDetailModal} detailStation={detailStation} setButtonCheck={setIsOpenDetailModal}/>
+        )
+      }
+      {/* End Modal detail station */}
     </div>
     </div>
     

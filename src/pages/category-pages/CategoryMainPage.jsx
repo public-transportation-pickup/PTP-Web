@@ -8,7 +8,9 @@ import CreateCategoryPage from "./CreateCategoryPage";
 
 export default function CategoryMainPage() {
   const [modalCreate,setModalCreate]=useState(false);
+  const [checkReload,setCheckReload]=useState(null);
 
+  console.log("check reload when create category", checkReload);
 
     const handleCreateButtonClick=()=>{
         setModalCreate(true);
@@ -16,7 +18,6 @@ export default function CategoryMainPage() {
 
     const handleCloseModal=()=>{
         setModalCreate(false);
-        
     }
     
     useEffect(()=>{
@@ -29,7 +30,7 @@ export default function CategoryMainPage() {
         <h1 className="text-center mx-auto text-4xl">Danh sách danh mục</h1>
         <div className="flex justify-between gap-1">
             <div className="w-2/3 mt-14">
-                    <CategoryItem/>
+                    <CategoryItem checkReload={checkReload}/>
                 <div>
                     {/* <PaginationButton/> */}
                 </div>
@@ -41,7 +42,7 @@ export default function CategoryMainPage() {
                 {modalCreate===true && (
                 <div className=" bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
                     <HiOutlineXCircle className="ml-auto hover:cursor-pointer"size={40} onClick={handleCloseModal}/>
-                    <CreateCategoryPage/>
+                    <CreateCategoryPage checkReload={setCheckReload}/>
                 </div>
                 )}
                 {/* {editFlag===true && modalCreate===false && (

@@ -34,6 +34,8 @@ import CreateTimetablePage from './pages/route-pages/timetable-pages/CreateTimet
 import CreateTripPage from './pages/route-pages/trip-pages/CreateTripPage.jsx';
 import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 import StationMainPage from './pages/station-pages/StationMainPage.jsx';
+//import StationDetailPage from './pages/station-pages/StationDetailPage.jsx';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -80,6 +82,7 @@ export default function App() {
                   <Route path=':routevarId'>
                     <Route path='timetable/create' element={<CreateTimetablePage/>}/>
                     <Route path='timetable/:timetableId/trip/create' element={<CreateTripPage/>}/>
+                    {/* <Route path='station/:stationId' element={<StationDetailPage/>}/> */}
                   </Route>
                 </Route>
               </Route>
