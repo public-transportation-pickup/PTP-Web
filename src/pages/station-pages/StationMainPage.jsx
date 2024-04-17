@@ -1,20 +1,16 @@
 import { useCallback, useEffect, useState } from "react"
-import { getUsers } from "../../api/user-api.js";
-import { useNavigate } from "react-router-dom";
 import MenuDropDown from "../../components/shared/MenuDropDown.jsx";
-import ComboBox from "../../components/shared/ComboBox.jsx";
 import PaginationButton from "../../components/shared/PaginationButton.jsx";
-import { GetDate } from "../../lib/utils/DateFormat.jsx";
 import { getStationRevenue } from '../../api/station-api';
 
 export default function StationMainPage() {
-  const navigate= useNavigate();
+  //const navigate= useNavigate();
   const [listStation,setListStation]= useState([]);
 
-  const [listUser,setListUser]= useState([]);
+  //const [listUser,setListUser]= useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  console.log("User list",listUser)
+  //console.log("User list",listUser)
 
   const fetchData= useCallback(
     async ()=>{
@@ -24,9 +20,9 @@ export default function StationMainPage() {
     },[listStation]
 ) 
 
-const ViewDetailFunc=(userId)=>{
-  navigate(`/user/${userId}`);
-}
+// const ViewDetailFunc=(userId)=>{
+//   navigate(`/user/${userId}`);
+// }
 const formatNumber = (number) => {
     const formatter = new Intl.NumberFormat('en-US', {
       minimumFractionDigits: 2,
@@ -57,7 +53,7 @@ const formatNumber = (number) => {
                 </thead>
                 <tbody className="overflow-auto">
                     {listStation && listStation.length >0 ? (listStation.slice(currentPage*10, currentPage*10+10).map((item,index)=>(
-                        <tr key={index} className=" border-b dark:bg-gray-800 dark:border-gray-700 text-xs">
+                        <tr key={index} className=" border-b dark:bg-gray-800 dark:border-gray-700 text-sm">
                              <td className="px-4">{index+1}</td>
                             <td>{item.name}</td>
                             <td>{item.storeName}</td>

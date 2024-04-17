@@ -7,8 +7,9 @@ import { HiOutlineTrash,HiPencil } from "react-icons/hi";
 import { toast } from "react-toastify";
 import CategoryDetailModal from './CategoryDetailModal.jsx';
 import Modal from '../shared/Modal.jsx';
+import PropTypes from 'prop-types'
 
-export default function CategoryItem() {
+export default function CategoryItem({checkReload}) {
 const [loading,setLoading]=useState(false);
 const [listCategory,setListCategory]=useState([]);
 const [detailModal,setDetailModal]=useState(null);
@@ -38,8 +39,9 @@ const [detailCategory, setdetailCategory]=useState(null);
       try {
         const responseAPI= await DeleteCategory(id);
         if (responseAPI===204){
-          toast.success("Xóa thành công");
           fetchData();
+          toast.success("Xóa thành công");
+          
         } 
         else toast.error("Xóa thất bại")
         console.log("Response API delete category", responseAPI);
@@ -63,7 +65,7 @@ const [detailCategory, setdetailCategory]=useState(null);
 
     useEffect(()=>{
         fetchData();
-    },[])
+    },[checkReload])
 
     const commonProperty= 'flex border gap-2 px-2 py-1 h-20';
     const inactiveProperty='border-dashed border-rose-500 border-4 hover:bg-rose-200'
@@ -105,4 +107,8 @@ const [detailCategory, setdetailCategory]=useState(null);
         
     </div>
   )
+}
+
+CategoryItem.propTypes={
+  checkReload:PropTypes.bool
 }

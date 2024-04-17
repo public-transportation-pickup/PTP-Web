@@ -50,14 +50,14 @@ export default function  RecentOrdrers({param}) {
       </div>
       {stations.length>0?
       <div className="mt-3">
-        <table className="w-full text-gray-700 border-x border-gray-200 rounded-sm">
+        <table className="w-full text-gray-700 border border-separate border-gray-400 rounded-sm">
           <thead>
             <tr className='font-bold'>
-              <td >#</td>
-              <td>Trạm</td>
-              <td>Cửa hàng</td>
-              <td>Địa chỉ</td>
-              <td>Số lượng đơn</td>
+              <td className='border border-slate-300'>#</td>
+              <td className='border border-slate-300'>Trạm</td>
+              <td className='border border-slate-300'>Cửa hàng</td>
+              <td className='border border-slate-300'>Địa chỉ</td>
+              <td className='border border-slate-300'>Số lượng đơn</td>
               {/* <td>Orders Cancelled</td> */}
               
               <td>Tổng doanh thu</td>
@@ -67,15 +67,15 @@ export default function  RecentOrdrers({param}) {
           <tbody>
             {stations.slice(0,5).map((station,index)=>(
               <tr key={index}>
-                <td className='pr-3'>{index+1}</td>
-                <td>{station.name}</td>
-                <td>{station.storeName}</td>
-                <td className=''>{station.address} VNĐ</td>
-                <td className='px-7'>{station.orderCompleted}</td>
+                <td className='border border-slate-300 px-3 py-2 text-sm'>{index+1}</td>
+                <td className='border border-slate-300 px-3 py-2 text-sm'>{station.name}</td>
+                <td className='border border-slate-300 px-3 py-2 text-sm'>{station.storeName}</td>
+                <td className='border border-slate-300 px-3 py-2 text-sm'>{station.address} VNĐ</td>
+                <td className='border border-slate-300 px-7 text-sm'>{station.orderCompleted}</td>
                 {/* <td></td> */}
                 {/* <td className='px-6'>{station.orderCanceled + station.orderOthers}</td> */}
                 
-                <td className='pl-4'>{formatNumber(station.revenue)} VNĐ</td>
+                <td className='border border-slate-300 pl-4'>{formatNumber(station.revenue)} VNĐ</td>
               </tr>
             ))}
           </tbody>

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import DragDropImage from "../../components/category-components/DragDropImage";
+//import DragDropImage from "../../components/category-components/DragDropImage";
 import { CreateCategory, getCategories } from "../../api/category-api";
 import { ToastContainer, toast } from "react-toastify";
 import { HiCloudUpload } from "react-icons/hi";
+import PropTypes from 'prop-types'
 
-export default function CreateCategoryPage() {
+export default function CreateCategoryPage({checkReload}) {
   const [createModal, setCreateModal]=useState({
     Name:'',
     Description:'',
@@ -30,7 +31,7 @@ export default function CreateCategoryPage() {
   // }
 
   const handleInputImgChange = (e) => {
-    const { name, value } = e.target;
+    const { name} = e.target;
     //setFile(e.target.files)
     setPreview(URL.createObjectURL(e.target.files[0]))
     setCreateModal((prevFormData) => ({
@@ -45,11 +46,13 @@ export default function CreateCategoryPage() {
 
   const handleSubmit=async ()=>{
     try {
+      checkReload(true);
       const responseAPI= await CreateCategory(createModal);
       console.log("ResponseAPI create category page", responseAPI);
       if (responseAPI===201){
         await toast.success("Tạo thành công");
         fetchData();
+        checkReload(false);
       } 
       else toast.error("Tạo thất bại")
     } catch (error) {
@@ -86,7 +89,7 @@ export default function CreateCategoryPage() {
                         ):(<>
                             <div className=""></div>
                         </>)}
-          <label htmlFor="Image" className="mt-2 border-2 border-dashed border-blue-500 p-2 flex flex-row gap-2 items-center cursor-pointer hover:bg-blu">
+          <label htmlFor="Image" className="mt-2 border-2 border-dashed border-blue-500 p-2 flex flex-row gap-2 items-center cursor-pointer hover:bg-blue-200">
             <HiCloudUpload />
             <input onChange={handleInputImgChange} className="hidden" type="file" id="Image" name="Image" accept="image/*" multiple={false}/>
             <div className="flex flex-row">
@@ -102,4 +105,8 @@ export default function CreateCategoryPage() {
     </form>
     </div>
   )
+}
+
+CreateCategoryPage.propTypes={
+  checkReload:PropTypes.func
 }

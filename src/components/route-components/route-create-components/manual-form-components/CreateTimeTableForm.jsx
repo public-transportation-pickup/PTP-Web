@@ -41,7 +41,10 @@ export default function CreateTimeTableForm() {
 
     const handleApplyTimetable=async ()=>{
         const responseAPI= await applyTimetableFortrip(timetableId);
-        if(responseAPI===200) toast("Áp dụng thời khóa biếu thành công")
+        if(responseAPI===200){
+            toast("Áp dụng thời khóa biếu thành công")
+            
+        } 
         else toast("Áp dụng thời khóa biếu thất bại")
     }
 
