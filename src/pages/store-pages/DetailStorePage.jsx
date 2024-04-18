@@ -34,8 +34,8 @@ export default function DetailStorePage() {
         navigate(`/store/${id}/menu`)
     }
 
-    const handleStoreAllButton=async ()=>{
-        navigate('/store')
+    const handleViewDashboardButton=async (id)=>{
+        navigate(`/store/${id}/dashboard`)
     }
 
   return (
@@ -54,7 +54,7 @@ export default function DetailStorePage() {
              <div className="items-center flex justify-center gap-14 pt-4 pb-8">
                  <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-amber-200 rounded-lg w-32 h-8 hover:opacity-70">Sản phẩm</button>
                  <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-amber-400 rounded-lg w-32 h-8 hover:opacity-70">Lịch bán</button>
-                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-amber-400 rounded-lg w-auto h-8 hover:opacity-70 px-2">Thống kê cửa hàng</button>
+                 <button onClick={()=>handleViewDashboardButton(params.storeId)} className="bg-amber-400 rounded-lg w-auto h-8 hover:opacity-70 px-2">Thống kê cửa hàng</button>
              </div>
              <div className='p-3 max-w-6xl mx-auto'>
                  {/* xem detail store như create store, cho thêm thuộc tính
@@ -68,23 +68,23 @@ export default function DetailStorePage() {
                <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                    <div className="sm:col-span-2">
                        <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Địa chỉ</label>
-                       <input type="text" name="address" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={`${detailStore.addressNo}, ${detailStore.zone}, ${ detailStore.ward}`} required=""/>
+                       <input type="text" name="address" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={`${detailStore.addressNo}, ${detailStore.zone}, ${ detailStore.ward}`} readOnly/>
                    </div>
                    <div className="w-full">
                        <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Giờ mở cửa</label>
-                       <input type="text" name="brand" id="brand" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.openedTime} required=""/>
+                       <input type="text" name="brand" id="brand" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.openedTime} readOnly/>
                    </div>
                    <div className="w-full">
                        <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Giờ đóng cửa</label>
-                       <input type="text" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.closedTime} required=""/>
+                       <input type="text" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.closedTime} readOnly/>
                    </div>
                    <div>
                        <label htmlFor="activationDate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ngày bắt đầu hoạt động</label>
-                       <input type="text" name="activationDate" id="activationDate" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.activationDate} required=""/>
+                       <input type="text" name="activationDate" id="activationDate" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.activationDate} readOnly/>
                    </div>
                    <div>
                        <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trạng thái</label>
-                       <input type="text" name="status" id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.status==="ACTIVE"?'Đang hoạt động':'Dừng hoạt động'} required=""/>
+                       <input type="text" name="status" id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.status==="ACTIVE"?'Đang hoạt động':'Dừng hoạt động'} readOnly/>
                    </div> 
                    <div className="sm:col-span-2">
                        <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cửa hàng đã được đăng kí tại trạm</label>
