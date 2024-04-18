@@ -34,6 +34,8 @@ import CreateTimetablePage from './pages/route-pages/timetable-pages/CreateTimet
 import CreateTripPage from './pages/route-pages/trip-pages/CreateTripPage.jsx';
 import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 import StationMainPage from './pages/station-pages/StationMainPage.jsx';
+import DashboardStorePage from './pages/store-pages/DashboardStorePage.jsx';
+import TestPage from './pages/TestPage.jsx';
 //import StationDetailPage from './pages/station-pages/StationDetailPage.jsx';
 
 export default function App() {
@@ -55,6 +57,7 @@ export default function App() {
               <Route path=':storeId'>
                 {/* url for menu of store */}
                 <Route index element={<DetailStorePage/>}/>
+                <Route path='dashboard' element={<DashboardStorePage/>}/>
                 <Route path='menu'>
                   <Route index element={<MenuMainPage/>}/>
                   <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
@@ -104,7 +107,7 @@ export default function App() {
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/map' element={<Map/>}/>
-        <Route path='/createRoutevar' element={<CreateRouteVarPage/>}/>
+        <Route path='testpage' element={<TestPage/>}/>
       </Routes>
     </BrowserRouter>
   )

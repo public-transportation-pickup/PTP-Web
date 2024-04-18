@@ -190,3 +190,22 @@ export const getMenuByStoreId=async (storeId)=>{
     }
 }
 
+export const getStoreReport=async(storeId)=> {
+    // var CURRENT_USER = JSON.parse(localStorage.getItem("user"));
+    // // console.log(JSON.parse(user));
+    // let STOREID = CURRENT_USER.user.storeId;
+    //var url = BASE_URL + "/stores/" + storeId + "?isReport=true";
+    // const response = await axios.get(`${BASE_URL}/stores/${storeId}?isReport=true`, {
+    //   headers: { Authorization: `Bearer ${ACCESS_TOKEN}` },
+    // });
+    // console.log("GetStoreReport response", response)
+    // return response.data;
+    try {
+        const res= await fetch(`${BASE_URL}/stores/${storeId}?isReport=true`);
+        console.log("Get store report api  res", res);
+        if(res.status===200) return await res.json();
+        else return null;
+    } catch (error) {
+        console.error("Get store report api exception",error)
+    }
+  }
