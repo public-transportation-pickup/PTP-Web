@@ -66,12 +66,12 @@ export default function CreateRouteVarForm1({getRoutevar1}) {
         console.log("Reponse api create route manuall-Đi",responseAPI);
         if(responseAPI!==null || responseAPI !==undefined){
           
-          toast("Tạo lượt ĐI thành công");
+          toast.success("Tạo lượt ĐI thành công");
           //setRoutevarId(responseAPI.id);
           getRoutevar1(responseAPI.id);
           setButtonSubmit(true);
         } 
-        else toast("Tạo lượt ĐI thất bại");
+        else toast.error("Tạo lượt ĐI thất bại");
       }
     } catch (error) {
       console.error("Handle submit create route var",error);
@@ -102,7 +102,7 @@ export default function CreateRouteVarForm1({getRoutevar1}) {
        
         <div>
         <main className="mx-20 mx-auto my-4">
-          <h1>Tạo lượt<span className='font-semibold'>ĐI</span> cho tuyến {routeInfo.name}</h1>
+        <h1 className='font-bold pb-4'>Tạo lượt <span className='text-rose-500'>ĐI</span> cho tuyến {routeInfo.name}</h1>
           {/* <h1 className='text-xl text-red-600'>{params.routeId}</h1> */}
         <div className="relative z-0 w-full mb-5 group">
             <input onChange={handleChange} type="text" name="routeVarName" id="routeVarName" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
@@ -170,7 +170,7 @@ export default function CreateRouteVarForm1({getRoutevar1}) {
           </div>
         </div>
         <div className="flex flex-row gap-4">
-        <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận tạo lượt đi</button>
+        <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="disabled:bg-gray-400 disabled:cursor-not-allowed text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận tạo lượt đi</button>
         {/* {buttonSubmit===true&&(
           <div className="flex flex-row gap-3 items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <button  onClick={handleContinueButton} type="button" className="">Tiếp tục tạo thời khóa biểu </button><HiArrowRight className="" size={20}/>

@@ -42,20 +42,21 @@ export default function CreateRoutePage() {
       <ToastContainer/>
       <h2 className="text-pretty text-xl text-center py-8 uppercase font-semibold">Tạo mới tuyến</h2>
       {/* {enumRoute &&} */}
-      <div className="mx-auto items-center">
-        <p className="text-lg">Hiện nay hệ thống hỗ trợ 2 cách để tạo tuyến là <span className="text-lg text-cyan-500 uppercase font-bold">Chỉnh sửa trên tuyến có sẵn</span> và <span className="text-lg text-cyan-500 uppercase font-bold">Tạo thủ công tuyến mới </span></p>
-        <div className="mx-auto">
-          <p className="text-lg">Chọn cách để tạo: </p>
-          <div className="flex flex-row gap-4 mt-4">
-            <Modal buttonValue={ 
-            <p className="bg-orange-400 rounded-lg p-2 hover:bg-amber-200 flex flex-row items-center gap-2"><HiOutlineDuplicate />Tạo bản sao</p>
-            } title="Tạo mới tuyến dựa trên tuyến có sẵn" EnumHandler={handleDuplicateChoice}/>
-            <Modal buttonValue={<p className="bg-orange-400 rounded-lg p-2 hover:bg-amber-200 flex flex-row items-center gap-2"><HiOutlineHand/>Tạo thủ công</p>} title="Tạo mới tuyến bằng cách thủ công" EnumHandler={handleManuallyChoice}/>
+      <div className="flex justify-center">
+        <div className="mx-auto items-center ">
+          <p className="text-lg">Hiện nay hệ thống hỗ trợ 2 cách để tạo tuyến là <span className="text-lg text-cyan-500 uppercase font-bold">Chỉnh sửa trên tuyến có sẵn</span> và <span className="text-lg text-cyan-500 uppercase font-bold">Tạo thủ công tuyến mới </span></p>
+          <div className="mx-auto flex flex-col justify-center items-center">
+            <p className="text-lg font-bold">Chọn cách để tạo: </p>
+            <div className="flex flex-row gap-4 mt-4">
+              <Modal buttonValue={ 
+              <div className="bg-gradient-to-r from-cyan-500 to-sky-500 rounded-lg p-2 hover:from-green-500 hover:to-yellow-500 flex flex-row items-center gap-2"><HiOutlineDuplicate />Tạo bản sao</div>
+              } title="Tạo mới tuyến dựa trên tuyến có sẵn" EnumHandler={handleDuplicateChoice}/>
+              <Modal buttonValue={<div className="bg-gradient-to-r from-cyan-500 to-sky-500 hover:from-green-500 hover:to-yellow-500 rounded-lg p-2  flex flex-row items-center gap-2"><HiOutlineHand/>Tạo thủ công</div>} title="Tạo mới tuyến bằng cách thủ công" EnumHandler={handleManuallyChoice}/>
+            </div>
           </div>
         </div>
-       
-        
       </div>
+      
       {flag===false && (
         <div className="mt-10">
         <div className="px-4 py-2  border-2 border-indigo-200 rounded-lg">

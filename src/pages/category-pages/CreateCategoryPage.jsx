@@ -50,11 +50,11 @@ export default function CreateCategoryPage({checkReload}) {
       const responseAPI= await CreateCategory(createModal);
       console.log("ResponseAPI create category page", responseAPI);
       if (responseAPI===201){
-        await toast.success("Tạo thành công");
+        await toast.success("Tạo danh mục thành công");
         fetchData();
         checkReload(false);
       } 
-      else toast.error("Tạo thất bại")
+      else toast.error("Tạo danh mục thất bại")
     } catch (error) {
       console.error("Create category page error", error);
     }

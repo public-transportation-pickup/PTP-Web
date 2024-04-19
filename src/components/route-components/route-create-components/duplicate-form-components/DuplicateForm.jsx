@@ -41,35 +41,36 @@ export default function DuplicateForm() {
 
     const handleDuplicateButton=async()=>{
         setDuplicate(true);
+        fetchData();
     }
 
+    const fetchData=async()=>{
+        const responseAPI=await getRoutes();
+        Array.isArray(responseAPI)?setListRoute(responseAPI):()=>{
+            setListRoute([]);
+            toast("Không thể tải danh sách tuyến");
+        };
+        if(routeId){
+            const responseAPI2= await getRouteVars(routeId);
+            Array.isArray(responseAPI2)? setListRouteVar(responseAPI2):()=>{
+                setListRouteVar([]);
+                toast("Không thể tải danh sách lượt")
+            }
+        }
 
+    }
 
     useEffect(()=>{
-        const fetchData=async()=>{
-            const responseAPI=await getRoutes();
-            Array.isArray(responseAPI)?setListRoute(responseAPI):()=>{
-                setListRoute([]);
-                toast("Không thể tải danh sách tuyến");
-            };
-            if(routeId){
-                const responseAPI2= await getRouteVars(routeId);
-                Array.isArray(responseAPI2)? setListRouteVar(responseAPI2):()=>{
-                    setListRouteVar([]);
-                    toast("Không thể tải danh sách lượt")
-                }
-            }
-
-        }
+        
         fetchData();
-    },[routeId,routeVarInfo])
+    },[routeId,routeVarInfo,listRouteVarStation])
     
   return (
     <div>
         <div>
             <ToastContainer className="w-60 h-10"/>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-row gap-4 items-center">
             <div>
                 <p>Chọn Tuyến</p>
             <ComboboxComponent listItems={listRoute} params="name" onValueChange={handleRouteIdChange}/>
@@ -79,7 +80,7 @@ export default function DuplicateForm() {
             <ComboboxComponent listItems={listRouteVar} params="routeVarName" onValueChange={handleRouteVarIdChange}/>
 
             </div>
-            <button onClick={handleDuplicateButton} type="button" className="rounded-lg bg-blue-300 hover:opacity-85 p-4">Tạo bản sao</button>
+            <button onClick={handleDuplicateButton} type="button" className="rounded-lg bg-blue-300 hover:opacity-85 px-4 py-2 ml-10 mt-5">Tạo bản sao</button>
         </div>
         {/* Onclick button thì show detail route var ra */}
         {duplicate===true &&  (

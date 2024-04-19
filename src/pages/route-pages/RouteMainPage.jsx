@@ -13,9 +13,9 @@ export default function RouteMainPage() {
   return (
     <div className="">
       <ToastContainer/>
-      <h1 className="pt-2 font-bold text-2xl">Danh sách tuyến</h1>
+      <h1 className="py-4 font-bold text-4xl font-bold text-center">Danh Sách Tuyến</h1>
       <div className="flex justify-end mb-2">
-        <button onClick={()=>handleCreateButton()} type="button" className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100"><HiOutlinePlusSm/>Tạo mới tuyến</button>
+        <button onClick={()=>handleCreateButton()} type="button" className="text-lg font-semibold rounded-lg bg-gradient-to-r from-cyan-600 to-sky-500 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:from-green-500 hover:to-yellow-500"><HiOutlinePlusSm/>Tạo mới tuyến</button>
       </div>
       <div>
         <RouteItem/>

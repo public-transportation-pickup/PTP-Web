@@ -63,7 +63,7 @@ export default function UpdateRouteVarPage() {
         console.log("Reponse api update route manuall",responseAPI);
         if(responseAPI!==null || responseAPI !==undefined){
           
-          toast("Tạo lượt thành công");
+          toast("Cập lượt thành công");
           setRoutevarId(responseAPI.id);
           setButtonSubmit(true);
         } 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import HeaderStats from '../../components/store-components/HeaderStats.jsx'
-import { ToastContainer,toast } from 'react-toastify'
+import { ToastContainer} from 'react-toastify'
 import CardLineChart from '../../components/store-components/dashboard-store-component/CardLineChart.jsx'
 import CardBarChart from '../../components/store-components/dashboard-store-component/CardBarChart.jsx'
 import CardPageVisits from '../../components/store-components/dashboard-store-component/CardPageVisits.jsx'
@@ -8,32 +8,19 @@ import CardSocialTraffic from '../../components/store-components/dashboard-store
 import CardPageTransactions from '../../components/store-components/dashboard-store-component/CardPageTransactions.jsx'
 //import { Actions, useAPIRequest } from '../../lib/utils/api-request.js'
 import { useCallback, useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { getStoreReport } from '../../api/store-api.js'
 
-export default function DashboardStorePage({storenName}) {
+export default function DashboardStorePage() {
     const params =useParams();
+    const navigate=useNavigate()
     console.log("Param store dashboard", params.storeId)
-     //#region Api request
-  //const [reportState,requestReport]=useAPIRequest(GetStoreReport(params.storeId));
-  //#endregion
-  // const { user } = useAuth();
-  // console.log(user);
-  const [report,setReport]= useState(null);
-console.log("Report dashboard store",report)
-//   useEffect(()=>{
-//     requestReport();
-//   },[])
+    const [report,setReport]= useState(null);
+    console.log("Report dashboard store",report)
 
-//   useEffect(()=>{
-//     // console.log(reportState);
-//     if(reportState.status==Actions.success){
-//       setReport(reportState.payload);
-//     }
-//     if(reportState.status==Actions.failure){
-//       toast.warning("Lỗi!",{autoClose:900});
-//     }
-//   },[reportState])
+    const handleDetailClick=async ()=>{
+        navigate(`/store/${await params.storeId}`)
+    }
 
 const fetchData=useCallback(async()=>{
     try {
@@ -59,7 +46,14 @@ useEffect(()=>{
         {report===null&&(<div>
 
         </div>)}
-        <div>Thống kể của cửa hàng {storenName}</div>
+        <p>
+        <span className="hover:underline text-sky-700">Cửa hàng</span>
+        <span className="px-2">&gt;</span>
+        <button type="button" onClick={handleDetailClick} className="hover:underline text-sky-700">Chi tiết</button>
+        <span className="px-2">&gt;</span>
+        <span className="hover:underline text-sky-700">Sản phẩm</span>
+    </p>
+        <h1 className="text-center mx-auto text-3xl my-10 underline font-bold">Thống Kê Của Cửa Hàng</h1>
         <div>
             <ToastContainer className="w-100 h-10"/>
             <HeaderStats param={report} />

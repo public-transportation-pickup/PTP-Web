@@ -4,10 +4,10 @@ import { arrayMove } from "@dnd-kit/sortable";
 import PropTypes from 'prop-types'
 import RowItemDrag from "./RowItemDrag";
 import { createRouteVarDuplicate } from "../../../../api/route-var-api";
-import ComboboxComponent from "../../../store-components/ComboboxComponent";
+//import ComboboxComponent from "../../../store-components/ComboboxComponent";
 import { getDistrictByProvinceId } from "../../../../api/store-api";
-import { HiOutlinePlus } from "react-icons/hi";
-import { getStations } from "../../../../api/station-api";
+// import { HiOutlinePlus } from "react-icons/hi";
+// import { getStations } from "../../../../api/station-api";
 import {toast} from 'react-toastify'
 import StationByZone from "../StationByZone";
 
@@ -99,8 +99,8 @@ const handleConfirmButton=async ()=>{
         if(duplicateRouteVarModel.length === listRouteStationUpdate.length){
             const responseAPI= await createRouteVarDuplicate(routeId,routevarId,duplicateRouteVarModel);
             console.log("Handle confirm on drag.jsx reponse",responseAPI);
-            if(responseAPI!==null || responseAPI !==undefined) toast("Tạo thành công");
-            else toast("Tạo thất bại");
+            if(responseAPI!==null || responseAPI !==undefined) toast.success("Cập nhật tuyến thành công");
+            else toast.error("Cập nhật tuyến thất bại");
         } else toast("Chưa thêm xong");
         setLoading(false);
     } catch (error) {
@@ -158,7 +158,8 @@ return (
     </div>
     
     <div>
-        <button type="button" className="bg-sky-400 p-4 rounded-lg" onClick={handleConfirmButton}>{loading===true ? 'Xác nhận ...':'Xác nhận'}</button>
+        <button type="button" className="bg-cyan-600 p-4 font-bold text- rounded-lg hover:bg-cyan-200" onClick={handleConfirmButton}>{loading===true ? 'Xác nhận ...':'Xác nhận'}</button>
+
     </div>
 </div>
 )

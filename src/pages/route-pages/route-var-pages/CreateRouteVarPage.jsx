@@ -14,7 +14,7 @@ export default function CreateRouteVarPage() {
   console.log("routeVarIdOutBound",routeVarIdOutBound);
   console.log("routeVarIdInBound",routeVarIdInBound)
   const handleContinueButton=async ()=>{
-    if(routeVarIdOutBound!=='') navigate(`/route/${params.routeId}/routevar/${routeVarIdOutBound}/timetable/create`)
+    if(routeVarIdOutBound!=='') navigate(`/route/${params.routeId}/routevar/${routeVarIdOutBound}/${routeVarIdInBound}/timetable/create`)
     else toast("Chưa tạo lượt")
   }
 
@@ -28,7 +28,7 @@ export default function CreateRouteVarPage() {
   return (
     <div>
       <ToastContainer/>
-      <div className="border-2 rounded-lg border-amber-200 p-4">
+      <div className="border-2 rounded-lg border-blue-200 p-4">
         <p>Hướng dẫn chung:</p>
         <div>
           <p>- Bạn cần tạo đầy đủ 2 lượt để đến bước tiếp theo là áp dụng thời khóa biểu</p>
@@ -36,8 +36,8 @@ export default function CreateRouteVarPage() {
       </div>
       <CreateRouteVarForm1 getRoutevar1={setRouteVarIdOutBound}/>
       <CreateRouteVarForm2 getRoutevar2={setRouteVarIdInBound}/>
-      {routeVarIdOutBound==='' && routeVarIdInBound===''&&(
-          <div onClick={handleContinueButton} className="flex flex-row gap-3 items-end ml-auto w-64 p-4 rounded-lg my-8 text-white bg-cyan-700 hover:bg-cyan-500">
+      {routeVarIdOutBound!=='' && routeVarIdInBound!==''&&(
+          <div onClick={handleContinueButton} className="flex flex-row gap-3 items-end ml-auto w-64 p-4 rounded-lg my-8 text-white bg-blue-800 hover:bg-blue-500">
             <button   type="button" className="">Tiếp tục tạo thời khóa biểu </button><HiArrowRight className="" size={20}/>
           </div>
         ) }
