@@ -82,7 +82,7 @@ export default function App() {
                 <Route index element={<DetailRoutePage/>}/>
                 <Route path='routevar'>
                   <Route path='create' element={<CreateRouteVarPage/>}/>
-                  <Route path=':routevarId'>
+                  <Route path=':routevarId1/:routevarId2'>
                     <Route path='timetable/create' element={<CreateTimetablePage/>}/>
                     <Route path='timetable/:timetableId/trip/create' element={<CreateTripPage/>}/>
                     {/* <Route path='station/:stationId' element={<StationDetailPage/>}/> */}

@@ -132,9 +132,9 @@ const handleSubmit =async (e)=>{
       setError(false);
       const responseAPI= await updateStore(jsonForm);
               console.log("call api update store", responseAPI);
-              if(responseAPI===204) toast("Cập nhật thành công")
-              else if(responseAPI===401) toast("Vui lòng đăng nhập")
-              else toast("Cập nhật thất bại")
+              if(responseAPI===204) toast.success("Cập nhật cửa hàng thành công")
+              else if(responseAPI===401) toast.warning("Vui lòng đăng nhập")
+              else toast.error("Cập nhật cửa hàng thất bại")
       
       
       setLoading(false);
@@ -188,19 +188,37 @@ const handleSubmit =async (e)=>{
       <>
       <ToastContainer/>
           <main className='p-3 max-w-6xl mx-auto'>
-              <h1 className='text-3xl font-semibold text-center my-7'>Cập nhật cửa hàng</h1>
+              <h1 className='text-3xl font-semibold text-center my-7'>Cập Nhật Cửa Hàng</h1>
               <div className="flex flex-row gap-2 mb-6 w-full">
-                <div>
-                  <div className="flex flex-row gap-3 items-center w-full">
-                            <label className="" htmlFor="Address">Địa chỉ hiện tại</label>
-                            <input
-                            type="text"
-                            className="rounded-lg w-3/5 h-12"
-                            value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
-                            readOnly
-                            />
-                  <HiPencil onClick={handleOpenChangeAddress} size={30} className="z-10 bg-blue-300 cursor-pointer rounded-full p-1 hover:bg-blue-400"/>        
+                <div className="w-full">
+                  <div className=" ml-20 flex flex-row items-center gap-5">
+                    <div>
+                      <div className="flex flex-row gap-3 items-center">
+                                <div className="">Địa chỉ hiện tại:</div>
+                                <input
+                                type="text"
+                                className="rounded-lg w-[28rem] h-12"
+                                value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
+                                readOnly
+                                />
+                                {/* <div className="w-[28rem] h-12">{store.addressNo}, {store.street!=="null"?store.street +",":""} {store.ward}, ${store.zone}</div> */}
+                      </div>
+                      <div className="flex flex-row mt-8 items-center">
+                        <div htmlFor="description" className="">Các trạm hiện tại được đăng kí:</div>
+                        <div className="flex flex-wrap ml-3 items-center bg-white w-[28rem] h-12 rounded-lg">
+                          {store.stationName && store.stationName.length >0&& store.stationName.map((item,index)=>(
+                                  // <div key={index} className="ml-8 items-center">
+                                      <p key={index} className="p-2 mb-2">{index+1}-{item} </p>
+                                  // </div>
+                              ))}
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <HiPencil onClick={handleOpenChangeAddress} size={30} className="z-10 bg-blue-300 cursor-pointer rounded-full p-1 hover:bg-blue-400"/>        
+                    
                   </div>
+                  
                   <div>
                   <div>
                             {jsonForm.StationIds && stationListInfo.length >0 && stationListInfo.map((item,index)=>(
@@ -224,7 +242,7 @@ const handleSubmit =async (e)=>{
 
               {
                 changeAddress===true && (
-                  <div className="border-2 border-blue-300 rounded-lg p-3 mb-8">
+                  <div className="border-2 border-blue-300 rounded-lg p-3 mb-6">
                     <div className="flex justify-between mb-2">
                       <p className="font-bold"><span className="text-rose-500 underline text-xl">Lưu ý: </span> Nếu đóng form địa chỉ sẽ không được cập nhật</p>
                       <HiOutlineXCircle size={30} onClick={handleCloseChangeAddress} className="z-10 bg-rose-300 cursor-pointer rounded-full p-1 hover:bg-rose-400"/>
@@ -283,7 +301,7 @@ const handleSubmit =async (e)=>{
               
               <div>
                   <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
-                      <div className='w-2/3 flex flex-col gap-6 flex-1'>
+                      <div className='w-2/3 flex flex-col gap-6 flex-1 pt-16'>
                       <div className="flex flex-col gap-1">
                             <label htmlFor="Name" className="">Tên cửa hàng</label>
                             <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Tên cửa hàng' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
@@ -311,7 +329,7 @@ const handleSubmit =async (e)=>{
                               </div>
                           </div> */}
                       </div>
-                      <div className='w-1/3 flex flex-col flex-1 gap-2'>
+                      <div className='w-1/3 flex flex-col flex-1 gap-2 pt-24'>
                           <div className="flex justify-center flex-row gap-2 ">
                           <div className='flex gap-4'>
                               <label htmlFor="File" className="p-1 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80">
@@ -326,12 +344,12 @@ const handleSubmit =async (e)=>{
                           </div>
                           
                           {preview? (
-                          <div className="flex justify-center p-3 border items-center rounded-full bg-purple-300 w-28 h-28 mx-auto">
+                          <div className="flex justify-center p-3 border items-center rounded-full bg-blue-200 w-28 h-28 mx-auto">
                                           {console.log("File map: ",preview)}
                                           <img src={preview} alt="listing image" className="w-28 h-28 object-contain rounded-full items-center" />
                                       </div>
                           ):(<>
-                              <div className="rounded-full bg-purple-300 w-28 h-28 mx-auto"></div>
+                              <div className="rounded-full bg-blue-300 w-28 h-28 mx-auto"></div>
                           </>)}
                           <button onClick={handleSubmit} disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading===true?'Cập nhật ....':'Cập nhật'}</button>
                           {error&& <p className="text-red-700 text-sm">{error}</p>}

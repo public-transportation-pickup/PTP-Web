@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react"
 import MenuDropDown from "../../components/shared/MenuDropDown.jsx";
 import PaginationButton from "../../components/shared/PaginationButton.jsx";
 import { getStationRevenue } from '../../api/station-api';
+import classNames from "classnames";
+import { ToastContainer,toast } from "react-toastify";
 
 export default function StationMainPage() {
   //const navigate= useNavigate();
@@ -31,6 +33,12 @@ const formatNumber = (number) => {
   
     return formatter.format(number);
   };
+
+
+  const ViewDetailFunc=async()=>{
+
+  }
+
   useEffect(()=>{
     fetchData()
   },[]);
@@ -38,9 +46,9 @@ const formatNumber = (number) => {
     <div className="">
       {/* <div>Search</div> */}
 
-      <h1 className="text-xl mb-4 font-bold text-center">Danh Sách Thu Nhập Theo Trạm</h1>
+      <h1 className="py-4 text-3xl mb-4 font-bold text-center">Danh Sách Thu Nhập Theo Trạm</h1>
       <table className=" w-full h-96 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-auto">
-                <thead className="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
+                <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
                     <tr>
                     <th className="px-4">#</th>
                     <th>Trạm</th>
@@ -53,7 +61,7 @@ const formatNumber = (number) => {
                 </thead>
                 <tbody className="overflow-auto">
                     {listStation && listStation.length >0 ? (listStation.slice(currentPage*10, currentPage*10+10).map((item,index)=>(
-                        <tr key={index} className=" border-b dark:bg-gray-800 dark:border-gray-700 text-sm">
+                        <tr key={index} className={classNames(index%2!==0?"bg-blue-100":'',"border-b dark:border-gray-700 text-sm")}>
                              <td className="px-4">{index+1}</td>
                             <td>{item.name}</td>
                             <td>{item.storeName}</td>

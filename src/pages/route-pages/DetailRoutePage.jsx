@@ -10,6 +10,7 @@ import { getTimeTableByRouteIdandRouteVarId } from "../../api/timetable-api.js";
 import classNames from "classnames";
 import { getStationByStationId } from "../../api/station-api.js";
 import StationDetailModal from "../../components/route-components/StationDetailModal.jsx";
+import { HiPencil } from "react-icons/hi";
 
 export default function DetailRoutePage() {
   const params=useParams();
@@ -93,34 +94,36 @@ export default function DetailRoutePage() {
   },[params.routeId])
 
   return (
-    <div className="mx-8">
+    <div className="mx-8 mt-8">
       <ToastContainer/>
       <div className="mb-2">
-        <p className="text-center text-2xl pb-6 text-amber-500 font-bold">
-          {routeInfo.name}
-        </p>
+        <div className="flex flex-row justify-center items-center gap-4">
+          <div className="text-center text-2xl pb-6 text-sky-500 font-bold mt-3">{routeInfo.name}</div>
+          <HiPencil className=" bg-blue-200 hover:bg-blue-700 rounded-full text-center" size={30}/>
+        </div>
+        
         <div>
-        <p><span className="text-amber-500 font-bold" >Mã số tuyến:</span> <span>{routeInfo.routeNo}</span></p>
-        <p><span className="text-amber-500 font-bold" >Khoảng cách:</span> <span>{routeInfo.distance} mét</span></p>
-        <p><span className="text-amber-500 font-bold" >Thời gian của 1 chuyến:</span> <span>{routeInfo.timeOfTrip} phút</span></p>
-        <p><span className="text-amber-500 font-bold" >Thời gian giãn cách:</span> <span>{routeInfo.headWay} phút</span></p>
-        <p><span className="text-amber-500 font-bold" >Loại xe:</span> <span>{routeInfo.numOfSeats} chỗ</span></p>
-        <p><span className="text-amber-500 font-bold" >Tổng số chuyến:</span> <span>{routeInfo.totalTrip}</span></p>
-        <p><span className="text-amber-500 font-bold" >Thuộc tổ chức:</span> <span>{routeInfo.orgs}</span></p>
-        <p><span className="text-amber-500 font-bold" >Mô tả vé:</span> <span>{routeInfo.tickets}</span></p>
-        <p><span className="text-amber-500 font-bold" >Thời khóa biểu - lượt đi:</span> <span>{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
-        <p><span className="text-amber-500 font-bold" >Thời khóa biểu - lượt về:</span> <span>{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
-        <p><span className="text-amber-500 font-bold" >Trạng thái:</span> <span>{routeInfo.status}</span></p>
+        <p><span className="text-sky-500 font-bold" >Mã số tuyến:</span> <span>{routeInfo.routeNo}</span></p>
+        <p><span className="text-sky-500 font-bold" >Khoảng cách:</span> <span>{routeInfo.distance} mét</span></p>
+        <p><span className="text-sky-500 font-bold" >Thời gian của 1 chuyến:</span> <span>{routeInfo.timeOfTrip} phút</span></p>
+        <p><span className="text-sky-500 font-bold" >Thời gian giãn cách:</span> <span>{routeInfo.headWay} phút</span></p>
+        <p><span className="text-sky-500 font-bold" >Loại xe:</span> <span>{routeInfo.numOfSeats} chỗ</span></p>
+        <p><span className="text-sky-500 font-bold" >Tổng số chuyến:</span> <span>{routeInfo.totalTrip}</span></p>
+        <p><span className="text-sky-500 font-bold" >Thuộc tổ chức:</span> <span>{routeInfo.orgs}</span></p>
+        <p><span className="text-sky-500 font-bold" >Mô tả vé:</span> <span>{routeInfo.tickets}</span></p>
+        <p><span className="text-sky-500 font-bold" >Thời khóa biểu - lượt đi:</span> <span>{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
+        <p><span className="text-sky-500 font-bold" >Thời khóa biểu - lượt về:</span> <span>{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
+        <p><span className="text-sky-500 font-bold" >Trạng thái:</span> <span>{routeInfo.status}</span></p>
         </div>
         
       </div>
       
       <div className="flex flex-col gap-4 pt-8">
       {/* Lượt  */}
-      <div className="border-2 border-amber-200 p-4 rounded-lg">
-        <HiOutlineEye className="bg-amber-400 rounded-full cursor-pointer hover:bg-amber-200 ml-auto" onClick={()=>handleViewMap(true)} size={25}/>
+      <div className="border-2 border-sky-200 p-4 rounded-lg">
+        <HiOutlineEye className="bg-sky-400 rounded-full cursor-pointer hover:bg-sky-200 ml-auto" onClick={()=>handleViewMap(true)} size={25}/>
         <div>
-        <h1 className="text-amber-500 underline">Lượt đi:</h1>
+        <h1 className="text-sky-500 underline">Lượt đi:</h1>
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList1&& routeStationList1.length>0&&routeStationList1.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
@@ -134,10 +137,10 @@ export default function DetailRoutePage() {
         
       </div>
       {/* Lượt về */}
-      <div className="border-2 border-amber-200 p-4 rounded-lg">
-        <HiOutlineEye className="bg-amber-400 rounded-full cursor-pointer hover:bg-amber-200 ml-auto" onClick={()=>handleViewMap(false)} size={25}/>
+      <div className="border-2 border-sky-200 p-4 rounded-lg">
+        <HiOutlineEye className="bg-sky-400 rounded-full cursor-pointer hover:bg-sky-200 ml-auto" onClick={()=>handleViewMap(false)} size={25}/>
         <div>
-        <h1 className="text-amber-500 underline">Lượt về:</h1>
+        <h1 className="text-sky-500 underline">Lượt về:</h1>
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList2&& routeStationList2.length>0&&routeStationList2.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
@@ -163,8 +166,8 @@ export default function DetailRoutePage() {
       {/*End Lượt về */}
       {/* Map của lượt */}
       {isOpenMap===true &&(
-        <div className="border-2 border-amber-200 rounded-lg p-4 w-2/3 mx-auto">
-          <h1>Bản đồ lượt đi</h1>
+        <div className="border-2 border-sky-200 rounded-lg p-4 mx-auto">
+          <h1 className="text-sky-500">Bản đồ lượt đi</h1>
         <HiOutlineXCircle onClick={handleCloseMap} className="cursor-pointer ml-auto" size={30}/>
         {MapType===true && (
           <Map markers={routeStationList1}/>
@@ -172,8 +175,8 @@ export default function DetailRoutePage() {
       </div>
       )}
       {isOpenMap===false &&(
-        <div className="border-2 border-amber-200 rounded-lg p-4 mx-auto">
-          <h1>Bản đồ lượt về</h1>
+        <div className="border-2 border-sky-200 rounded-lg p-4 mx-auto">
+          <h1 className="text-sky-500">Bản đồ lượt về</h1>
         <HiOutlineXCircle onClick={handleCloseMap} className="cursor-pointer ml-auto" size={30}/>
         {MapType===false && (
           <Map markers={routeStationList2}/>

@@ -1,5 +1,5 @@
 //import React from 'react'
-import { FcOrgUnit } from "react-icons/fc";
+//import { FcOrgUnit } from "react-icons/fc";
 import { DASHBOARD_SIDEBAR_BOTTOM_LINKS, DASHBOARD_SIDEBAR_LINKS } from "../../lib/contants/NavigationSidebar.jsx";
 import { Link,useLocation  } from "react-router-dom";
 import classNames from 'classnames'
@@ -7,17 +7,45 @@ import PropTypes from 'prop-types';
 import { signOutUserStart, signOutUserFailre, signOutUserSuccess } from "../../redux/user/userSlice.js";
 import { useDispatch,useSelector } from "react-redux";
 import{HiOutlineLogout } from 'react-icons/hi'
+import PTP_LOGO from '../../assets/PTP - LOGO - COLOR VER.png'
+//import ModalNotification from "./ModalNotification.jsx";
 
 const linkClass = 
 	'flex items-center gap-2 font-light px-3 py-2 hover:bg-neutral-300 hover:no-underline active:bg-neutral-600 rounded-sm text-base';
 
 function SidebarLink({item}){
   const { pathname } = useLocation();
+  //const [checkPath,setCheckPath]=useState(true);
   return (
-    <Link to={item.path} className={ classNames(pathname===item.path? ' bg-neutral-300 text-black':'text-slate-500',linkClass)}>
-      <span className="text-xl">{item.icon}</span>
-      {item.label}
-    </Link>
+    <>
+     {/* {item.path=='/support' || item.path=='/settings' &&(
+        <ModalNotification buttonClick={checkPath} setButtonClick={} />
+      )} */}
+      {item.path==='/' &&(
+        <div>
+          <Link to={item.path} className={classNames(pathname===item.path? ' bg-neutral-300 text-black':'text-slate-500',linkClass)}>
+        <span className="text-xl">{item.icon}</span>
+        {item.label}
+        </Link>
+        </div>
+        
+      )}
+      {/* {item.path==='/support' ||item.path==='/settings'&&(
+         <Link to={item.path} className={ classNames(pathname.includes(item.path)? ' bg-neutral-300 text-black':'text-slate-500',linkClass)}>
+         <span className="text-xl">{item.icon}</span>
+         {item.label}
+       </Link>
+      )} */}
+      {item.path!=='/'&&(
+        <Link to={item.path} className={ classNames(pathname.includes(item.path)? ' bg-neutral-300 text-black':'text-slate-500',linkClass)}>
+        <span className="text-xl">{item.icon}</span>
+        {item.label}
+      </Link>
+      )}
+
+      
+    </>
+   
   );
   
 }
@@ -31,9 +59,9 @@ export default function Sidebar() {
   const handleSignout= async ()=>{
     try{
       dispatch(signOutUserStart)
-      
       await localStorage.clear();
       dispatch(signOutUserSuccess(currentUser));
+      window.location.reload();
     }catch(error){
       dispatch(signOutUserFailre(error.message));
     }
@@ -43,7 +71,8 @@ export default function Sidebar() {
   return (
     <div className="bg-neutral-200 w-60 p-3 flex flex-col text-black">
         <div className="flex items-center gap-2 px-1 py-3">
-            <FcOrgUnit fontSize={24}/>
+            {/* <FcOrgUnit fontSize={24}/> */}
+            <img src={PTP_LOGO} className="w-10 h-10"/>
             <span className="text-neutral-900 text-lg">PTP - Admin</span>
         </div>
         <div className="flex-1 py-8 flex flex-col gap-0.5">

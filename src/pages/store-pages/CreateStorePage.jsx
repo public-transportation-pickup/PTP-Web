@@ -105,9 +105,9 @@ export default function CreateStorePage() {
             if(jsonForm.Latitude !==0 && jsonForm.Longitude!==0){
                 const responseAPI= await createStore(jsonForm,file);
                 console.log("call api create store", responseAPI);
-                if(responseAPI===null) toast("Tạo thất bại")
-                else if (responseAPI===500) toast("Đang trong quá trình tạo tài khoản cho store");
-                else toast("Tạo thành công")
+                if(responseAPI===null) toast.error("Tạo cửa hàng thất bại")
+                else if (responseAPI===500) toast.info("Đang trong quá trình tạo tài khoản cho store");
+                else toast.success("Tạo cửa hàng thành công")
             }else toast("Đang cập nhật địa chỉ. Xin chờ chút ạ!")
             
             
@@ -209,7 +209,7 @@ return (
             </div>
             <div>
                 <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4 w-full'>
-                    <div className='w-2/3 flex flex-col gap-6 flex-1'>
+                    <div className='w-2/3 flex flex-col gap-6 flex-1 pt-4'>
                         <div className="flex flex-col gap-1">
                             <label htmlFor="Name" className="">Tên cửa hàng</label>
                             <input onChange={handleChange} value={jsonForm.Name} type='text' placeholder='Tên cửa hàng' className='border p-3 rounded-lg'id='Name' maxLength='62' minLength='1' required/>
@@ -238,7 +238,7 @@ return (
                             </div>
                         </div> */}
                     </div>
-                    <div className='w-1/3 flex flex-col flex-1 gap-2'>
+                    <div className='w-1/3 flex flex-col flex-1 gap-2 pt-12'>
                         <div className="flex justify-center flex-row gap-2 ">
                         <div className='flex gap-4'>
                             {/* <input onChange={handleInputImgChange} className='hidden' type='file' id='images' accept='image/*'/>
@@ -256,13 +256,13 @@ return (
                         
                         {/* <p className="text-red-700 text-sm">{imageUploadError && imageUploadError}</p> */}
                         {preview? (
-                        <div className="flex justify-center p-3 border items-center rounded-full bg-purple-300 w-28 h-28 mx-auto">
+                        <div className="flex justify-center p-3 border items-center rounded-full bg-blue-200 w-28 h-28 mx-auto">
                                         {console.log("File map: ",preview)}
                                         <img src={preview} alt="listing image" className="w-28 h-28 object-contain rounded-full items-center" />
                                         {/* <button type="button" className="p-3 text-red-700 rounded-lg uppercase hover: opacity-65">Delete</button> */}
                                     </div>
                         ):(<>
-                            <div className="rounded-full bg-purple-300 w-28 h-28 mx-auto"></div>
+                            <div className="rounded-full bg-blue-300 w-28 h-28 mx-auto"></div>
                         </>)}
                         <button onClick={handleSubmit} disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading===true?'Tạo Cửa hàng ....':'Tạo Cửa hàng'}</button>
                         {error&& <p className="text-red-700 text-sm">{error}</p>}

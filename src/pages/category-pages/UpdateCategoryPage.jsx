@@ -34,7 +34,8 @@ console.log("Update category model", categoryUpdate);
       try {
         const responseAPI= await UpdateCategory(params.categoryId, categoryUpdate);
         console.log("Handle submit response API update category pagae",responseAPI);
-        if(responseAPI==204) toast.success("Cập nhật thành công")
+        if(responseAPI==204) toast.success("Cập nhật danh mục thành công")
+        else toast.error("Cập nhật danh mục thất bại");
       } catch (error) {
         console.log("Handle submit",error);
       }

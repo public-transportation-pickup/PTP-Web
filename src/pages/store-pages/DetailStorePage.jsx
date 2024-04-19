@@ -10,6 +10,10 @@ export default function DetailStorePage() {
     console.log("param detail page", params.storeId);
     const [detailStore, setDetailStore]=useState({});
     const [markerStore,setMarkerStore]=useState([])
+    const date= new Date(detailStore.activationDate);
+    // const year=date.getFullYear()
+    // console.log("date",year);
+
     console.log("detail store", detailStore);
     console.log("Marker store", markerStore);
     //console.log("JSON.strungfy",detailStore.name)
@@ -46,15 +50,15 @@ export default function DetailStorePage() {
         {detailStore&&(
              <div>
         
-             <h1 className="text-center text-2xl pb-6">{detailStore.name}</h1>
-             <div className="flex justify-center p-3 border items-center rounded-full bg-purple-300 w-28 h-28 mx-auto">
+             <h1 className="text-center text-2xl pb-6 font-bold">{detailStore.name}</h1>
+             <div className="flex justify-center p-3 border items-center rounded-full bg-blue-300 w-28 h-28 mx-auto">
                                              <img src={detailStore.imageURL} alt="image" className="w-28 h-28 object-contain rounded-full items-center" />
                                              {/* <button type="button" className="p-3 text-red-700 rounded-lg uppercase hover: opacity-65">Delete</button> */}
              </div>
              <div className="items-center flex justify-center gap-14 pt-4 pb-8">
-                 <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-amber-200 rounded-lg w-32 h-8 hover:opacity-70">Sản phẩm</button>
-                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-amber-400 rounded-lg w-32 h-8 hover:opacity-70">Lịch bán</button>
-                 <button onClick={()=>handleViewDashboardButton(params.storeId)} className="bg-amber-400 rounded-lg w-auto h-8 hover:opacity-70 px-2">Thống kê cửa hàng</button>
+                 <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-sky-400 rounded-lg w-32 h-8 hover:bg-sky-200">Sản phẩm</button>
+                 <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-sky-400 rounded-lg w-32 h-8 hover:bg-sky-200">Lịch bán</button>
+                 <button onClick={()=>handleViewDashboardButton(params.storeId)} className="bg-sky-400 rounded-lg w-auto h-8 hover:bg-sky-200 px-2">Thống kê cửa hàng</button>
              </div>
              <div className='p-3 max-w-6xl mx-auto'>
                  {/* xem detail store như create store, cho thêm thuộc tính
@@ -80,14 +84,14 @@ export default function DetailStorePage() {
                    </div>
                    <div>
                        <label htmlFor="activationDate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ngày bắt đầu hoạt động</label>
-                       <input type="text" name="activationDate" id="activationDate" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.activationDate} readOnly/>
+                       <input type="text" name="activationDate" id="activationDate" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={`Ngày ${date.getDay()} Tháng ${date.getMonth() +1} Năm ${date.getFullYear()}`} readOnly/>
                    </div>
                    <div>
                        <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trạng thái</label>
                        <input type="text" name="status" id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.status==="ACTIVE"?'Đang hoạt động':'Dừng hoạt động'} readOnly/>
                    </div> 
                    <div className="sm:col-span-2">
-                       <label htmlFor="description" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cửa hàng đã được đăng kí tại trạm</label>
+                       <label htmlFor="stationRegister" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cửa hàng đã được đăng kí tại trạm</label>
                         {detailStore.stationName && detailStore.stationName.length >0&& detailStore.stationName.map((item,index)=>(
                             <div key={index} className="flex flex-row gap-4 ml-8">
                                 <div className="bg-gray-50 rounded-lg p-2 mb-2 border border-gray-400 w-full">{index+1} - {item}</div>

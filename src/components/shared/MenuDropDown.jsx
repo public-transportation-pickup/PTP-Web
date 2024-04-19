@@ -2,16 +2,17 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 import { HiDotsHorizontal } from "react-icons/hi";
 import PropTypes from 'prop-types'
+import Modal from './Modal';
 
 export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
     return (
         <div className="">
           <Menu as="div" className="z-10 relative inline-block text-left">
             <div>
-              <Menu.Button className="inline-flex w-full justify-center rounded-md py-2 text-base font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
+              <Menu.Button className="inline-flex w-full justify-center rounded-md py-3 text-base font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
                 {/* Options */}
                 <HiDotsHorizontal
-                  className="-mr-1 ml-2 h-5 w-5 text-violet-400 hover:text-violet-100"
+                  className="-mr-1 ml-2 h-5 w-5 text-blue-400 hover:text-blue-100"
                   aria-hidden="true"
                 />
               </Menu.Button>
@@ -25,14 +26,14 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="z-10 absolute right-0 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <Menu.Items className="z-20 absolute right-0 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
                       <button
                       onClick={()=>EditFunc()}
                         className={`${
-                          active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                          active ? 'bg-blue-500 text-white' : 'text-gray-900'
                         } group flex w-full items-center rounded-md px-2 py-2 text-xs`}
                       >
                         {active ? (
@@ -55,7 +56,7 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
                       <button
                       onClick={()=>ViewDetailFunc()}
                         className={`${
-                          active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                          active ? 'bg-blue-500 text-white' : 'text-gray-900'
                         } group flex w-full items-center rounded-md px-2 py-2 text-xs`}
                       >
                         {active ? (
@@ -77,25 +78,28 @@ export default function MenuDropDown({EditFunc, ViewDetailFunc,DeleteFunc }) {
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
-                      <button
-                      onClick={DeleteFunc}
-                        className={`${
-                          active ? 'bg-violet-500 text-white' : 'text-gray-900'
-                        } group flex w-full items-center rounded-md px-2 py-2 text-xs`}
-                      >
-                        {active ? (
-                          <DeleteActiveIcon
-                            className="mr-2 h-5 w-5 text-violet-400"
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <DeleteInactiveIcon
-                            className="mr-2 h-5 w-5 text-violet-400"
-                            aria-hidden="true"
-                          />
-                        )}
-                        Xóa
-                      </button>
+                      <Modal buttonValue={
+                        <div
+                        // onClick={DeleteFunc}
+                          className={`${
+                            active ? 'bg-blue-500 text-white hover:bg-blue-500' : 'text-gray-900'
+                          } group flex w-full rounded-lg px-2 py-2 text-xs z-20`}
+                        >
+                          {active ? (
+                            <DeleteActiveIcon
+                              className="mr-2 h-5 w-5 text-blue-400"
+                              aria-hidden="true"
+                            />
+                          ) : (
+                            <DeleteInactiveIcon
+                              className="mr-2 h-5 w-5 text-blue-400"
+                              aria-hidden="true"
+                            />
+                          )}
+                          Xóa
+                        </div>
+                      } EnumHandler={DeleteFunc} title="Bạn chắc chắn muốn xóa"/>
+                     
                     )}
                   </Menu.Item>
                 </div>
@@ -117,7 +121,7 @@ function EditInactiveIcon(props) {
         <path
           d="M4 13V16H7L16 7L13 4L4 13Z"
           fill="#EDE9FE"
-          stroke="#A78BFA"
+          stroke="#4696FC"
           strokeWidth="2"
         />
       </svg>
@@ -134,8 +138,8 @@ function EditInactiveIcon(props) {
       >
         <path
           d="M4 13V16H7L16 7L13 4L4 13Z"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
+          fill="#4696FC"
+          stroke="#67A7F8"
           strokeWidth="2"
         />
       </svg>
@@ -153,13 +157,13 @@ function EditInactiveIcon(props) {
         <path
           d="M4 4H12V12H4V4Z"
           fill="#EDE9FE"
-          stroke="#A78BFA"
+          stroke="#67A7F8"
           strokeWidth="2"
         />
         <path
           d="M8 8H16V16H8V8Z"
           fill="#EDE9FE"
-          stroke="#A78BFA"
+          stroke="#67A7F8"
           strokeWidth="2"
         />
       </svg>
@@ -176,14 +180,14 @@ function EditInactiveIcon(props) {
       >
         <path
           d="M4 4H12V12H4V4Z"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
+          fill="#4696FC"
+          stroke="#87B8F6"
           strokeWidth="2"
         />
         <path
           d="M8 8H16V16H8V8Z"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
+          fill="#4696FC"
+          stroke="#87B8F6"
           strokeWidth="2"
         />
       </svg>
@@ -205,11 +209,11 @@ function EditInactiveIcon(props) {
           width="10"
           height="10"
           fill="#EDE9FE"
-          stroke="#A78BFA"
+          stroke="#67A7F8"
           strokeWidth="2"
         />
-        <path d="M3 6H17" stroke="#A78BFA" strokeWidth="2" />
-        <path d="M8 6V4H12V6" stroke="#A78BFA" strokeWidth="2" />
+        <path d="M3 6H17" stroke="#67A7F8" strokeWidth="2" />
+        <path d="M8 6V4H12V6" stroke="#67A7F8" strokeWidth="2" />
       </svg>
     )
   }
@@ -227,12 +231,12 @@ function EditInactiveIcon(props) {
           y="6"
           width="10"
           height="10"
-          fill="#8B5CF6"
-          stroke="#C4B5FD"
+          fill="#4696FC"
+          stroke="#87B8F6"
           strokeWidth="2"
         />
-        <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
-        <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
+        <path d="M3 6H17" stroke="#87B8F6" strokeWidth="2" />
+        <path d="M8 6V4H12V6" stroke="#87B8F6" strokeWidth="2" />
       </svg>
     )
   }

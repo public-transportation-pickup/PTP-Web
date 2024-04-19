@@ -1,7 +1,7 @@
 import { useState } from "react"
 import {useNavigate} from 'react-router-dom';
 import { createRoute } from "../../../../api/route-api"
-import {toast} from 'react-toastify'
+import {ToastContainer, toast} from 'react-toastify'
 import PropTypes from 'prop-types'
 import { HiArrowRight } from "react-icons/hi";
 
@@ -47,7 +47,7 @@ console.log("create route model", createRouteModel)
         setButtonSubmit(true);
         toast.success("Tạo tuyến thành công")
       } 
-      else toast("Tạo tuyến thất bại")
+      else toast.error("Tạo tuyến thất bại")
     } catch (error) {
       console.error("handle submit create route form", error);
     }
@@ -56,7 +56,8 @@ console.log("create route model", createRouteModel)
   
 
   return (
-    <div>    
+    <div>   
+      <ToastContainer/> 
       <main className="mx-20 mx-auto my-4">
         
         <div className="relative z-0 w-full mb-5 group">
@@ -132,7 +133,7 @@ console.log("create route model", createRouteModel)
           </div>
         </div>
         <div className="flex flex-row gap-4">
-        <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+        <button disabled={buttonSubmit===true ? true :false}  onClick={handleSubmit} type="button" className="disabled:bg-gray-400 disabled:cursor-not-allowed text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
         {buttonSubmit===true&&(
           <div className="flex flex-row gap-3 items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <button  onClick={handleContinueButton} type="button" className="">Tiếp tục tạo lượt </button><HiArrowRight className="" size={20}/>

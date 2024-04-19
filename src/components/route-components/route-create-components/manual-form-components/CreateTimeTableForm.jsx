@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react';
 import { applyTimetableFortrip, createTimeTableManually } from '../../../../api/timetable-api';
 import {toast} from 'react-toastify'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { HiArrowRight } from 'react-icons/hi';
 import { getRouteById } from '../../../../api/route-api';
 import { getRouteVarsById } from '../../../../api/route-var-api';
@@ -10,12 +10,14 @@ import { getRouteVarsById } from '../../../../api/route-var-api';
 export default function CreateTimeTableForm() {
     //const navigate=useNavigate();
     const params=useParams();
+    const navigate=useNavigate();
     const dayOfWeek=["T2","T3","T4","T5","T6","T7","CN"]
     const [dateApply,setDateApply]=useState([]);
     const [routeInfo,setRouteInfo]=useState({});
     const [routeVarInfo,setRouteVarInfo]=useState({})
     const [timetableId,setTimetableId]=useState('');
     const [buttonSubmit,setButtonSubmit]=useState(false);
+    const [loading,setLoading]=useState(false);
     console.log("timetableId",timetableId);
 
     console.log("button submit",buttonSubmit)
@@ -40,12 +42,14 @@ export default function CreateTimeTableForm() {
     };
 
     const handleApplyTimetable=async ()=>{
+        setLoading(false);
         const responseAPI= await applyTimetableFortrip(timetableId);
         if(responseAPI===200){
-            toast("Áp dụng thời khóa biếu thành công")
-            
+            await toast.success("Áp dụng thời khóa biếu thành công")
+            setLoading(true)
+            if(loading===true) navigate(`/route/${params.routeId}`)
         } 
-        else toast("Áp dụng thời khóa biếu thất bại")
+        else toast.error("Áp dụng thời khóa biếu thất bại")
     }
 
     // const handleContinueButton=async ()=>{
@@ -57,18 +61,26 @@ export default function CreateTimeTableForm() {
         const timeTableModel=[{
             applyDates:dateApplyStr,
             routeId:params.routeId,
-            routeVarId:params.routevarId
-        }]
+            routeVarId:params.routevarId1
+        },
+        {
+            applyDates:dateApplyStr,
+            routeId:params.routeId,
+            routeVarId:params.routevarId2
+        },
+
+    ]
         try {
             const responseAPI= await createTimeTableManually(timeTableModel);
             if(responseAPI!==null){
+                
                 console.log("responseAPI[0].id",responseAPI[0].id)
                 setTimetableId(responseAPI[0].id);
                 setButtonSubmit(true);
-                toast("Tạo thời khóa biểu thành công")
+                await toast.success("Tạo thời khóa biểu thành công")
                 
             } 
-            else toast("Tạo thời khóa biểu thất bại");
+            else toast.error("Tạo thời khóa biểu thất bại");
         } catch (error) {
             console.error("handle submit create time table page", error)
         }
@@ -92,8 +104,9 @@ export default function CreateTimeTableForm() {
   return (
     <div>
         <div>
-            <h1>Tạo thời khóa biểu cho tuyến {routeInfo.name} lượt {routeVarInfo.routeVarName}</h1>
-            <p>Chọn ngày tuyến sẽ hoạt động</p>
+            <h1 className='font-bold text-center py-10'>Tạo thời khóa biểu cho tuyến: <span className='text-rose-400'>{routeInfo.name}</span> </h1>
+            <div className='flex flex-col items-center'>
+            <p className='text-lg py-2'>Chọn ngày tuyến sẽ hoạt động</p>
             <div>
                 {/* <label htmlFor="day"></label> */}
                 <div  className="flex flex-row items-center ">
@@ -103,16 +116,16 @@ export default function CreateTimeTableForm() {
                             <input onChange={handleChange} key={index} type="checkbox" value={item} className="w-4 h-4"/>
                             <label htmlFor="dayOfWeek" className="">{item}</label>
                         </div>
-                    
-                    
                 ))}
                 </div>
                 
             </div>
+            </div>
+            
         </div>
-        <div className="mt-4">
+        <div className="mt-4 ml-[28rem]">
         <div className="flex flex-row gap-4">
-        <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
+        <button disabled={buttonSubmit===true ? true :false} onClick={handleSubmit} type="button" className="disabled:bg-gray-400 disabled:cursor-not-allowed text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Xác nhận</button>
         {buttonSubmit===true&&(
           <div className="flex flex-row gap-3 items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             {/* <button  onClick={handleContinueButton} type="button" className="">Tiếp tục tạo chuyến </button><HiArrowRight className="" size={20}/> */}
@@ -126,7 +139,6 @@ export default function CreateTimeTableForm() {
 }
 
 CreateTimeTableForm.propTypes={
-    routeId:PropTypes.string,
-    routeVarId:PropTypes.string,
-    getTimeTableIdFunc:PropTypes.func
+    routevarId2:PropTypes.string,
+    
 }

@@ -40,10 +40,10 @@ const [detailCategory, setdetailCategory]=useState(null);
         const responseAPI= await DeleteCategory(id);
         if (responseAPI===204){
           fetchData();
-          toast.success("Xóa thành công");
+          toast.success("Xóa danh mục thành công");
           
         } 
-        else toast.error("Xóa thất bại")
+        else toast.error("Xóa danh mục thất bại")
         console.log("Response API delete category", responseAPI);
       } catch (error) {
         console.error("Delete category on categoryItem.jsx", error);
@@ -67,9 +67,9 @@ const [detailCategory, setdetailCategory]=useState(null);
         fetchData();
     },[checkReload])
 
-    const commonProperty= 'flex border gap-2 px-2 py-1 h-20';
-    const inactiveProperty='border-dashed border-rose-500 border-4 hover:bg-rose-200'
-    const activeProperty= 'border-solid  border-green-500 border-4 hover:bg-green-200'
+    const commonProperty= 'flex border gap-2 px-2 py-1 h-20 rounded-lg';
+    const inactiveProperty='border-dashed border-rose-400 border-4 hover:bg-rose-200'
+    const activeProperty= 'border-solid  border-cyan-400 border-4 hover:bg-cyan-200'
     //className='flex flex-row border border-dashed border-green-100 border-4 gap-2
 
   return (
@@ -90,8 +90,8 @@ const [detailCategory, setdetailCategory]=useState(null);
                 {/* </Link> */}
              
               <div className='ml-auto mr-2 flex flex-row items-center gap-3'>
-                <HiPencil className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30} onClick={()=>navigateEditPage(item.id)}/>
-                <Modal buttonValue={<HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteCategory(item.id)}/>
+                <HiPencil className='z-10 bg-blue-200 hover:bg-blue-700 rounded-lg cursor-pointer p-1' size={30} onClick={()=>navigateEditPage(item.id)}/>
+                <Modal buttonValue={<HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-700 rounded-lg cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteCategory(item.id)}/>
               </div>
               </div>
            </div>

@@ -1,5 +1,6 @@
 import { BASE_URL } from "../lib/contants";
 import axios from "axios";
+import { ACCESS_TOKEN } from "./auth-api";
 
 export const getUsers = async (roleName) => {
   try {
@@ -17,3 +18,19 @@ export const getReport = async () => {
   const res = await axios.get(`${BASE_URL}/reports/admin`);
   return res.data;
 };
+
+
+export const deleteUser=async (id)=>{
+  try {
+    const res= await axios.delete(`${BASE_URL}/users/${id}`,{
+      headers:{
+        Authorization: `Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+      }
+    })
+    console.log("response delete user", res);
+    if(res.status===204) return res.status;
+    else return null;
+  } catch (error) {
+    console.error("Delete user api exception",error)
+  }
+}
