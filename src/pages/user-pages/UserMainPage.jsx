@@ -41,8 +41,9 @@ const DeleteFunc=async (userId)=>{
     const responseAPI= await deleteUser(userId);
     console.log("delete func responseAPI",responseAPI);
     if(responseAPI===204){
+      fetchData("Quản lý");
       toast.success ("Xóa người dùng thành công")
-      fetchData();
+      
     } 
     else toast.error("Xóa người dùng thất bại")
   } catch (error) {

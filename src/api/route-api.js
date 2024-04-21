@@ -21,7 +21,8 @@ export const getRouteById=async (routeId)=>{
         const response = await fetch(`${BASE_URL}/routes/${routeId}`);
         const data=await response.json();
         console.log("Get route by Id data:",data);
-        return data;
+        if(response.status===200) return data;
+        else return null;
     } catch (error) {
         console.log("Get route exception", error);
     }
@@ -40,6 +41,7 @@ export const createRoute=async (createModel)=>{
     }
 }
 
+
 export const deleleRoute = async (routeId)=>{
     try {
         const res= await axios.delete(`${BASE_URL}/routes/${routeId}`,{
@@ -53,16 +55,16 @@ export const deleleRoute = async (routeId)=>{
         console.log("Delete route exception", error);
     }
 }
-export const updateRoute = async (routeModel)=>{
+export const updateRoute = async (routeId,routeModel)=>{
     try {
-        const res= await axios.put(`${BASE_URL}/routes/${routeModel.id}`,routeModel,{
+        const res= await axios.put(`${BASE_URL}/routes/${routeId}`,routeModel,{
             headers:{
                 "Content-Type":"application/json"
             }
         })
         if(res.status===204) return res.status;
     } catch (error) {
-        console.error("Create Route exception", error);
+        console.error("update Route exception", error);
     }
 }
 
