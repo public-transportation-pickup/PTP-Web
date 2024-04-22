@@ -1,30 +1,26 @@
 import { Dialog, Transition } from '@headlessui/react'
-import { Fragment, isValidElement, useEffect, useState } from 'react'
+import { Fragment, isValidElement, useState } from 'react'
 import PropTypes from 'prop-types'
 
-export default function ModalNotification({buttonClick,setButtonClick}) {
-    let [isOpen, setIsOpen] = useState(buttonClick)
+export default function ModalUpdateUser({buttonValue,userInfo,EnumHandler}) {
+    let [isOpen, setIsOpen] = useState(false)
 
     function closeModal() {
       setIsOpen(false)
-      setButtonClick(false);
     }
   
-    // function openModal() {
-    //   setIsOpen(true)
-    // }
+    function openModal() {
+      setIsOpen(true)
+    }
 
-    useEffect(()=>{
-
-    },[buttonClick])
   
     return (
       <>
-        {/* <div className=" flex items-center ">
+        <div className=" flex items-center ">
           {isValidElement(buttonValue)===true && (
             <button
             type="button"
-            className='w-full rounded-lg'
+            className='w-full rounded-lg hover:bg-blue-500'
             onClick={openModal}
             
           >
@@ -32,7 +28,7 @@ export default function ModalNotification({buttonClick,setButtonClick}) {
           </button>
           )}
           
-        </div> */}
+        </div>
   
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -64,11 +60,11 @@ export default function ModalNotification({buttonClick,setButtonClick}) {
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900"
                     >
-                      Thông báo
+                      Cập nhật thông tin cho user
                     </Dialog.Title>
                     <div className="mt-2">
-                      <p className="text-base text-gray-500">
-                        Chức năng này hiện chưa được hỗ trợ
+                      <p className="text-sm text-gray-500">
+                        Vui lòng cập nhật thông tin cho user tại đây 
                       </p>
                     </div>
   
@@ -77,18 +73,19 @@ export default function ModalNotification({buttonClick,setButtonClick}) {
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-400 px-4 py-2 text-sm font-medium text-slate-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={async ()=>{
+                          await EnumHandler()
                           closeModal();
                         }}
                       >
-                        Đóng
+                        Chắc chắn
                       </button>
-                      {/* <button
+                      <button
                         type="button"
                         className="inline-flex justify-center rounded-md border border-transparent bg-blue-300 px-4 py-2 text-sm font-medium text-slate-900 hover:bg-blue-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                         onClick={closeModal}
                       >
                         Hủy
-                      </button> */}
+                      </button>
                     </div>
                   </Dialog.Panel>
                 </Transition.Child>
@@ -100,7 +97,10 @@ export default function ModalNotification({buttonClick,setButtonClick}) {
     )
 }
 
-ModalNotification.propTypes={
-    buttonClick:PropTypes.bool,
-    setButtonClick:PropTypes.func
+
+ModalUpdateUser.propTypes={
+    buttonValue:PropTypes.element,
+    userInfo:PropTypes.object,
+    status: PropTypes.bool,
+    EnumHandler:PropTypes.func
 }

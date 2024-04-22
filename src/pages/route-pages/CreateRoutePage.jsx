@@ -28,20 +28,11 @@ export default function CreateRoutePage() {
     
   }
 
-  // const handleSubmit=async ()=>{
-  //   try {
-      
-  //   } catch (error) {
-  //     console.error("handle submit create route page", error);
-  //   }
-  // }
-
 
   return (
     <div>
       <ToastContainer/>
       <h2 className="text-pretty text-xl text-center py-8 uppercase font-semibold">Tạo mới tuyến</h2>
-      {/* {enumRoute &&} */}
       <div className="flex justify-center">
         <div className="mx-auto items-center ">
           <p className="text-lg">Hiện nay hệ thống hỗ trợ 2 cách để tạo tuyến là <span className="text-lg text-cyan-500 uppercase font-bold">Chỉnh sửa trên tuyến có sẵn</span> và <span className="text-lg text-cyan-500 uppercase font-bold">Tạo thủ công tuyến mới </span></p>

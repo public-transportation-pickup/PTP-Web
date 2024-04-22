@@ -14,7 +14,7 @@ import StationByZone from "../StationByZone";
 
 export default function DragandDrop({listRouteVarStation, routevarId, routeId}) {
     
-    const [listRouteStationUpdate,setListRouteStationUpdate]=useState(listRouteVarStation);
+    const [listRouteStationUpdate,setListRouteStationUpdate]=useState([]);
     const [duplicateRouteVarModel,setDuplicateRouteVarModel]=useState([]);
     const [flag,setFlag]=useState(false);
     const [listZone, setListZone]=useState([]);
@@ -111,17 +111,8 @@ const handleConfirmButton=async ()=>{
 
 
 useEffect(()=>{
-   
-    //setListRouteStationUpdate(listRouteVarStation);
-    // const fetchData= async ()=>{
-    //     listRouteVarStation.forEach(async (element)=> {
-    //         //console.log("Element", element);
-    //         await listRouteStationUpdate.push({id:element.index,stationId:element.id,index:element.index,stationName:element.stationName});
-    //     });
-            
-    // }
-    // fetchData();
-},[listRouteVarStation,stationChoosen])
+    setListRouteStationUpdate(listRouteVarStation);
+},[listRouteVarStation,stationChoosen,routeId,routevarId])
 
 return (
 <div>

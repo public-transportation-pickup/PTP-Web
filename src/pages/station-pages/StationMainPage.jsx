@@ -35,17 +35,27 @@ const formatNumber = (number) => {
   };
 
 
-  const ViewDetailFunc=async()=>{
-
-  }
+  // const ViewDetailFunc=()=>{
+  //   // navigate(`/user/${userId}`);
+  //   toast.info("Tính năng này hiện chưa thể sử dụng")
+  // }
+  
+  // const EditFunc=()=>{
+  //   // navigate(`/user/${userId}`);
+  //   toast.info("Tính năng này hiện chưa thể sử dụng")
+  // }
+  // const DeleteFunc=()=>{
+  //   // navigate(`/user/${userId}`);
+  //   toast.info("Tính năng này hiện chưa thể sử dụng")
+  // }
+  
 
   useEffect(()=>{
     fetchData()
   },[]);
   return (
     <div className="">
-      {/* <div>Search</div> */}
-
+      <ToastContainer/>
       <h1 className="py-4 text-3xl mb-4 font-bold text-center">Danh Sách Thu Nhập Theo Trạm</h1>
       <table className=" w-full h-96 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-auto">
                 <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
@@ -70,7 +80,7 @@ const formatNumber = (number) => {
                             <td className='px-7'>{item.orderCompleted}</td>
                             
                             <td className='px-3'>{formatNumber(item.revenue)} VNĐ</td>
-                            <td><MenuDropDown/></td>
+                            {/* <td><MenuDropDown DeleteFunc={()=>DeleteFunc()} EditFunc={()=>EditFunc()} ViewDetailFunc={()=>ViewDetailFunc()}/></td> */}
                         </tr>
                     ))):(<></>)}
                    

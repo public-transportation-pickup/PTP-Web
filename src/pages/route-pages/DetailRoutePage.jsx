@@ -63,6 +63,14 @@ export default function DetailRoutePage() {
     navigate(`/route/${routeInfo.id}/update`);
   }
 
+  const handleRouteClick=async ()=>{
+    navigate(`/route`)
+  }
+
+  // const handleDetailClick=async ()=>{
+  //   navigate(`/route/${params.routeId}`)
+  // }
+
   useEffect(()=>{
     const fetchData=async ()=>{
       try {
@@ -102,9 +110,14 @@ export default function DetailRoutePage() {
     <div className="mx-8 mt-8">
       <ToastContainer/>
       <div className="mb-2">
+      <p>
+        <button onClick={handleRouteClick} className="hover:underline text-sky-700">Tuyến</button>
+        <span className="px-2">&gt;</span>
+        <button type="button" className="hover:underline text-sky-700">Chi tiết</button>
+      </p>
         <div className="flex flex-row justify-center items-center gap-4">
           <div className="text-center text-2xl pb-6 text-sky-500 font-bold mt-3">{routeInfo.name}</div>
-          <HiPencil className=" bg-blue-200 hover:bg-blue-700 rounded-full text-center" size={30} onClick={()=>handleEditRoute()}/>
+          <HiPencil className=" bg-blue-200 hover:bg-blue-700 hover:cursor-pointer rounded-full text-center" size={30} onClick={()=>handleEditRoute()}/>
         </div>
         
         <div>
@@ -150,9 +163,6 @@ export default function DetailRoutePage() {
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList2&& routeStationList2.length>0&&routeStationList2.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
-              {/* <p className="mr-2">{item.stationName}</p> */}
-              {/* <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2")}>{item.stationName}</p>
-               */}
               <div onClick={()=>handleViewStationDetail(item.stationId)} className="hover:cursor-pointer">
                 <p className={ classNames(item.storeId!=="00000000-0000-0000-0000-000000000000"? ' text-neutral-400':'text-black',"mr-2 hover:font-bold")}>{item.stationName}</p>
               </div>

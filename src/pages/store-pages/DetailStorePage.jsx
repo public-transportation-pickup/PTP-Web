@@ -83,13 +83,22 @@ export default function DetailStorePage() {
                        <input type="text" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.closedTime} readOnly/>
                    </div>
                    <div>
-                       <label htmlFor="activationDate" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ngày bắt đầu hoạt động</label>
-                       <input type="text" name="activationDate" id="activationDate" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={`Ngày ${date.getDay()} Tháng ${date.getMonth() +1} Năm ${date.getFullYear()}`} readOnly/>
+                       <label htmlFor="phoneNumber" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Số điện thoại của cửa hàng</label>
+                       <input type="text" name="phoneNumber" id="phoneNumber" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.phoneNumber} readOnly/>
                    </div>
                    <div>
-                       <label htmlFor="status" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trạng thái</label>
-                       <input type="text" name="status" id="status" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.status==="ACTIVE"?'Đang hoạt động':'Dừng hoạt động'} readOnly/>
-                   </div> 
+                       <label htmlFor="emailManager" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email Quản lý</label>
+                       <input type="text" name="emailManager" id="emailManager" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.email} readOnly/>
+                   </div>
+                   <div>
+                       <label htmlFor="managerName" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Họ và tên quản lý</label>
+                       <input type="text" name="managerName" id="managerName" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.managerName} readOnly/>
+                   </div>
+                   <div>
+                       <label htmlFor="managerPhone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Số điện thoại quản lý</label>
+                       <input type="text" name="managerPhone" id="managerPhone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={detailStore.managerPhone} readOnly/>
+                   </div>
+                    
                    <div className="sm:col-span-2">
                        <label htmlFor="stationRegister" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cửa hàng đã được đăng kí tại trạm</label>
                         {detailStore.stationName && detailStore.stationName.length >0&& detailStore.stationName.map((item,index)=>(

@@ -15,7 +15,8 @@ export default function CreateTimeTableForm() {
     const [dateApply,setDateApply]=useState([]);
     const [routeInfo,setRouteInfo]=useState({});
     const [routeVarInfo,setRouteVarInfo]=useState({})
-    const [timetableId,setTimetableId]=useState('');
+    const [timetableId1,setTimetableId1]=useState('');
+    const [timetableId2,setTimetableId2]=useState('');
     const [buttonSubmit,setButtonSubmit]=useState(false);
     const [loading,setLoading]=useState(false);
     console.log("timetableId",timetableId);
@@ -43,7 +44,8 @@ export default function CreateTimeTableForm() {
 
     const handleApplyTimetable=async ()=>{
         setLoading(false);
-        const responseAPI= await applyTimetableFortrip(timetableId);
+        const responseAPI1= await applyTimetableFortrip(timetableId1);
+        const responseAPI2= await applyTimetableFortrip(timetableId2);
         if(responseAPI===200){
             await toast.success("Áp dụng thời khóa biếu thành công")
             setLoading(true)
@@ -75,7 +77,8 @@ export default function CreateTimeTableForm() {
             if(responseAPI!==null){
                 
                 console.log("responseAPI[0].id",responseAPI[0].id)
-                setTimetableId(responseAPI[0].id);
+                setTimetableId1(responseAPI[0].id);
+                setTimetableId2(responseAPI[1].id);
                 setButtonSubmit(true);
                 await toast.success("Tạo thời khóa biểu thành công")
                 
@@ -108,7 +111,6 @@ export default function CreateTimeTableForm() {
             <div className='flex flex-col items-center'>
             <p className='text-lg py-2'>Chọn ngày tuyến sẽ hoạt động</p>
             <div>
-                {/* <label htmlFor="day"></label> */}
                 <div  className="flex flex-row items-center ">
                 {dayOfWeek && dayOfWeek.length >0 && dayOfWeek.map((item,index)=>(
                     

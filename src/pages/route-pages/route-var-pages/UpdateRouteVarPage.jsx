@@ -89,9 +89,6 @@ export default function UpdateRouteVarPage() {
   },[listRouteStation])
   return (
     <div>
-      {/* {!params.routeId && (<div>
-        <p>Vui lòng hoàn thành bước 1 để thao tác tiếp bước 2</p>
-      </div>)} */}
     <div>
       <div className="flex flex-row gap-2">
       </div>
@@ -151,10 +148,7 @@ export default function UpdateRouteVarPage() {
                   <div className='ml-2'>
                     {index+1} - {item.name} 
                   </div>
-                  {/* <div className='flex flex-row ml-auto gap-2'> */}
                     <input className='w-1/2 text-center ml-auto mr-2' value={index}/>
-                  {/* </div> */}
-                  
                 </div>
                 <HiOutlineTrash className='hover: cursor-pointer' size={20} onClick={()=>handleRemoveStation(item.id)}/>
               </div>

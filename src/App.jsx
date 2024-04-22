@@ -14,7 +14,6 @@ import MenuMainPage from './pages/store-pages/menu-pages/MenuMainPage.jsx';
 // import RouteItem from './components/route-components/RouteItem.jsx';
 //import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 //import MapStationPage from './pages/route-pages/MapStationPage.jsx';
-// import StationsList from './components/route-components/StationsList.jsx';
 import DetailRoutePage from './pages/route-pages/DetailRoutePage.jsx';
 // import ProductItemModal from './components/store-components/menu-components/ProductItemModal.jsx';
 import CategoryMainPage from './pages/category-pages/CategoryMainPage.jsx';

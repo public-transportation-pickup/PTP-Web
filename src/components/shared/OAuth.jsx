@@ -44,9 +44,9 @@ export default function OAuth({formData}) {
     <button
       onClick={handleSignIn}
       type="button"
-      className="flex w-full justify-center rounded-md bg-cyan-800 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
+      className="flex w-full h-12 justify-center rounded-md bg-cyan-800 px-3 py-3 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600"
       >
-      {loading? 'SignIn...':'SignIn'} 
+      {loading? 'Đăng nhập...':'Đăng nhập'} 
     </button>
     </>
     
