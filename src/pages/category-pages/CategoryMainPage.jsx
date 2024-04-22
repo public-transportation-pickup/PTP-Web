@@ -31,9 +31,6 @@ export default function CategoryMainPage() {
         <div className="flex justify-between gap-1">
             <div className="w-2/3 mt-14">
                     <CategoryItem checkReload={checkReload}/>
-                <div>
-                    {/* <PaginationButton/> */}
-                </div>
             </div>
             <div className="w-1/3 mt-10">
                 {modalCreate===false&& (
@@ -45,12 +42,6 @@ export default function CategoryMainPage() {
                     <CreateCategoryPage checkReload={setCheckReload}/>
                 </div>
                 )}
-                {/* {editFlag===true && modalCreate===false && (
-                <div className=" bg-gradient-to-r from-cyan-100 to-blue-100 p-4">
-                    <HiOutlineXCircle className="ml-auto hover:cursor-pointer"size={40} onClick={handleCloseModal("EDIT_CLOSE")}/>
-                    <UpdateCategoryPage/>
-                </div>
-                )} */}
             </div>
             
         </div>

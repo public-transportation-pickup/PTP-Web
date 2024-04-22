@@ -5,6 +5,7 @@ import ComboboxComponent from "../../components/store-components/ComboboxCompone
 import { getStations } from "../../api/station-api";
 import {useParams} from 'react-router-dom'
 import {HiPencil,HiOutlineXCircle, HiOutlineTrash } from "react-icons/hi";
+//import { getUserById, updateUser } from "../../api/user-api";
 
 export default function UpdateStorePage() {
   const params=useParams();
@@ -60,7 +61,17 @@ export default function UpdateStorePage() {
     StationIds:[]
 })
 
+// const [userId,setUserId]=useState();
+
+// const [userForm,setUserForm]=useState({
+//     FullName: '',
+//     PhoneNumber: '',
+//     DateOfBirth: '',
+//     RoleName: 'StoreManager'
+// })
+
 console.log("Jsonform",jsonForm)
+//console.log("userform",userForm)
 
   const handleStationChange=async (value)=>{
     console.log("station change",value);
@@ -91,32 +102,37 @@ const handleWardChange=async (value)=>{
 }
 
 const handleChange=async (e)=>{
-  //if(e.target.type==='time' || e.target.type ==='text' || e.target.type==='textarea'|| e.target.type==='number'){
+  if(e.target.type==='time' || e.target.type ==='text' || e.target.type==='textarea'|| e.target.type==='number'||e.target.type==='date'){
     if(e.target.id==='DateOfBirth'){
       //const inputDate= new Date(e.target.value);
       setJsonForm({...jsonForm,[e.target.id]: (e.target.value).toString(),});
   } 
-  else setJsonForm({...jsonForm,[e.target.id]:e.target.value,});
-  if((jsonForm.AddressNo!=='' && jsonForm.Ward!=='' && jsonForm.Zone!=='') ||(jsonForm.AddressNo!==store.AddressNo || jsonForm.Ward!==store.Ward && jsonForm.Zone!==store.Zone)){
-        setLoading(true);  
-        let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
+  else{
+    setJsonForm({...jsonForm,[e.target.id]:e.target.value,});
+  } 
+  if(changeAddress===true){
+    if((jsonForm.AddressNo!=='' && jsonForm.Ward!=='' && jsonForm.Zone!=='') ||(jsonForm.AddressNo!==store.AddressNo || jsonForm.Ward!==store.Ward || jsonForm.Zone!==store.Zone)){
+      setLoading(true);  
+      let addressStore= `${jsonForm.AddressNo}, ${jsonForm.Ward}, ${jsonForm.Zone}, TPHCM`
+        const geocoording= await forwardGeocoding(addressStore)
+        if(geocoording===null){
+            toast("Kiểm tra lại địa chỉ")
+        }
+        else{
           const geocoording= await forwardGeocoding(addressStore)
-          if(geocoording===null){
-              toast("Kiểm tra lại địa chỉ")
-          }
-          else{
-            const geocoording= await forwardGeocoding(addressStore)
-            console.log("Geocooording",geocoording)
-            await setJsonForm(prevJsonForm => ({
-                ...prevJsonForm,
-                Latitude: geocoording.lat,
-                Longitude: geocoording.lng
-              }));
-            console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
-          } 
-          
-      }
- // }
+          console.log("Geocooording",geocoording)
+          await setJsonForm(prevJsonForm => ({
+              ...prevJsonForm,
+              Latitude: geocoording.lat,
+              Longitude: geocoording.lng
+            }));
+          console.log("json lat long"+jsonForm.Latitude+" "+ jsonForm.Longitude)
+        } 
+        setLoading(false);
+    }
+}
+  }
+  
 }
 
 const handleOpenChangeAddress=async ()=>{
@@ -136,14 +152,25 @@ const handleSubmit =async (e)=>{
   e.preventDefault();
   try{
       //if(jsonForm.File.length <1 ) return setError('You must upload at least one image');
-      
+      setLoading(true);
       setError(false);
       const responseAPI= await updateStore(jsonForm);
               console.log("call api update store", responseAPI);
               if(responseAPI===204) toast.success("Cập nhật cửa hàng thành công")
               else if(responseAPI===401) toast.warning("Vui lòng đăng nhập")
               else toast.error("Cập nhật cửa hàng thất bại")
-      
+      //       setUserForm({...userForm, 
+      //       FullName: JSON.parse(jsonForm).ManagerName,
+      //       PhoneNumber: JSON.parse(jsonForm).ManagerPhone,
+      //       DateOfBirth: JSON.parse(jsonForm).DateOfBirth,
+      //       RoleName: "StoreManager"
+      //       })
+      // const responseAPIUpdateUser= await updateUser(userId, userForm);
+      // console.log("call api update user", responseAPIUpdateUser);
+      // if(responseAPIUpdateUser===204) toast.success("Cập nhật cửa hàng thành công")
+      // else if(responseAPIUpdateUser===401) toast.warning("Vui lòng đăng nhập")
+      // else toast.error("Cập nhật cửa hàng thất bại")
+
       
       setLoading(false);
   }catch(error){
@@ -168,9 +195,16 @@ const handleSubmit =async (e)=>{
         }
         if(params.storeId){
             const responseAPI= await getStoreById(params.storeId);
+            //const responseGetUserByIdAPI= await getUserById(responseAPI.userId);
             //const responseAPI=await 
             setStore(responseAPI);
             setPreview(responseAPI.imageURL);
+            // setUserForm({...userForm, 
+            // FullName: responseAPI.managerName,
+            // PhoneNumber: responseAPI.managerPhone,
+            // DateOfBirth: responseAPI.dateOfBirth,
+            // RoleName: "StoreManager"
+            // })
             setJsonForm({...jsonForm,
               Id:params.storeId,
               Name:responseAPI.name,
@@ -183,12 +217,13 @@ const handleSubmit =async (e)=>{
               AddressNo:responseAPI.addressNo,
               Street:responseAPI.street,
               ActivationDate: new Date().toISOString(),
-              Email:'',
-              ManagerName:'',
-              DateOfBirth:'',
-              ManagerPhone:'',
+              Email:responseAPI.email,
+              ManagerName:responseAPI.managerName,
+              DateOfBirth:new Date(responseAPI.dateOfBirth).toISOString().split('T')[0],
+              ManagerPhone:responseAPI.phoneNumber,
               StationIds:responseAPI.stationIds
             })
+            
         }else setStore(null);
        
             

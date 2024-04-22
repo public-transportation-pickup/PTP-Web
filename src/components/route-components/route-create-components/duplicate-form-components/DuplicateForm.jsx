@@ -15,12 +15,15 @@ export default function DuplicateForm() {
     const [routeId,setRouteId]=useState('');
     const [routeVarInfo, setRouteVarInfo]=useState();
     const [duplicate, setDuplicate]=useState(false);
-    console.log("detail route var", listRouteVarStation)
+    const [loading,setLoading]=useState(false);
+    console.log("routevarInfo choossen",routeVarInfo);
+    //console.log("detail route var", listRouteVarStation)
     console.log("list Oute var station", listRouteVarStation)
 
     const handleRouteIdChange=async(value)=>{
         console.log("Route choose", value);
         setRouteId(value.id===null|| value.id===undefined ? '':value.id)
+        setListRouteVarStation([]) 
         //console.log("RouteId", routeId);
     }
 
@@ -30,18 +33,25 @@ export default function DuplicateForm() {
             const responseAPI= await getRouteStation(routeId,value.id);
             await setRouteVarInfo(value);
             console.log("Response get list station by routevar id:",responseAPI);
-            //await setListRouteVarStation(responseAPI)   
-            responseAPI.forEach(async (element)=> {
-                //console.log("Element", element);
-                listRouteVarStation.push({id:element.index,stationId:element.stationId,index:element.index,stationName:element.stationName});
-            });  
+            //await setListRouteVarStation(responseAPI) 
+            //if(listRouteVarStation.length>0)await setListRouteVarStation([])  
+            
+            if(listRouteVarStation.length===0){
+                responseAPI.forEach(async (element)=> {
+                    //console.log("Element", element);
+                    listRouteVarStation.push({id:element.index,stationId:element.stationId,index:element.index,stationName:element.stationName});
+                });  
+            }else toast("Đã xảy ra lỗi")
+        
+            
             //await console.log("detail route var", listRouteVarStation);
         }
     }
 
     const handleDuplicateButton=async()=>{
         setDuplicate(true);
-        fetchData();
+        //fetchData();
+        //if(listRouteVarStation.length > 0) setListRouteVarStation([])  
     }
 
     const fetchData=async()=>{
@@ -85,9 +95,9 @@ export default function DuplicateForm() {
         {/* Onclick button thì show detail route var ra */}
         {duplicate===true &&  (
             <div>
-                <h2>{routeVarInfo.RouteVarName }</h2>
                 <DragandDrop listRouteVarStation={listRouteVarStation} routevarId={routeVarInfo.id} routeId={routeId}/>
             </div>
+            
         )}
             
        

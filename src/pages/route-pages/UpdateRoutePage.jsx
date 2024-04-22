@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { getRouteById, updateRoute } from "../../api/route-api";
 
 
 export default function UpdateRoutePage() {
   const params =useParams();
+  const navigate=useNavigate();
   const [routeInfo,setRouteInfo]=useState(null);
   const [loading,setLoading]=useState(false);
   const [routeNo,setRouteNo]=useState('');
@@ -57,6 +58,14 @@ console.log("Update route info",routeInfo)
     }
   }
 
+  const handleRouteClick=async ()=>{
+    navigate(`/route`)
+  }
+
+  const handleDetailClick=async ()=>{
+    navigate(`/route/${params.routeId}`)
+  }
+
   useEffect(()=>{
     const fetchData=async ()=>{
       try {
@@ -96,6 +105,13 @@ console.log("Update route info",routeInfo)
     <div>   
       <ToastContainer/> 
       <main className="mx-20 mx-auto my-4">
+      <p>
+        <button onClick={handleRouteClick} className="hover:underline text-sky-700">Tuyến</button>
+        <span className="px-2">&gt;</span>
+        <button type="button" onClick={handleDetailClick} className="hover:underline text-sky-700">Chi tiết</button>
+        <span className="px-2">&gt;</span>
+        <span className="hover:underline text-sky-700">Cập nhật tuyến</span>
+      </p>
         <h1 className="text-pretty text-xl text-center py-8 uppercase font-semibold">Cập Nhật Cho Mã Tuyến:  {updateRouteModel.routeNo===null?'':routeNo}</h1>
         {/* <div className="relative z-0 w-full mb-5 group">
             <input onChange={handleChange} type="text" name="routeNo" id="routeNo" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />

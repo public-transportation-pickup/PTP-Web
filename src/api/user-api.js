@@ -45,3 +45,17 @@ export const getUserById=async (id)=>{
     console.error("get user by id exception",error);
   }
 }
+
+export const updateUser=async (id,userModal)=>{
+  try {
+    const res= await axios.put(`${BASE_URL}/users/${id}`,userModal,{
+      headers:{
+        "Content-Type":"application/json"
+      }
+    });
+    if(res.status===204) return res.status;
+    else return null;
+  } catch (error) {
+    console.error("update user exception",error)
+  }
+}

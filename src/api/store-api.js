@@ -135,6 +135,10 @@ export const updateStore = async (storeModel)=>{
         formData.append('Street',storeModel.Street);
         formData.append('File',storeModel.file);
         formData.append('ActivationDate',storeModel.ActivationDate);
+        formData.append('Email',storeModel.Email);
+        formData.append('ManagerName',storeModel.ManagerName);
+        formData.append('DateOfBirth',storeModel.DateOfBirth);
+        formData.append('ManagerPhone',storeModel.ManagerPhone);
         //formData.append('StationIds',storeModel.StationId);
         storeModel.StationIds.forEach((item) => formData.append("StationIds", item))
         console.log("AccessToken update store", ACCESS_TOKEN)

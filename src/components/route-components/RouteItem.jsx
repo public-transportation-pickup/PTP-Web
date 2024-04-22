@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 export default function RouteItem() {
     const navigate=useNavigate();
     const [loading,setLoading]=useState(false);
-    //const [searchTerm,setSearchTerm]=useState(false)
+    //const [searchTerm,setSearchTerm]=useState('');
     const [listRoute, setListRoute]=useState([]);
 
     const viewDetail=async (id)=>{
@@ -35,7 +35,7 @@ export default function RouteItem() {
     async function fetchData(){
         try {
             setLoading(true);
-            const res= await getRoutes();
+            const res= await getRoutes('');
             //const data= await res.json();
             await setListRoute(res);
             setLoading(false);
@@ -45,13 +45,16 @@ export default function RouteItem() {
         
     }
 
-    // const searchListResult=async(searchTerm)=>{
-    //     try {
-    //         const responseAPI=await 
-    //     } catch (error) {
-    //         console.error("search list route page main exception", error);
-    //     }
-    // }
+    const searchListResult=async(searchTerm)=>{
+        try {
+            setLoading(true)
+            const responseAPI=await getRoutes(searchTerm);
+            setListRoute(responseAPI);
+            setLoading(false);
+        } catch (error) {
+            console.error("search list route page main exception", error);
+        }
+    }
 
     useEffect(()=>{
         fetchData();
@@ -59,26 +62,24 @@ export default function RouteItem() {
     },[])
 return (
     <main>
-        {/* <div><ComboboxComponent listItems={listRoute} params="Name" /></div> */}
+        
         <div className="pb-4 px-px items-center">
-            {/* <SearchBar getTermSearch={setSearchTerm}/> */}
+            <SearchBar searchFunc={searchListResult}/>
         </div>
         {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
-        {Array.isArray(listRoute)===false && <p className="text-center my-7 text-2xl">Không có dữ liệu. Vui lòng quay lại sau</p>}
+        {Array.isArray(listRoute)===false || listRoute.length ===0 && <p className="text-center my-7 text-2xl">Không có dữ liệu. Vui lòng quay lại sau</p>}
         <div className="grid grid-cols-3 gap-5" >
             {Array.isArray(listRoute)===true&& listRoute.length > 0&& !loading && (listRoute.map((item)=>(
-            // <Link to={`/route/${item.id}`} key={item.id}>
+            
                 <div key={item.id}  className=' flex flex-row bg-blue-300 hover:bg-blue-400 rounded-lg items-center gap-8 w-full h-full  p-2'>
                 <div className='rounded-full border border-cyan-300 flex justify-between items-center p-2' >
                         {item.routeNo}
                 </div>
                 <div className="cursor-pointer hover:font-bold" onClick={()=>viewDetail(item.id)}>{item.name}</div>
                 <div className='ml-auto mr-2 flex flex-row items-center gap-3'>
-                    {/* <HiPencil className='z-10 bg-blue-200 hover:bg-blue-400 rounded-full cursor-pointer p-1' size={30} onClick={()=>navigateDetailPage(item.id)}/> */}
                     <Modal buttonValue={<HiOutlineTrash className='z-10 bg-blue-200 hover:bg-blue-600 rounded-lg cursor-pointer p-1' size={30}/>} title="Bạn chắc chắn muốn xóa?" EnumHandler={()=>deleteRoute(item.id)}/>
               </div>
                 </div>
-            // </Link>
         )))}
         </div>
     </main>

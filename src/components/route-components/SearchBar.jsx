@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-export default function SearchBar({getTermSearch}) {
+export default function SearchBar({searchFunc}) {
     const [term,setTerm]=useState('');
     const handleChange=async (e)=>{
         setTerm(e.target.value);
@@ -15,8 +15,8 @@ export default function SearchBar({getTermSearch}) {
                 <path stroke="currentColor" className='stroke-cyan-500'  d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
         </div>
-        <input onChange={handleChange} type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border  rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nhập tên tuyến để tìm kiếm" required />
-        <button onClick={getTermSearch(term)} type="button" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+        <input onChange={handleChange} type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border  rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500  dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nhập mã tuyến để tìm kiếm" required />
+        <button onClick={()=>searchFunc(term)} type="button" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
     </div>
 </form>
   )
@@ -26,6 +26,6 @@ SearchBar.propTypes={
     // listItem:PropTypes.array.isRequired,
     // param:PropTypes.string.isRequired,
     // onValueChange:PropTypes.func
-    getTermSearch:PropTypes.func
+    searchFunc:PropTypes.func
 }
 
