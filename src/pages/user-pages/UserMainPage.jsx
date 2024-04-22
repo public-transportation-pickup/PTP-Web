@@ -101,6 +101,10 @@ const DeleteFunc=async (userId)=>{
                 currentPage={currentPage}
                 totalPages={Math.ceil(listUser.length/10)}/>
           </div>:<></>}
+          <div>
+
+          </div>
+
     </div>
   )
 }
