@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiOutlineEye,HiOutlineXCircle, HiArrowRight  } from "react-icons/hi";
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import { getRouteById } from "../../api/route-api";
 import { getRouteVars } from "../../api/route-var-api";
 import { ToastContainer,toast } from "react-toastify";
@@ -14,7 +14,7 @@ import { HiPencil } from "react-icons/hi";
 
 export default function DetailRoutePage() {
   const params=useParams();
-  //const navigate=useNavigate();
+  const navigate=useNavigate();
   const [routeInfo,setRouteInfo]=useState({});
   const [routeStationList1,setRouteStationList1]=useState([])
   const [routeStationList2,setRouteStationList2]=useState([])
@@ -27,7 +27,7 @@ export default function DetailRoutePage() {
   const [detailStation,setDetailStation]=useState(null);
   const [isOpenDetailModal,setIsOpenDetailModal]=useState(null);
 
-
+  console.log("route info",routeInfo)
   console.log("routeStationList1",routeStationList1)
   console.log("routeStationList2",routeStationList2)
 
@@ -58,6 +58,11 @@ export default function DetailRoutePage() {
       console.error("view station detail exception",error);
     }
   }
+
+  const handleEditRoute=async ()=>{
+    navigate(`/route/${routeInfo.id}/update`);
+  }
+
   useEffect(()=>{
     const fetchData=async ()=>{
       try {
@@ -99,7 +104,7 @@ export default function DetailRoutePage() {
       <div className="mb-2">
         <div className="flex flex-row justify-center items-center gap-4">
           <div className="text-center text-2xl pb-6 text-sky-500 font-bold mt-3">{routeInfo.name}</div>
-          <HiPencil className=" bg-blue-200 hover:bg-blue-700 rounded-full text-center" size={30}/>
+          <HiPencil className=" bg-blue-200 hover:bg-blue-700 rounded-full text-center" size={30} onClick={()=>handleEditRoute()}/>
         </div>
         
         <div>
@@ -107,6 +112,7 @@ export default function DetailRoutePage() {
         <p><span className="text-sky-500 font-bold" >Khoảng cách:</span> <span>{routeInfo.distance} mét</span></p>
         <p><span className="text-sky-500 font-bold" >Thời gian của 1 chuyến:</span> <span>{routeInfo.timeOfTrip} phút</span></p>
         <p><span className="text-sky-500 font-bold" >Thời gian giãn cách:</span> <span>{routeInfo.headWay} phút</span></p>
+        <p><span className="text-sky-500 font-bold" >Thời gian hoạt động:</span> <span>{routeInfo.operationTime}</span></p>
         <p><span className="text-sky-500 font-bold" >Loại xe:</span> <span>{routeInfo.numOfSeats} chỗ</span></p>
         <p><span className="text-sky-500 font-bold" >Tổng số chuyến:</span> <span>{routeInfo.totalTrip}</span></p>
         <p><span className="text-sky-500 font-bold" >Thuộc tổ chức:</span> <span>{routeInfo.orgs}</span></p>
@@ -156,8 +162,8 @@ export default function DetailRoutePage() {
           {routeStationList2.length===0&&(
             <div>
               <p>Lượt về này hiện chưa có dữ liệu. Bạn có muốn tạo dữ liệu cho lượt về này không?</p>
-              <button>Có</button>
-              <button>Không</button>
+              <button className="bg-green-300 hover:bg-green-50">Có</button>
+              <button className="bg-rose-300 hover:bg-rose-50">Không</button>
             </div>
           )}
         </div>

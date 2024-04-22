@@ -93,6 +93,10 @@ export const createStore = async (storeModel,file)=>{
         formData.append('Street',storeModel.Street);
         formData.append('File',file[0]);
         formData.append('ActivationDate',storeModel.ActivationDate);
+        formData.append('Email',storeModel.Email);
+        formData.append('ManagerName',storeModel.ManagerName);
+        formData.append('DateOfBirth',storeModel.DateOfBirth);
+        formData.append('ManagerPhone',storeModel.ManagerPhone);
         //formData.append('StationIds',JSON.stringify(storeModel.StationIds));
         storeModel.StationIds.forEach((item) => formData.append("StationIds", item))
         // console.log("FormData req: ",file[0]);

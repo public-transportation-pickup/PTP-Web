@@ -36,6 +36,7 @@ import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 import StationMainPage from './pages/station-pages/StationMainPage.jsx';
 import DashboardStorePage from './pages/store-pages/DashboardStorePage.jsx';
 import TestPage from './pages/TestPage.jsx';
+import UpdateRoutePage from './pages/route-pages/UpdateRoutePage.jsx';
 //import StationDetailPage from './pages/station-pages/StationDetailPage.jsx';
 
 export default function App() {
@@ -88,6 +89,7 @@ export default function App() {
                     {/* <Route path='station/:stationId' element={<StationDetailPage/>}/> */}
                   </Route>
                 </Route>
+                <Route path='update' element={<UpdateRoutePage/>}/>
               </Route>
             </Route>
             {/* end route */}

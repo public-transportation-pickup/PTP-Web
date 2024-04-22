@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 export default function RouteItem() {
     const navigate=useNavigate();
     const [loading,setLoading]=useState(false);
+    //const [searchTerm,setSearchTerm]=useState(false)
     const [listRoute, setListRoute]=useState([]);
 
     const viewDetail=async (id)=>{
@@ -43,9 +44,16 @@ export default function RouteItem() {
         }
         
     }
+
+    // const searchListResult=async(searchTerm)=>{
+    //     try {
+    //         const responseAPI=await 
+    //     } catch (error) {
+    //         console.error("search list route page main exception", error);
+    //     }
+    // }
+
     useEffect(()=>{
-        
-        
         fetchData();
         
     },[])
@@ -53,7 +61,7 @@ return (
     <main>
         {/* <div><ComboboxComponent listItems={listRoute} params="Name" /></div> */}
         <div className="pb-4 px-px items-center">
-            <SearchBar/>
+            {/* <SearchBar getTermSearch={setSearchTerm}/> */}
         </div>
         {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
         {Array.isArray(listRoute)===false && <p className="text-center my-7 text-2xl">Không có dữ liệu. Vui lòng quay lại sau</p>}

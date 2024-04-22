@@ -25,6 +25,7 @@ export default function DashboardStorePage() {
 const fetchData=useCallback(async()=>{
     try {
         const responseAPI=await getStoreReport(params.storeId);
+        console.log("ResponseAPI fetch dashboard store", responseAPI)
         if(responseAPI!==null){
             //toast("Đã xảy ra lỗi")
             console.log("responseAPI get store report fetch data",responseAPI)
@@ -43,17 +44,15 @@ useEffect(()=>{
   return (
     <div>
         <ToastContainer/>
-        {report===null&&(<div>
-
-        </div>)}
-        <p>
+        {report!==null&&(<div>
+            <p>
         <span className="hover:underline text-sky-700">Cửa hàng</span>
         <span className="px-2">&gt;</span>
         <button type="button" onClick={handleDetailClick} className="hover:underline text-sky-700">Chi tiết</button>
         <span className="px-2">&gt;</span>
         <span className="hover:underline text-sky-700">Sản phẩm</span>
     </p>
-        <h1 className="text-center mx-auto text-3xl my-10 underline font-bold">Thống Kê Của Cửa Hàng</h1>
+        <h1 className="text-center mx-auto text-3xl my-10 font-bold">Thống Kê Của Cửa Hàng: {report.storeName}</h1>
         <div>
             <ToastContainer className="w-100 h-10"/>
             <HeaderStats param={report} />
@@ -84,6 +83,8 @@ useEffect(()=>{
                 </div>
             </div>
         </div>
+        </div>)}
+       
     </div>
   )
 }

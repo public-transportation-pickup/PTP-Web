@@ -34,3 +34,14 @@ export const deleteUser=async (id)=>{
     console.error("Delete user api exception",error)
   }
 }
+
+export const getUserById=async (id)=>{
+  try {
+    const res= await fetch(`${BASE_URL}/users/${id}`);
+    console.log("get user by id res",res);
+    if(res.status===200) return await res.json();
+    else return null
+  } catch (error) {
+    console.error("get user by id exception",error);
+  }
+}
