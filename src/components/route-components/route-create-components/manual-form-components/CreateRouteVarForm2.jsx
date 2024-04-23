@@ -63,7 +63,7 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
       if(params.routeId!==null && params.routeId){
         const responseAPI= await createRouteVarManually(createRouteVarModel);
         console.log("Reponse api create route manuall vỀ",responseAPI);
-        if(responseAPI!==null || responseAPI !==undefined){
+        if(responseAPI!==null){
           
           toast.success("Tạo lượt VỀ thành công");
           getRoutevar2(responseAPI.id);
@@ -125,7 +125,7 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
           </div>
           <div className="relative z-0 w-full mb-5 group">
               
-          <input value="Lượt đi" type="text"  name="outBound" id="outBound" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " readOnly />
+          <input value="Lượt về" type="text"  name="outBound" id="outBound" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " readOnly />
               <label htmlFor="outBound" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Lượt về</label>
           </div>
         </div>

@@ -38,6 +38,7 @@ export const createRouteVarManually= async (RouteVarCreateModel)=>{
         else return null;
     } catch (error) {
         console.error("create route var manually exception: ", error)
+        return null;
     }
 }
 
