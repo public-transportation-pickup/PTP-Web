@@ -48,7 +48,7 @@ export default function StationByZone({handleCloseButtonFunc,addStationFunc,list
                     {listStationbyZone && listStationbyZone.length >0 && (listStationbyZone.map((item,index)=>(
                         <div key={index} className="flex justify-between border-b-2 p-2 text-sm">
                             <div className="ml-4">{index+1}- {item.name}</div>
-                            <HiOutlinePlus className="w-5 h-5 rounded-full bg-red-200 hover:opacity-95" onClick={()=>addStationFunc(item)}/>
+                            <HiOutlinePlus className="w-5 h-5 rounded-full bg-red-200 hover:bg-red-50 hover:cursor-pointer" onClick={()=>addStationFunc(item)}/>
                         </div>
                     )))}
                 </div>
