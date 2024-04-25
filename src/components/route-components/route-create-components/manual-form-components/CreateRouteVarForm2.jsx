@@ -31,7 +31,7 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
   const [buttonSubmit,setButtonSubmit]=useState(false);
 
   console.log("List route var", listRouteStation)
-  console.log("Create route var model", createRouteVarModel);
+  console.log("Create route var model2", createRouteVarModel);
   //console.log("Create route var model", createRouteVarModel2);
   console.log("RouteInfo", routeInfo)
   const handleAddStation=async (station)=>{
@@ -46,7 +46,7 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
 
   const handleRemoveStation= (id)=>{
     setListRouteStation(listRouteStation.filter((station)=>station.id!==id))
-    setCreateRouteVarModel(createRouteVarModel.routeStations.filter((station)=>station.stationId!==id));
+    setCreateRouteVarModel({...createRouteVarModel,routeStations:createRouteVarModel.routeStations.filter((station)=>station.stationId!==id)});
   }
 
   const handleChange=async(e)=>{
@@ -140,14 +140,18 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
     </div>
     )}
           </div>
-          <div className="relative z-0 w-full mb-5 group">
+          <div className="relative z-0 w-full mb-5 mt-16 ml-4 group">
             {listRouteStation && listRouteStation.length >0 ?( listRouteStation.map((item,index)=>(
               <div key={index} className='flex flex-row mb-1 items-center gap-2'>
                 <div className='border-2 w-2/3 flex flex-row gap-2 items-center border-slate-300 py-2'>
-                  <div className='ml-2'>
-                    {index+1} - {item.name} 
+                <div className='ml-2 items-center flex flex-row gap-3'>
+                    <p className='bg-sky-100 rounded-full p-1 px-3'>{index+1}</p>
+                    <div className='flex flex-col'>
+                      <p>{item.name} </p>
+                      <p className='text-xs'>{item.address}</p>
+                    </div>
                   </div>
-                    <input className='w-1/2 text-center ml-auto mr-2' value={index}/>
+                    {/* <input className='w-1/2 text-center ml-auto mr-2' value={index}/> */}
                 </div>
                 <HiOutlineTrash className='hover: cursor-pointer' size={20} onClick={()=>handleRemoveStation(item.id)}/>
               </div>

@@ -5,7 +5,7 @@ import {toast} from 'react-toastify'
 import {useNavigate, useParams} from 'react-router-dom'
 import { HiArrowRight } from 'react-icons/hi';
 import { getRouteById } from '../../../../api/route-api';
-import { getRouteVarsById } from '../../../../api/route-var-api';
+//import { getRouteVarsById } from '../../../../api/route-var-api';
 
 export default function CreateTimeTableForm() {
     //const navigate=useNavigate();
@@ -14,12 +14,13 @@ export default function CreateTimeTableForm() {
     const dayOfWeek=["T2","T3","T4","T5","T6","T7","CN"]
     const [dateApply,setDateApply]=useState([]);
     const [routeInfo,setRouteInfo]=useState({});
-    const [routeVarInfo,setRouteVarInfo]=useState({})
+    //const [routeVarInfo,setRouteVarInfo]=useState({})
     const [timetableId1,setTimetableId1]=useState('');
     const [timetableId2,setTimetableId2]=useState('');
     const [buttonSubmit,setButtonSubmit]=useState(false);
     const [loading,setLoading]=useState(false);
-    console.log("timetableId",timetableId);
+    //console.log("timetableId",timetableId);
+    console.log("Time 1"+timetableId1+"Time 2"+timetableId2)
 
     console.log("button submit",buttonSubmit)
 
@@ -46,7 +47,7 @@ export default function CreateTimeTableForm() {
         setLoading(false);
         const responseAPI1= await applyTimetableFortrip(timetableId1);
         const responseAPI2= await applyTimetableFortrip(timetableId2);
-        if(responseAPI===200){
+        if(responseAPI1===200 && responseAPI2===200){
             await toast.success("Áp dụng thời khóa biếu thành công")
             setLoading(true)
             if(loading===true) navigate(`/route/${params.routeId}`)
@@ -93,9 +94,9 @@ export default function CreateTimeTableForm() {
         const fetchData= async ()=>{
             try {
                 const responseRouteInfo= await getRouteById(params.routeId);
-                const responseRoutevarInfo= await getRouteVarsById(params.routevarId);
+                //const responseRoutevarInfo= await getRouteVarsById(params.routevarId1);
                 responseRouteInfo===null?setRouteInfo({}) :setRouteInfo(responseRouteInfo);
-                responseRoutevarInfo===null? setRouteVarInfo({}) :setRouteVarInfo(responseRoutevarInfo);
+                //responseRoutevarInfo===null? setRouteVarInfo({}) :setRouteVarInfo(responseRoutevarInfo);
             } catch (error) {
                 console.log("create time table page fetch data", error)
             }
