@@ -7,7 +7,7 @@ import TransactionChart from "../components/TransactionChart";
 import { useEffect, useState } from "react";
 import { ACCESS_TOKEN, authenticationV2, refreshToken } from "../api/auth-api";
 import { useNavigate } from "react-router-dom";
-import { getReport ,getTest} from "../api/user-api";
+import { getReport } from "../api/user-api";
 import { useAPIRequest,Actions } from "../lib/utils/api-request";
 
 export default function Dashboard() {
@@ -44,16 +44,11 @@ export default function Dashboard() {
 
   //#region request API
     const [reportState,requestReport]=useAPIRequest(getReport);
-    const [reportState2,requestReport2]=useAPIRequest(getTest);
     const [report,setReport]=useState(null);
     useEffect( ()=>{
       requestReport();
     },[])
 
-
-    // useEffect( ()=>{
-    //   requestReport2();
-    // },[])
   
     useEffect(()=>{
       if(reportState.status===Actions.success){
@@ -64,15 +59,7 @@ export default function Dashboard() {
         console.log("Get report errors:",reportState.error);
       }
     },[reportState]);
-    // useEffect(()=>{
-    //   if(reportState2.status===Actions.success){
-    //     setReport(reportState2.payload);
-    //     // console.log("Report: ",reportState.payload)
-    //   }
-    //   if(reportState2.status===Actions.failure){
-    //     console.log("Get report errors:",reportState2.error);
-    //   }
-    // },[reportState2]);
+
   //#region 
 
 

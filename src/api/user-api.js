@@ -17,15 +17,3 @@ export const getReport = async () => {
   const res = await axios.get(`${BASE_URL}/reports/admin`);
   return res.data;
 };
-
-export const getTest = async () => {
-  const res = await axios.get(
-    `https://magiclandapiv2.somee.com/api/v1/classes?time=Week`,
-    {
-      headers: {
-        'referrerPolicy': "no-referrer",
-      },
-    }
-  );
-  return res.data;
-};
