@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import PaginationButton from "../../../components/store-components/PaginationButton";
 import {useParams,useNavigate} from 'react-router-dom'
 import { getMenuByStoreId } from "../../../api/store-api";
 import { getProductsInMenu } from "../../../api/product-in-menu-api";
 import { getMenuById } from "../../../api/menu-api";
 import NumberFormat from "../../../lib/utils/NumberFormat";
 import {GetDayOfWeek,GetDate} from "../../../lib/utils/DateFormat"
+import PaginationButton from "../../../components/shared/PaginationButton";
+import classNames from "classnames";
 
 export default function MenuMainPage() {
     const params= useParams();
@@ -47,13 +48,13 @@ export default function MenuMainPage() {
     return (
     <>
      <p>
-        <span className="hover:underline">Cửa hàng</span>
+        <span className="hover:underline text-sky-700">Cửa hàng</span>
         <span className="px-2">&gt;</span>
-        <button type="button" onClick={handleDetailClick} className="hover:underline">Chi tiết</button>
+        <button type="button" onClick={handleDetailClick} className="hover:underline text-sky-700">Chi tiết</button>
         <span className="px-2">&gt;</span>
-        <span className="hover:underline">Lịch bán</span>
+        <span className="hover:underline text-sky-700">Sản phẩm</span>
     </p>
-        <h1 className="text-center mx-auto text-4xl mb-10">Lịch bán</h1>
+        <h1 className="text-center mx-auto text-4xl mb-20 font-bold">Danh Sách Lịch Bán</h1>
         {/* <button className="">Create Menu</button> */}
         {/* <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new product</button>
@@ -63,11 +64,11 @@ export default function MenuMainPage() {
             <table className="h-full w-full">
                 <tbody>
                 <tr className="">
-                    <td className="content-start border-r-4 border-orange-100 w-1/3">
+                    <td className="content-start border-r-4 border-cyan-700 w-1/3">
                     <div className="p-2 mx-3">
                     {listMenu && listMenu.length > 0 && listMenu.slice(currentPage*10, currentPage*10+10).map((item,index)=>(
-                        <div key={index} className="border-b-4 border-orange-100 ">
-                            <div className="hover:font-bold focus:text-yellow-200" onClick={()=>getListProductInMenu(item.id)}>{item.name}</div>
+                        <div key={index} className="border-b-4 border-cyan-700 ">
+                            <div className=" cursor-pointer hover:font-bold focus:text-yellow-200" onClick={()=>getListProductInMenu(item.id)}>{item.name}</div>
                         </div>
                     ))}
                     
@@ -77,20 +78,20 @@ export default function MenuMainPage() {
                     <div className=" mx-3 overflow-auto">
                     {menuId !== ''? (
                         <div className="">
-                            <div className="bg-yellow-100 p-4 rounded-lg mb-6">
-                                <div>Mô tả: {menuInfo.description}</div>
-                                <div>Thời gian áp dụng: {menuInfo.startTime} - {menuInfo.endTime}</div>
-                                <div>Áp dụng các ngày trong tuần: <GetDayOfWeek days={menuInfo.dateApply}/></div>
+                            <div className="bg-sky-100 p-4 rounded-3xl mb-6 w-[32rem] mx-auto mt-4">
+                                <div className="ml-10">Mô tả: {menuInfo.description}</div>
+                                <div className="ml-10">Thời gian áp dụng: {menuInfo.startTime} - {menuInfo.endTime}</div>
+                                <div className="ml-10">Áp dụng các ngày trong tuần: <GetDayOfWeek days={menuInfo.dateApply}/></div>
                                 {menuInfo.startDate!==null?
-                                    <div>Ngày cụ thể: <GetDate date={menuInfo.startDate}/> - <GetDate date={menuInfo.endDate}/></div>
+                                    <div className="ml-10">Ngày cụ thể: <GetDate date={menuInfo.startDate}/> - <GetDate date={menuInfo.endDate}/></div>
                                     :<></>
                                 }
                             </div>
                              {listProductsMenu && listProductsMenu.length >0 ? (
-                                listProductsMenu.map((item,index)=>(
-                                    <div  key={index} className="border rounded-lg">
+                               
+                                    <div  className="border rounded-lg">
                                     <table className="table-auto rounded-lg min-w-full divide-y divide-gray-200">
-                                        <thead className="rounded-lg bg-gray-50">
+                                        <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
                                             <tr>
                                                 <th>Sản phẩm</th>
                                                 <th>Giá</th>
@@ -101,7 +102,8 @@ export default function MenuMainPage() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                                <tr className="hover:bg-orange-100">
+                                        {listProductsMenu.map((item,index)=>(
+                                                <tr key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4 hover:bg-sky-50")}>
                                                 <td>
                                                     <div className="flex flex-row py-2 gap-4 items-center ml-4">
                                                         <img src={item.imageURL} className="rounded-full bg-purple-100 w-10 h-10"/>
@@ -115,7 +117,7 @@ export default function MenuMainPage() {
                                                 {/* <td className="text-center py-2">{item.expirationDate}</td> */}
                                             </tr>
                                             
-                                            
+                                        ))}
                                         </tbody>
                                     </table>
                                     <div>
@@ -125,7 +127,7 @@ export default function MenuMainPage() {
                                         totalPages={Math.ceil(listProductsMenu.length/10)}/>
                                     </div>
                                 </div>
-                                ))
+                               
                                 ):(
                                     <div className="mb-auto">Danh sách trống</div>
                                 )}

@@ -1,5 +1,6 @@
 import { BASE_URL } from "../lib/contants";
 import axios from "axios";
+import { ACCESS_TOKEN } from "./auth-api";
 
 export const getUsers = async (roleName) => {
   try {
@@ -17,3 +18,44 @@ export const getReport = async () => {
   const res = await axios.get(`${BASE_URL}/reports/admin`);
   return res.data;
 };
+
+
+export const deleteUser=async (id)=>{
+  try {
+    const res= await axios.delete(`${BASE_URL}/users/${id}`,{
+      headers:{
+        Authorization: `Bearer ${JSON.parse(ACCESS_TOKEN)}`,
+      }
+    })
+    console.log("response delete user", res);
+    if(res.status===204) return res.status;
+    else return null;
+  } catch (error) {
+    console.error("Delete user api exception",error)
+  }
+}
+
+export const getUserById=async (id)=>{
+  try {
+    const res= await fetch(`${BASE_URL}/users/${id}`);
+    console.log("get user by id res",res);
+    if(res.status===200) return await res.json();
+    else return null
+  } catch (error) {
+    console.error("get user by id exception",error);
+  }
+}
+
+export const updateUser=async (id,userModal)=>{
+  try {
+    const res= await axios.put(`${BASE_URL}/users/${id}`,userModal,{
+      headers:{
+        "Content-Type":"application/json"
+      }
+    });
+    if(res.status===204) return res.status;
+    else return null;
+  } catch (error) {
+    console.error("update user exception",error)
+  }
+}

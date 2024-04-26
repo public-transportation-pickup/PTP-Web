@@ -14,7 +14,6 @@ import MenuMainPage from './pages/store-pages/menu-pages/MenuMainPage.jsx';
 // import RouteItem from './components/route-components/RouteItem.jsx';
 //import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 //import MapStationPage from './pages/route-pages/MapStationPage.jsx';
-// import StationsList from './components/route-components/StationsList.jsx';
 import DetailRoutePage from './pages/route-pages/DetailRoutePage.jsx';
 // import ProductItemModal from './components/store-components/menu-components/ProductItemModal.jsx';
 import CategoryMainPage from './pages/category-pages/CategoryMainPage.jsx';
@@ -34,6 +33,11 @@ import CreateTimetablePage from './pages/route-pages/timetable-pages/CreateTimet
 import CreateTripPage from './pages/route-pages/trip-pages/CreateTripPage.jsx';
 import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 import StationMainPage from './pages/station-pages/StationMainPage.jsx';
+import DashboardStorePage from './pages/store-pages/DashboardStorePage.jsx';
+import TestPage from './pages/TestPage.jsx';
+import UpdateRoutePage from './pages/route-pages/UpdateRoutePage.jsx';
+//import StationDetailPage from './pages/station-pages/StationDetailPage.jsx';
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -53,6 +57,7 @@ export default function App() {
               <Route path=':storeId'>
                 {/* url for menu of store */}
                 <Route index element={<DetailStorePage/>}/>
+                <Route path='dashboard' element={<DashboardStorePage/>}/>
                 <Route path='menu'>
                   <Route index element={<MenuMainPage/>}/>
                   <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
@@ -77,11 +82,13 @@ export default function App() {
                 <Route index element={<DetailRoutePage/>}/>
                 <Route path='routevar'>
                   <Route path='create' element={<CreateRouteVarPage/>}/>
-                  <Route path=':routevarId'>
+                  <Route path=':routevarId1/:routevarId2'>
                     <Route path='timetable/create' element={<CreateTimetablePage/>}/>
                     <Route path='timetable/:timetableId/trip/create' element={<CreateTripPage/>}/>
+                    {/* <Route path='station/:stationId' element={<StationDetailPage/>}/> */}
                   </Route>
                 </Route>
+                <Route path='update' element={<UpdateRoutePage/>}/>
               </Route>
             </Route>
             {/* end route */}
@@ -101,6 +108,7 @@ export default function App() {
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/map' element={<Map/>}/>
+        <Route path='testpage' element={<TestPage/>}/>
       </Routes>
     </BrowserRouter>
   )

@@ -58,13 +58,13 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <CiRoute />,
 		flag:false
 	},
-	{
-		key: 'station',
-		label: 'Doanh thu theo trạm',
-		path: '/station',
-		icon: <FaMapLocation />,
-		flag:false
-	},
+	// {
+	// 	key: 'station',
+	// 	label: 'Doanh thu theo trạm',
+	// 	path: '/station',
+	// 	icon: <FaMapLocation />,
+	// 	flag:false
+	// },
 	{
 		key: 'category',
 		label: 'Danh mục',
@@ -76,16 +76,16 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 ]
 
 export const DASHBOARD_SIDEBAR_BOTTOM_LINKS = [
-	{
-		key: 'settings',
-		label: 'Cài đặt',
-		path: '/settings',
-		icon: <HiOutlineCog />
-	},
-	{
-		key: 'support',
-		label: 'Trợ giúp',
-		path: '/support',
-		icon: <HiOutlineQuestionMarkCircle />
-	}
+	// {
+	// 	key: 'settings',
+	// 	label: 'Cài đặt',
+	// 	path: '/settings',
+	// 	icon: <HiOutlineCog />
+	// },
+	// {
+	// 	key: 'support',
+	// 	label: 'Trợ giúp',
+	// 	path: '/support',
+	// 	icon: <HiOutlineQuestionMarkCircle />
+	// }
 ]

@@ -37,7 +37,7 @@ export const CreateCategory=async (createModal)=>{
         formData.append('Name', createModal.Name);
         formData.append("Description", createModal.Description);
         formData.append('Status',createModal.Status);
-        formData.append('Image', createModal.Image);
+        formData.append('Image', createModal.Image[0]);
         //console.log("CURRENT_USER.token",JSON.stringify(ACCESS_TOKEN));
         const res= await axios.post(`${BASE_URL}/categories`,formData,{
             headers:{

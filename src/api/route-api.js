@@ -2,15 +2,24 @@ import axios from 'axios';
 import { BASE_URL } from '../lib/contants/index'
 import { ACCESS_TOKEN } from './auth-api';
 
-export const getRoutes = async ()=>{
+export const getRoutes = async (searchTernm)=>{
     try {
         // const response= await fetch(`${BASE_URL}/routes`);
         // const data= await response.json();
         // console.log("Get all route data",data);
         // return data;
-        const response= await axios.get(`${BASE_URL}/routes`);
-        console.log("Response, response.dâta",response,response.data);
-        return response.data;
+        if(searchTernm==='' || searchTernm===null || searchTernm===undefined){
+           
+            const response= await axios.get(`${BASE_URL}/routes`);
+            console.log("Response, response.dâta",response,response.data);
+            return response.data;
+        }else{
+            const responseSearch= await axios.get(`${BASE_URL}/routes?RouteNo=${searchTernm}`);
+            console.log("ResponseSearch, responseSearch.dâta",responseSearch,responseSearch.data);
+            if(responseSearch===200)return responseSearch.data;
+            else return null;
+        }
+        
     } catch (error) {
         console.log("Get routes exception", error);
     }
@@ -21,7 +30,8 @@ export const getRouteById=async (routeId)=>{
         const response = await fetch(`${BASE_URL}/routes/${routeId}`);
         const data=await response.json();
         console.log("Get route by Id data:",data);
-        return data;
+        if(response.status===200) return data;
+        else return null;
     } catch (error) {
         console.log("Get route exception", error);
     }
@@ -40,6 +50,7 @@ export const createRoute=async (createModel)=>{
     }
 }
 
+
 export const deleleRoute = async (routeId)=>{
     try {
         const res= await axios.delete(`${BASE_URL}/routes/${routeId}`,{
@@ -53,16 +64,16 @@ export const deleleRoute = async (routeId)=>{
         console.log("Delete route exception", error);
     }
 }
-export const updateRoute = async (routeModel)=>{
+export const updateRoute = async (routeId,routeModel)=>{
     try {
-        const res= await axios.put(`${BASE_URL}/routes/${routeModel.id}`,routeModel,{
+        const res= await axios.put(`${BASE_URL}/routes/${routeId}`,routeModel,{
             headers:{
                 "Content-Type":"application/json"
             }
         })
         if(res.status===204) return res.status;
     } catch (error) {
-        console.error("Create Route exception", error);
+        console.error("update Route exception", error);
     }
 }
 

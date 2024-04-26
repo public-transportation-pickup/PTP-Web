@@ -12,7 +12,6 @@ export default function ItemDrag({id, StationName}) {
     }
   return (
     <div ref={setNodeRef} {...attributes} {...listeners} style={style} className='bg-red-100 m-2 p-2 items-center flex justify-start gap-10 hover:bg-red-400'>
-    {/* <input type='checkbox' className=''/>     */}
     <HiOutlineViewGrid className="w-5 h-5"/> {StationName}
 </div>
   )
