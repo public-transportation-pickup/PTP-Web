@@ -52,16 +52,6 @@ const [detailCategory, setdetailCategory]=useState(null);
     const navigateEditPage=(id)=>{
       navigate(`update/${id}`)
     }
-    // const editCategory =async (id)=>{
-    //   try {
-    //     const responseAPI= await DeleteCategory(id);
-    //     if (responseAPI==204) toast.success("Xóa thành công");
-    //     else toast.error("Xóa thất bại")
-    //     console.log("Response API delete category", responseAPI);
-    //   } catch (error) {
-    //     console.error("Delete category on categoryItem.jsx", error);
-    //   }
-    // }
 
     useEffect(()=>{
         fetchData();

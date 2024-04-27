@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import {ToastContainer, toast } from "react-toastify";
 import { updateStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictId, getStoreById } from "../../api/store-api";
 import ComboboxComponent from "../../components/store-components/ComboboxComponent";
-import { getStations } from "../../api/station-api";
+import { getStationByStationId, getStations } from "../../api/station-api";
 import {useParams} from 'react-router-dom'
 import {HiPencil,HiOutlineXCircle, HiOutlineTrash } from "react-icons/hi";
 //import { getUserById, updateUser } from "../../api/user-api";
@@ -19,7 +19,7 @@ export default function UpdateStorePage() {
   const [preview,setPreview]=useState();
   console.log("Preview",preview)
 
-  const [error, setError]=useState(false);
+  const [error, setError]=useState('');
   const [loading,setLoading]=useState(false);
   const [changeAddress,setChangeAddress]=useState(false);
 
@@ -61,24 +61,19 @@ export default function UpdateStorePage() {
     StationIds:[]
 })
 
-// const [userId,setUserId]=useState();
-
-// const [userForm,setUserForm]=useState({
-//     FullName: '',
-//     PhoneNumber: '',
-//     DateOfBirth: '',
-//     RoleName: 'StoreManager'
-// })
+//console.log("Store update get info",store);
+console.log("Station info list initial",stationListInfo)
 
 console.log("Jsonform",jsonForm)
-//console.log("userform",userForm)
+
 
   const handleStationChange=async (value)=>{
     console.log("station change",value);
     if(value.storeId!=="00000000-0000-0000-0000-000000000000") await toast("Trạm đã được đăng kí store")
     else{
+        await setJsonForm({...jsonForm,StationIds:[]});
         await setJsonForm({...jsonForm,StationIds:[...jsonForm.StationIds, value.id]});
-    await setStationListInfo(prev=>[...prev, value]);
+        await setStationListInfo(prev=>[...prev, value]);
     // await setJsonForm({...jsonForm,StationIds:value.id});
     // setAddressStation(JSON.stringify(value.address))
     }
@@ -153,29 +148,19 @@ const handleSubmit =async (e)=>{
   try{
       //if(jsonForm.File.length <1 ) return setError('You must upload at least one image');
       setLoading(true);
-      setError(false);
+      //setError(false);
       const responseAPI= await updateStore(jsonForm);
               console.log("call api update store", responseAPI);
               if(responseAPI===204) toast.success("Cập nhật cửa hàng thành công")
               else if(responseAPI===401) toast.warning("Vui lòng đăng nhập")
+              else if(responseAPI.status===400) toast.warning(responseAPI.message);
               else toast.error("Cập nhật cửa hàng thất bại")
-      //       setUserForm({...userForm, 
-      //       FullName: JSON.parse(jsonForm).ManagerName,
-      //       PhoneNumber: JSON.parse(jsonForm).ManagerPhone,
-      //       DateOfBirth: JSON.parse(jsonForm).DateOfBirth,
-      //       RoleName: "StoreManager"
-      //       })
-      // const responseAPIUpdateUser= await updateUser(userId, userForm);
-      // console.log("call api update user", responseAPIUpdateUser);
-      // if(responseAPIUpdateUser===204) toast.success("Cập nhật cửa hàng thành công")
-      // else if(responseAPIUpdateUser===401) toast.warning("Vui lòng đăng nhập")
-      // else toast.error("Cập nhật cửa hàng thất bại")
 
       
       setLoading(false);
   }catch(error){
       console.log("Catch:",error);
-      setError(error.message);
+      //setError(error.message);
       setLoading(false);
   }
 }
@@ -195,16 +180,8 @@ const handleSubmit =async (e)=>{
         }
         if(params.storeId){
             const responseAPI= await getStoreById(params.storeId);
-            //const responseGetUserByIdAPI= await getUserById(responseAPI.userId);
-            //const responseAPI=await 
             setStore(responseAPI);
             setPreview(responseAPI.imageURL);
-            // setUserForm({...userForm, 
-            // FullName: responseAPI.managerName,
-            // PhoneNumber: responseAPI.managerPhone,
-            // DateOfBirth: responseAPI.dateOfBirth,
-            // RoleName: "StoreManager"
-            // })
             setJsonForm({...jsonForm,
               Id:params.storeId,
               Name:responseAPI.name,
@@ -212,10 +189,10 @@ const handleSubmit =async (e)=>{
               PhoneNumber:responseAPI.phoneNumber,
               Latitude:responseAPI.latitude,
               Longitude: responseAPI.longitude,
+              AddressNo:responseAPI.addressNo,
               Zone:responseAPI.zone,
               Ward:responseAPI.ward,
-              AddressNo:responseAPI.addressNo,
-              Street:responseAPI.street,
+              //Street:responseAPI.street,
               ActivationDate: new Date().toISOString(),
               Email:responseAPI.email,
               ManagerName:responseAPI.managerName,
@@ -223,14 +200,19 @@ const handleSubmit =async (e)=>{
               ManagerPhone:responseAPI.phoneNumber,
               StationIds:responseAPI.stationIds
             })
-            
+            if(responseAPI.stationIds.length >0 && stationListInfo.length < responseAPI.stationIds.length){
+              responseAPI.stationIds.forEach(async element => {
+                let value=await getStationByStationId(element);
+                setStationListInfo(prev=>[...prev, value]);
+              });
+            } 
         }else setStore(null);
        
             
     }
     fetchData();
     
-},[districtId,loading,params.storeId]);
+},[params.storeId]);
 
     return (
       <>
@@ -302,7 +284,7 @@ const handleSubmit =async (e)=>{
                                   <div className="">Địa chỉ hiện tại:</div>
                                   <input
                                   type="text"
-                                  className="rounded-lg w-[28rem] h-12"
+                                  className="rounded-lg w-[42rem] h-12"
                                   value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
                                   readOnly
                                   />
@@ -310,13 +292,14 @@ const handleSubmit =async (e)=>{
                         </div>
                         <div className="flex flex-row mt-8 items-center">
                           <div htmlFor="description" className="">Các trạm hiện tại được đăng kí:</div>
-                          <div className="flex flex-wrap ml-3 items-center bg-white w-[28rem] h-12 rounded-lg">
+                         
                             {store.stationName && store.stationName.length >0&& store.stationName.map((item,index)=>(
                                     // <div key={index} className="ml-8 items-center">
+                                    <div key={index} className="flex flex-wrap ml-3 items-center bg-white w-[28rem] h-12 rounded-lg">
                                         <p key={index} className="p-2 mb-2">{index+1}-{item} </p>
-                                    // </div>
+                                    </div>
                                 ))}
-                          </div>
+                         
                         </div>
                       </div>
                       
@@ -325,21 +308,6 @@ const handleSubmit =async (e)=>{
                     </div>
                     
                     <div>
-                    <div>
-                              {jsonForm.StationIds && stationListInfo.length >0 && stationListInfo.map((item,index)=>(
-                                  //storeId="00000000-0000-0000-0000-000000000000"
-                                          <div key={index} className="flex flex-row gap-4 items-center border-y-2 justify-between">
-                                          <div className="flex flex-row gap-2">
-                                          <p>{index+1} - </p>
-                                          <div>
-                                              <p>Tên trạm: {item.name}</p>
-                                              <p>Địa chỉ: {item.address}</p>
-                                          </div>
-                                          </div>
-                                          <HiOutlineTrash className="cursor-pointer" onClick={()=>handleRemoveStation(item.id)}/>
-                                          </div>
-                              ))}
-                          </div>
                     </div>
                   </div>
                   
@@ -350,7 +318,7 @@ const handleSubmit =async (e)=>{
                     <div className="border-2 border-blue-300 rounded-lg p-3 mb-6">
                       <div className="flex justify-between mb-2">
                         <p className="font-bold"><span className="text-rose-500 underline text-xl">Lưu ý: </span> Nếu đóng form địa chỉ sẽ không được cập nhật</p>
-                        <HiOutlineXCircle size={30} onClick={handleCloseChangeAddress} className="z-10 bg-rose-300 cursor-pointer rounded-full p-1 hover:bg-rose-400"/>
+                        <HiOutlineXCircle size={30} onClick={()=>handleCloseChangeAddress} className="z-10 bg-rose-300 cursor-pointer rounded-full p-1 hover:bg-rose-400"/>
                       </div>
                       <div className="flex flex-row gap-4 pb-4  items-center py-2 ">
                     <div className="flex flex-col gap-8 items-start pb-4 mx-auto">

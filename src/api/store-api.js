@@ -31,11 +31,12 @@ export const getWardByDistrictId= async (districtId)=>{
     try {
         const data= await fetch(`https://vapi.vnappmob.com/api/province/ward/${districtId}`);
         res=await data.json();
-        //console.log("Get district by province Id response",res.results);
+        console.log("Get district by province Id response",res.results);
     } catch (error) {
         console.log("Error at getAllProvince", error);
     }
     return res.results;
+    
 }
 
 export const forwardGeocoding=async(address)=>{
@@ -62,6 +63,7 @@ export const getStores=async()=>{
         return data;
     } catch (error) {
         console.log("Get all stores error",error);
+        return null;
     }
 }
 
@@ -74,6 +76,7 @@ export const getStoreById=async(storeId)=>{
         else return null;
     } catch (error) {
         console.log("Get store by id error",error);
+        return null;
     }
 }
 
@@ -153,6 +156,10 @@ export const updateStore = async (storeModel)=>{
         else return null;
     } catch (error) {
         console.log("Update store exception", error);
+        if(error.response.status===400) return {
+            status:400,
+            message:error.response.data.error
+        };
     }
 }
 
@@ -171,10 +178,10 @@ export const deleteStore=async (storeId)=>{
     }
 }
 
-export const getProductByStoreId=async (storeId)=>{
+export const getProductByStoreId=async (storeId,pageNumber)=>{
     try {
         console.log("Store id", storeId)
-        const res= await axios.get(`${BASE_URL}/stores/${storeId}/products?pageNumber=-1&pageSize=100`,{
+        const res= await axios.get(`${BASE_URL}/stores/${storeId}/products?pageNumber=${pageNumber}&pageSize=10`,{
                 headers:{
                     Authorization:`Bearer ${JSON.parse(ACCESS_TOKEN)}`,
                 }
@@ -183,14 +190,16 @@ export const getProductByStoreId=async (storeId)=>{
         else return null;
     } catch (error) {
         console.error("Get product by store id exception",error)
+        return null;
     }
 }
 
 export const getMenuByStoreId=async (storeId)=>{
     try {
         const res= await fetch(`${BASE_URL}/stores/${storeId}/menus`);
-        console.log("get menu by store id res", res);
+        
         const data= await res.json();
+        console.log("get menu by store id resdata", data);
         if(res.status===200) return data;
         else return null;
     } catch (error) {

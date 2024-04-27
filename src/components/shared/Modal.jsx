@@ -101,6 +101,5 @@ export default function Modal({buttonValue,title,EnumHandler}) {
 Modal.propTypes={
     buttonValue:PropTypes.element,
     title:PropTypes.string,
-    status: PropTypes.bool,
     EnumHandler:PropTypes.func
 }

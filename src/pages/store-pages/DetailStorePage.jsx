@@ -51,8 +51,8 @@ export default function DetailStorePage() {
              <div>
         
              <h1 className="text-center text-2xl pb-6 font-bold">{detailStore.name}</h1>
-             <div className="flex justify-center p-3 border items-center rounded-full bg-blue-300 w-28 h-28 mx-auto">
-                                             <img src={detailStore.imageURL} alt="image" className="w-28 h-28 object-contain rounded-full items-center" />
+             <div className="flex justify-center p-3 border items-center rounded-full bg-blue-300 w-40 h-40 mx-auto">
+                                             <img src={detailStore.imageURL} alt="image" className="w-40 h-40 object-contain rounded-full items-center" />
                                              {/* <button type="button" className="p-3 text-red-700 rounded-lg uppercase hover: opacity-65">Delete</button> */}
              </div>
              <div className="items-center flex justify-center gap-14 pt-4 pb-8">
@@ -72,7 +72,7 @@ export default function DetailStorePage() {
                <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
                    <div className="sm:col-span-2">
                        <label htmlFor="address" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Địa chỉ</label>
-                       <input type="text" name="address" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={`${detailStore.addressNo}, ${detailStore.zone}, ${ detailStore.ward}`} readOnly/>
+                       <input type="text" name="address" id="address" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={`${detailStore.addressNo}, ${detailStore.zone}, ${ detailStore.ward}, TPHCM`} readOnly/>
                    </div>
                    <div className="w-full">
                        <label htmlFor="brand" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Giờ mở cửa</label>

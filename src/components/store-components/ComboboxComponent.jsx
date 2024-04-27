@@ -28,9 +28,9 @@ export default function ComboboxComponent({listItems,params,onValueChange}) {
     <div className="w-96">
     <Combobox value={selected} onChange={(e)=>handeleChange(e)}>
         <div className="relative">
-        <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        <div className="relative w-full cursor-default rounded-lg bg-white text-left sm:text-sm">
             <Combobox.Input
-            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+            className="w-full py-2 pl-3 pr-10 text-sm"
             displayValue={(person) => person[params]}
             onChange={(event) => setQuery(event.target.value)}
             />

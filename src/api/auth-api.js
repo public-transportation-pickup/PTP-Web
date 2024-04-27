@@ -41,7 +41,7 @@ export const authenticationV2 = async (tokenFirebase) => {
     if (res.status === 200 && res.data !== null) {
       await localStorage.setItem("accessToken", JSON.stringify(res.data.token));
       await localStorage.setItem("admin", JSON.stringify(res.data));
-      ACCESS_TOKEN = await localStorage.getItem("accessToken");
+      ACCESS_TOKEN = localStorage.getItem("accessToken");
       //   console.log("Local storage", await localStorage.getItem("admin"));
       //   console.log(
       //     "Access token local",
@@ -75,4 +75,5 @@ export const CURRENT_USER = async () => {
     //authenticationV2(currentUser.stsTokenManager.accessToken)
   }
 };
-export let ACCESS_TOKEN = null;
+ export let ACCESS_TOKEN = localStorage.getItem("accessToken")===null? null : localStorage.getItem("accessToken");
+//export let ACCESS_TOKEN = null;

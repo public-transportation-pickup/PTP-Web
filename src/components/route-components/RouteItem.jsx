@@ -8,12 +8,12 @@ import { HiOutlineTrash} from "react-icons/hi";
 import Modal from "../shared/Modal";
 import {useNavigate} from 'react-router-dom'
 import { toast } from "react-toastify";
+import { useCallback } from "react";
 
 
 export default function RouteItem() {
     const navigate=useNavigate();
     const [loading,setLoading]=useState(false);
-    //const [searchTerm,setSearchTerm]=useState('');
     const [listRoute, setListRoute]=useState([]);
 
     const viewDetail=async (id)=>{
@@ -32,23 +32,36 @@ export default function RouteItem() {
             console.error("delete route route main page", error)
         }
     }
-    async function fetchData(){
+
+    const fetchData=useCallback(async()=>{
         try {
             setLoading(true);
             const res= await getRoutes('');
-            //const data= await res.json();
             await setListRoute(res);
             setLoading(false);
         } catch (error) {
             console.log("Fetch Data routeItem exception",error);
         }
+    },[listRoute])
+    // async function fetchData(){
+    //     try {
+    //         setLoading(true);
+    //         const res= await getRoutes('');
+    //         //const data= await res.json();
+    //         await setListRoute(res);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         console.log("Fetch Data routeItem exception",error);
+    //     }
         
-    }
+    // }
 
     const searchListResult=async(searchTerm)=>{
         try {
+            console.log("Search Term",searchTerm)
             setLoading(true)
             const responseAPI=await getRoutes(searchTerm);
+            console.log("ResponseAPI search",responseAPI)
             setListRoute(responseAPI);
             setLoading(false);
         } catch (error) {
@@ -57,14 +70,13 @@ export default function RouteItem() {
     }
 
     useEffect(()=>{
-        fetchData();
-        
+        fetchData(); 
     },[])
 return (
     <main>
         
         <div className="pb-4 px-px items-center">
-            <SearchBar searchFunc={searchListResult}/>
+            <SearchBar searchFunc={(e)=>searchListResult(e)}/>
         </div>
         {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
         {Array.isArray(listRoute)===false || listRoute.length ===0 && <p className="text-center my-7 text-2xl">Không có dữ liệu. Vui lòng quay lại sau</p>}
