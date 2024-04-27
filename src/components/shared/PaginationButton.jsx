@@ -52,7 +52,7 @@ return (
                 ):null
             }
             containerClassName='flex item-center justify-center mt-3 mb-1'
-            pageClassName='block border border-solid border-gray-50 w-10 h-10 hover:bg-gray-200 flex items-center justify-center rounded-md'
+            pageClassName='block border border-solid border-gray-50 p-1 px-3 hover:bg-gray-200 flex items-center justify-center rounded-full'
             activeClassName='bg-purple-200 text-gray-400'
         />
     </motion.div>

@@ -26,13 +26,6 @@ export const getCategory=async (id)=>{
 
 export const CreateCategory=async (createModal)=>{
     try {
-        // const res=  await fetch(`${BASE_URL}/categories`,{
-        //     method:'POST',
-        
-        // });
-        // const data= await res.json();
-        // console.log("Data: ",data);
-        // return data;
         const formData= new FormData();
         formData.append('Name', createModal.Name);
         formData.append("Description", createModal.Description);

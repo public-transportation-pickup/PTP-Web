@@ -10,7 +10,7 @@ export const getMenuById = async (menuId) => {
     //     }
     // });
     // const data=res.json();
-    // console.log("getMenuById res",res);
+     console.log("getMenuById accesstoken",ACCESS_TOKEN);
     // if( res.status===200) return data;
     // else return null;
     const res = await axios.get(`${BASE_URL}/menus/${menuId}`, {

@@ -8,15 +8,15 @@ export const getRoutes = async (searchTernm)=>{
         // const data= await response.json();
         // console.log("Get all route data",data);
         // return data;
-        if(searchTernm==='' || searchTernm===null || searchTernm===undefined){
+        if(searchTernm===''){
            
             const response= await axios.get(`${BASE_URL}/routes`);
             console.log("Response, response.dâta",response,response.data);
             return response.data;
         }else{
             const responseSearch= await axios.get(`${BASE_URL}/routes?RouteNo=${searchTernm}`);
-            console.log("ResponseSearch, responseSearch.dâta",responseSearch,responseSearch.data);
-            if(responseSearch===200)return responseSearch.data;
+            console.log("ResponseSearch, responseSearch.dâta",responseSearch.data);
+            if(responseSearch.status===200)return responseSearch.data;
             else return null;
         }
         

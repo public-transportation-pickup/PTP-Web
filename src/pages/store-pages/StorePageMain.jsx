@@ -101,7 +101,7 @@ return (
             </table>
             <div>
             {listStore && listStore.length >0?
-            <div className="bg-white items-center  align-middle dark:bg-gray-800 dark:border-gray-700 border-0 border-slate-300 ">
+            <div className="items-center align-middle dark:bg-gray-800 dark:border-gray-700 border-0 border-slate-300 ">
             <PaginationButton
                 setCurrentPage={setCurrentPage}
                 currentPage={currentPage}

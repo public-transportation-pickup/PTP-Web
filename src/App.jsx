@@ -9,7 +9,7 @@ import UpdateStorePage from './pages/store-pages/UpdateStorePage.jsx';
 import Map from './pages/Map.jsx';
 import StorePageMain from './pages/store-pages/StorePageMain.jsx';
 import DetailStorePage from './pages/store-pages/DetailStorePage.jsx';
-import ScheduleMenuPage from './pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
+//import ScheduleMenuPage from './pages/store-pages/menu-pages/ScheduleMenuPage.jsx';
 import MenuMainPage from './pages/store-pages/menu-pages/MenuMainPage.jsx';
 // import RouteItem from './components/route-components/RouteItem.jsx';
 //import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
@@ -36,6 +36,7 @@ import StationMainPage from './pages/station-pages/StationMainPage.jsx';
 import DashboardStorePage from './pages/store-pages/DashboardStorePage.jsx';
 import TestPage from './pages/TestPage.jsx';
 import UpdateRoutePage from './pages/route-pages/UpdateRoutePage.jsx';
+import DetailProductPage from './pages/store-pages/product-pages/DetailProductPage.jsx';
 //import StationDetailPage from './pages/station-pages/StationDetailPage.jsx';
 
 export default function App() {
@@ -60,7 +61,7 @@ export default function App() {
                 <Route path='dashboard' element={<DashboardStorePage/>}/>
                 <Route path='menu'>
                   <Route index element={<MenuMainPage/>}/>
-                  <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/>
+                  {/* <Route path='scheduleMenu' element={<ScheduleMenuPage/>}/> */}
                 </Route>
                   {/* end url for menu of store */}
                 {/* url for product of store */}
@@ -108,7 +109,8 @@ export default function App() {
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/map' element={<Map/>}/>
-        <Route path='testpage' element={<TestPage/>}/>
+        <Route path='/testpage' element={<TestPage/>}/>
+        <Route path='/detailProduct' element={<DetailProductPage/>}/>
       </Routes>
     </BrowserRouter>
   )
