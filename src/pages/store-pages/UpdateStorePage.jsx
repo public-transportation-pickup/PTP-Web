@@ -19,7 +19,7 @@ export default function UpdateStorePage() {
   const [preview,setPreview]=useState();
   console.log("Preview",preview)
 
-  const [error, setError]=useState('');
+  // const [error, setError]=useState('');
   const [loading,setLoading]=useState(false);
   const [changeAddress,setChangeAddress]=useState(false);
 
@@ -221,7 +221,7 @@ const handleSubmit =async (e)=>{
               <h1 className='text-3xl font-semibold text-center my-7'>Cập Nhật Cửa Hàng</h1>
               <div>
                 <div>
-                  <h3>I. Cập nhật thông tin quản lý của cửa hàng:</h3>
+                  <h3 className="font-bold mb-2">I. Cập nhật thông tin quản lý của cửa hàng:</h3>
                   <div className="px-12">
                         <div className="flex flex-row items-center w-full pb-4">
                                 <label className="w-1/5" htmlFor="ManagerName">Họ và tên quản lý</label>
@@ -274,20 +274,31 @@ const handleSubmit =async (e)=>{
                     </div>
                 </div>
                 <div>
-                  <h3>II. Cập nhật thông tin cửa hàng:</h3>
+                  <h3 className="font-bold mb-2">II. Cập nhật thông tin cửa hàng:</h3>
                   <div>
                     <div className="flex flex-row gap-2 mb-6 w-full">
                   <div className="w-full">
                     <div className=" ml-20 flex flex-row items-center gap-5">
                       <div>
                         <div className="flex flex-row gap-3 items-center">
-                                  <div className="">Địa chỉ hiện tại:</div>
+                        <div className="flex flex-row items-center w-full">
+                                <label className="w-1/5" htmlFor="ManagerName">Địa chỉ hiện tại</label>
+                                <input
+                                type="text"
+                                id="ManagerName"
+                                className="rounded-lg w-4/5 h-12 px-4"
+                                value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
+                                readOnly
+                                />
+                                
+                            </div>
+                                  {/* <div className="">Địa chỉ hiện tại:</div>
                                   <input
                                   type="text"
                                   className="rounded-lg w-[42rem] h-12"
                                   value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
                                   readOnly
-                                  />
+                                  /> */}
                                   {/* <div className="w-[28rem] h-12">{store.addressNo}, {store.street!=="null"?store.street +",":""} {store.ward}, ${store.zone}</div> */}
                         </div>
                         <div className="flex flex-row mt-8 items-center">
@@ -425,7 +436,6 @@ const handleSubmit =async (e)=>{
                                 <div className="rounded-full bg-blue-300 w-28 h-28 mx-auto"></div>
                             </>)}
                             <button onClick={handleSubmit} disabled={loading} className="p-3 bg-cyan-600 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80">{loading===true?'Cập nhật ....':'Cập nhật'}</button>
-                            {error&& <p className="text-red-700 text-sm">{error}</p>}
                         </div>
                     </form>
                 </div>
