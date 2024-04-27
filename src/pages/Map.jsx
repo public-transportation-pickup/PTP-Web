@@ -38,7 +38,13 @@ const customIcon=new Icon({
   iconUrl:busStationIcon,
   iconSize:[33,33]
 })
+// const customIconV2=()=>{
+//   return (
+//     <div>
 
+//     </div>
+//   )
+// }
 // const createCustomClusterIcon =(cluster)=>{
 //   return new divIcon({
 //     html:`<div class='cluster-icon'>${cluster.getChildCount()}</div>`,

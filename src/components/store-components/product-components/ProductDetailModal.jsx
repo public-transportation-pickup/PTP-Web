@@ -12,10 +12,6 @@ export default function ProductDetailModal({buttonCheck,detailProduct,setButtonC
     setOpen(false);
     buttonCheck===true? setButtonCheck(false):setOpen(false);
   }
-
-  // function openModal() {
-  //   setOpen(true)
-  // }
   const cancelButtonRef = useRef(null)
   useEffect(()=>{
     
@@ -54,7 +50,7 @@ export default function ProductDetailModal({buttonCheck,detailProduct,setButtonC
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:text-left items-center">
                       <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900 mt-1.5 ml-2">
-                        Cửa hàng:  {detailProduct===undefined || detailProduct===null?"null":detailProduct.storeName} - Món: {detailProduct===undefined || detailProduct===null?"null":detailProduct.name}
+                        <span className='underline'>Cửa hàng:</span>  {detailProduct===undefined || detailProduct===null?"null":detailProduct.storeName} - <span className='underline'>Món:</span> {detailProduct===undefined || detailProduct===null?"null": detailProduct.name}
                       </Dialog.Title>
                       <div className="mt-2">
                         <DetailProductPage detailProduct={detailProduct}/>
