@@ -32,6 +32,8 @@ console.log("Update category model", categoryUpdate);
 
     const handleSubmit=async()=>{
       try {
+        const isFormValid = Object.values(categoryUpdate).every(value => value !== null && value !== '' && value.length>0);
+        if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
         const responseAPI= await UpdateCategory(params.categoryId, categoryUpdate);
         console.log("Handle submit response API update category pagae",responseAPI);
         if(responseAPI==204) toast.success("Cập nhật danh mục thành công")

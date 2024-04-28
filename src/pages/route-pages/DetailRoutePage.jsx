@@ -111,28 +111,28 @@ export default function DetailRoutePage() {
       <ToastContainer/>
       <div className="mb-2">
       <p>
-        <button onClick={handleRouteClick} className="hover:underline text-sky-700">Tuyến</button>
+        <button onClick={handleRouteClick} className="hover:underline text-sky-700 ">Tuyến</button>
         <span className="px-2">&gt;</span>
         <button type="button" className="hover:underline text-sky-700">Chi tiết</button>
       </p>
-        <div className="flex flex-row justify-center items-center gap-4">
+        <div className="flex flex-row justify-center items-center gap-4 font-montserrat">
           <div className="text-center text-2xl pb-6 text-sky-500 font-bold mt-3">{routeInfo.name}</div>
           <HiPencil className=" bg-blue-200 hover:bg-blue-700 hover:cursor-pointer rounded-full text-center" size={30} onClick={()=>handleEditRoute()}/>
         </div>
         
         <div>
-        <p><span className="text-sky-500 font-bold" >Mã số tuyến:</span> <span>{routeInfo.routeNo}</span></p>
-        <p><span className="text-sky-500 font-bold" >Khoảng cách:</span> <span>{routeInfo.distance} mét</span></p>
-        <p><span className="text-sky-500 font-bold" >Thời gian của 1 chuyến:</span> <span>{routeInfo.timeOfTrip} phút</span></p>
-        <p><span className="text-sky-500 font-bold" >Thời gian giãn cách:</span> <span>{routeInfo.headWay} phút</span></p>
-        <p><span className="text-sky-500 font-bold" >Thời gian hoạt động:</span> <span>{routeInfo.operationTime}</span></p>
-        <p><span className="text-sky-500 font-bold" >Loại xe:</span> <span>{routeInfo.numOfSeats} chỗ</span></p>
-        <p><span className="text-sky-500 font-bold" >Tổng số chuyến:</span> <span>{routeInfo.totalTrip}</span></p>
-        <p><span className="text-sky-500 font-bold" >Thuộc tổ chức:</span> <span>{routeInfo.orgs}</span></p>
-        <p><span className="text-sky-500 font-bold" >Mô tả vé:</span> <span>{routeInfo.tickets}</span></p>
-        <p><span className="text-sky-500 font-bold" >Thời khóa biểu - lượt đi:</span> <span>{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
-        <p><span className="text-sky-500 font-bold" >Thời khóa biểu - lượt về:</span> <span>{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
-        <p><span className="text-sky-500 font-bold" >Trạng thái:</span> <span>{routeInfo.status}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Mã số tuyến:</span> <span className="font-montserrat">{routeInfo.routeNo}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Khoảng cách:</span> <span className="font-montserrat">{routeInfo.distance} mét</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời gian của 1 chuyến:</span> <span className="font-montserrat">{routeInfo.timeOfTrip} phút</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời gian giãn cách:</span> <span className="font-montserrat">{routeInfo.headWay} phút</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời gian hoạt động:</span> <span className="font-montserrat">{routeInfo.operationTime}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Loại xe:</span> <span className="font-montserrat">{routeInfo.numOfSeats} chỗ</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Tổng số chuyến:</span> <span className="font-montserrat">{routeInfo.totalTrip}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thuộc tổ chức:</span> <span className="font-montserrat">{routeInfo.orgs}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Mô tả vé:</span> <span className="font-montserrat">{routeInfo.tickets}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt đi:</span> <span className="font-montserrat">{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt về:</span> <span className="font-montserrat">{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Trạng thái:</span> <span className="font-montserrat">{routeInfo.status}</span></p>
         </div>
         
       </div>
@@ -142,7 +142,7 @@ export default function DetailRoutePage() {
       <div className="border-2 border-sky-200 p-4 rounded-lg">
         <HiOutlineEye className="bg-sky-400 rounded-full cursor-pointer hover:bg-sky-200 ml-auto" onClick={()=>handleViewMap(true)} size={25}/>
         <div>
-        <h1 className="text-sky-500 underline">Lượt đi:</h1>
+        <h1 className="text-sky-500 underline font-montserrat">Lượt đi:</h1>
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList1&& routeStationList1.length>0&&routeStationList1.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
@@ -159,7 +159,7 @@ export default function DetailRoutePage() {
       <div className="border-2 border-sky-200 p-4 rounded-lg">
         <HiOutlineEye className="bg-sky-400 rounded-full cursor-pointer hover:bg-sky-200 ml-auto" onClick={()=>handleViewMap(false)} size={25}/>
         <div>
-        <h1 className="text-sky-500 underline">Lượt về:</h1>
+        <h1 className="text-sky-500 underline font-montserrat">Lượt về:</h1>
         {/* {loading===true &&(<p>Đang lấy dữ liệu...</p>)} */}
           {routeStationList2&& routeStationList2.length>0&&routeStationList2.map((item,index)=>(
             <div key={index} className="inline-flex items-center gap-1">
@@ -183,7 +183,7 @@ export default function DetailRoutePage() {
       {/* Map của lượt */}
       {isOpenMap===true &&(
         <div className="border-2 border-sky-200 rounded-lg p-4 mx-auto">
-          <h1 className="text-sky-500">Bản đồ lượt đi</h1>
+          <h1 className="text-sky-500 font-montserrat">Bản đồ lượt đi</h1>
         <HiOutlineXCircle onClick={handleCloseMap} className="cursor-pointer ml-auto" size={30}/>
         {MapType===true && (
           <Map markers={routeStationList1}/>
@@ -192,7 +192,7 @@ export default function DetailRoutePage() {
       )}
       {isOpenMap===false &&(
         <div className="border-2 border-sky-200 rounded-lg p-4 mx-auto">
-          <h1 className="text-sky-500">Bản đồ lượt về</h1>
+          <h1 className="text-sky-500 font-montserrat">Bản đồ lượt về</h1>
         <HiOutlineXCircle onClick={handleCloseMap} className="cursor-pointer ml-auto" size={30}/>
         {MapType===false && (
           <Map markers={routeStationList2}/>

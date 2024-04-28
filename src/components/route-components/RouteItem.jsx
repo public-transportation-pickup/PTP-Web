@@ -43,18 +43,6 @@ export default function RouteItem() {
             console.log("Fetch Data routeItem exception",error);
         }
     },[listRoute])
-    // async function fetchData(){
-    //     try {
-    //         setLoading(true);
-    //         const res= await getRoutes('');
-    //         //const data= await res.json();
-    //         await setListRoute(res);
-    //         setLoading(false);
-    //     } catch (error) {
-    //         console.log("Fetch Data routeItem exception",error);
-    //     }
-        
-    // }
 
     const searchListResult=async(searchTerm)=>{
         try {
@@ -78,9 +66,9 @@ return (
         <div className="pb-4 px-px items-center">
             <SearchBar searchFunc={(e)=>searchListResult(e)}/>
         </div>
-        {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
-        {Array.isArray(listRoute)===false || listRoute.length ===0 && <p className="text-center my-7 text-2xl">Không có dữ liệu. Vui lòng quay lại sau</p>}
-        <div className="grid grid-cols-3 gap-5" >
+        {loading && <p className="text-center my-7 text-2xl font-ubuntu">Loading...</p>}
+        {Array.isArray(listRoute)===false || listRoute.length ===0 && <p className="text-center my-7 text-2xl font-ubuntu">Không có dữ liệu. Vui lòng quay lại sau</p>}
+        <div className="grid grid-cols-3 gap-5 font-montserrat" >
             {Array.isArray(listRoute)===true&& listRoute.length > 0&& !loading && (listRoute.map((item)=>(
             
                 <div key={item.id}  className=' flex flex-row bg-blue-300 hover:bg-blue-400 rounded-lg items-center gap-8 w-full h-full  p-2'>

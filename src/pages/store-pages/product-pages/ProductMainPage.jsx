@@ -57,15 +57,16 @@ export default function ProductMainPage() {
         <span className="px-2">&gt;</span>
         <span className="hover:underline text-sky-700">Sản phẩm</span>
     </p>
-    <h1 className="text-center mx-auto mb-10 flex flex-col"><span className="font-bold text-3xl">{storeInfo.name} </span><span className="text-3xl">Danh sách sản phẩm</span></h1>
+    <h1 className="text-center mx-auto my-10 flex flex-col"><span className="font-bold text-3xl font-montserrat">{storeInfo.name} </span><span className="text-3xl font-quicksand">Danh sách sản phẩm</span></h1>
         {/* <div className="flex justify-end mb-8">
             <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new product</button>
         </div> */}
         
         <div className="rounded-lg">
-            <table className="table-auto rounded-lg min-w-full divide-y divide-gray-200">
-                <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
+            <table className="table-auto rounded-lg min-w-full divide-y divide-gray-200 px-1">
+                <thead className="font-montserrat text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
                     <tr>
+                        <th>#</th>
                         <th>Hình_Tên sản phẩm</th>
                         <th>Giá</th>
                         <th>Thời gian chuẩn bị</th>
@@ -74,9 +75,10 @@ export default function ProductMainPage() {
                         <th>Ngày hết hạn</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="">
                     {listProduct && listProduct.length >0&&  (listProduct.map((item,index)=>(
                         <tr onClick={()=>handleDetailModal(item.id)} key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4 hover:bg-sky-50 hover:cursor-pointer")}>
+                        <td className="px-4">{index+1}</td>
                         <td>
                             <div className="flex flex-row py-2 gap-4 items-center ml-4">
                                 <img src={item.imageURL} className="rounded-full bg-purple-100 w-10 h-10"/>

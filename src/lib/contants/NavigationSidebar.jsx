@@ -2,12 +2,7 @@ import {
 	HiOutlineViewGrid,
 	HiOutlineUsers,
 	HiOutlineDocumentText,
-	HiOutlineQuestionMarkCircle,
-	HiOutlineCog
 } from 'react-icons/hi'
-import { FaChartBar,FaMapLocation  } from "react-icons/fa6";
-
-import { VscMapFilled } from "react-icons/vsc";
 import { CiRoute,CiShop } from "react-icons/ci";
 
 export const DASHBOARD_SIDEBAR_LINKS = [

@@ -64,8 +64,8 @@ const [detailCategory, setdetailCategory]=useState(null);
 
   return (
     <div className='h-10 w-30'>
-      {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
-      <div className="grid grid-cols-3 gap-5">
+      {loading && <p className="text-center my-7 text-2xl font-poppins">Loading...</p>}
+      <div className="grid grid-cols-3 gap-5 font-montserrat">
         {listCategory.length>0 && listCategory&& (listCategory.map((item,index)=>(
            <div key={index}>
               <div key={index}  className={ classNames(item.status.toUpperCase() ==="ACTIVE"? activeProperty:inactiveProperty,commonProperty)}>

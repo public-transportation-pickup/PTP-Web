@@ -21,14 +21,14 @@ export default function DetailCategoryPage({detailCategory}) {
   },[detailCategory])
   return (
     <div>
-      <div className="bg-yellow-200 p-3 rounded-lg flex flex-row items-center gap-3 px-10">
+      <div className="bg-yellow-200 p-3 rounded-lg flex flex-row items-center gap-3 px-10 font-montserrat">
         <div className="w-28 h-28 bg-blue-300 rounded-full">
           <img src={detailCategory.imageURL} className="w-28 h-28 bg-blue-300 rounded-full"/>
         </div>
         <div>
         <div>Tên danh mục: {detailCategory.name}</div>
         <div>Mô tả: {detailCategory.description}</div>
-        <div>Trạng thái: {detailCategory.status}</div>
+        {/* <div>Trạng thái: {detailCategory.status}</div> */}
         </div>
         
       </div>

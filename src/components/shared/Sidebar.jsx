@@ -59,9 +59,9 @@ export default function Sidebar() {
     <div className="bg-neutral-200 w-60 p-3 flex flex-col text-black">
         <div className="flex items-center gap-2 px-1 py-3">
             <img src={PTP_LOGO} className="w-10 h-10"/>
-            <span className="text-neutral-900 text-lg">PTP - Admin</span>
+            <span className="text-neutral-900 text-lg uppercase font-montserrat">PTP - Admin</span>
         </div>
-        <div className="flex-1 py-8 flex flex-col gap-0.5">
+        <div className="flex-1 py-8 flex flex-col gap-0.5 font-ubuntu">
           {DASHBOARD_SIDEBAR_LINKS.map((item)=>(
             <SidebarLink key={item.key} item={item}></SidebarLink>
           ))}
@@ -72,7 +72,7 @@ export default function Sidebar() {
               <SidebarLink key={item.key}item={item}/>
             ))
           }
-          <div className={classNames(linkClass, 'cursor-pointer text-red-500')} onClick={handleSignout}>
+          <div className={classNames(linkClass, 'cursor-pointer text-red-500 font-montserrat')} onClick={handleSignout}>
             <span className="text-xl"><HiOutlineLogout /></span>
             Đăng xuất
           </div>

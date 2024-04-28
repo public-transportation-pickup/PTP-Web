@@ -60,7 +60,7 @@ export default function MenuMainPage() {
         <span className="px-2">&gt;</span>
         <span className="hover:underline text-sky-700">Sản phẩm</span>
     </p>
-        <h1 className="text-center mx-auto mb-10 flex flex-col"><span className="font-bold text-3xl">{storeInfo.name} </span><span className="text-3xl">Menu</span></h1>
+        <h1 className="text-center mx-auto mb-10 flex flex-col"><span className="font-bold text-3xl font-montserrat">{storeInfo.name} </span><span className="text-3xl font-quicksand">Menu</span></h1>
         {/* <button className="">Create Menu</button> */}
         
         <div className="border-2 rounded-lg  h-4/5">
@@ -71,7 +71,7 @@ export default function MenuMainPage() {
                     <div className="p-2 mx-3">
                     {listMenu && listMenu.length > 0 && listMenu.map((item,index)=>(
                         <div key={index} className="border-b-2 border-cyan-700 ">
-                            <div className={classNames(menuId && menuId==item.id?'text-cyan-500 font-semibold':'','cursor-pointer hover:font-bold focus:text-yellow-200')} onClick={()=>getListProductInMenu(item.id)}>{item.name}</div>
+                            <div className={classNames(menuId && menuId==item.id?'text-cyan-500 font-semibold':'','cursor-pointer hover:font-bold focus:text-yellow-200 font-poppins')} onClick={()=>getListProductInMenu(item.id)}>{item.name}</div>
                             {/* <div className="cursor-pointer hover:font-bold focus:text-yellow-200" onClick={()=>getListProductInMenu(item.id)}>{item.name}</div> */}
                         </div>
                     ))}
@@ -83,9 +83,9 @@ export default function MenuMainPage() {
                     {menuId !== '' && menuInfo!==undefined? (
                         <div className="">
                             <div className="bg-sky-100 p-4 rounded-3xl mb-6 w-[32rem] mx-auto mt-4">
-                                <div className="ml-10 font-bold">Mô tả: {menuInfo.description}</div>
-                                <div className="ml-10">Thời gian áp dụng: {menuInfo.startTime} - {menuInfo.endTime}</div>
-                                <div className="ml-10 flex flex-row"><p className="mr-2">Áp dụng các ngày trong tuần: </p><GetDayOfWeek days={menuInfo.dateApply}/></div>
+                                <div className="ml-10 font-bold font-poppins">Mô tả: {menuInfo.description}</div>
+                                <div className="ml-10 font-poppins">Thời gian áp dụng: {menuInfo.startTime} - {menuInfo.endTime}</div>
+                                <div className="ml-10 flex flex-row font-poppins"><p className="mr-2">Áp dụng các ngày trong tuần: </p><GetDayOfWeek days={menuInfo.dateApply}/></div>
                                 {menuInfo.startDate!==null?
                                     <div className="ml-10">Ngày cụ thể: <GetDate date={menuInfo.startDate}/> - <GetDate date={menuInfo.endDate}/></div>
                                     :<></>
@@ -95,7 +95,7 @@ export default function MenuMainPage() {
                                
                                     <div  className="rounded-lg">
                                     <table className="table-auto rounded-lg min-w-full divide-y divide-gray-200">
-                                        <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
+                                        <thead className="text-sm font-montserrat text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
                                             <tr>
                                                 <th>Sản phẩm</th>
                                                 <th>Giá</th>
@@ -107,7 +107,7 @@ export default function MenuMainPage() {
                                         </thead>
                                         <tbody>
                                         {listProductsMenu.map((item,index)=>(
-                                                <tr key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4 hover:bg-sky-50")}>
+                                                <tr key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4 hover:bg-sky-50 font-montserrat")}>
                                                 <td>
                                                     <div className="flex flex-row py-2 gap-4 items-center ml-4">
                                                         <img src={item.imageURL} className="rounded-full bg-purple-100 w-10 h-10"/>
@@ -133,10 +133,10 @@ export default function MenuMainPage() {
                                 </div>
                                
                                 ):(
-                                    <div className="mb-auto">Danh sách trống</div>
+                                    <div className="mb-auto font-poppins">Danh sách lịch bán trống</div>
                                 )}
                         </div>
-                    ):(<div className="mb-auto"><p>Chọn menu để xem sản phẩm trong menu</p></div>)}
+                    ):(<div className="mb-auto"><p className="font-poppins">Chọn menu để xem sản phẩm trong menu</p></div>)}
                    
                     
                    
