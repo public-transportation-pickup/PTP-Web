@@ -156,8 +156,8 @@ export const updateStore = async (storeModel)=>{
         else return null;
     } catch (error) {
         console.log("Update store exception", error);
-        if(error.response.status===400) return {
-            status:400,
+        return {
+            status:error.response.status,
             message:error.response.data.error
         };
     }

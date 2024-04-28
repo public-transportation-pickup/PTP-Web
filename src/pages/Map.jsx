@@ -31,7 +31,7 @@ export default function Map({markers}) {
   //     popUp:"Vincom Plaza Bien Hoa"
   //   }
   // ]
-  console.log("Marker on map component",markers)
+  //console.log("Marker on map component",markers)
   //console.log("Geocode[0]",markers.find((item)=>item.id==1).geocode)
 
 const customIcon=new Icon({

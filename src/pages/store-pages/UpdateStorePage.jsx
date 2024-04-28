@@ -153,7 +153,7 @@ const handleSubmit =async (e)=>{
               console.log("call api update store", responseAPI);
               if(responseAPI===204) toast.success("Cập nhật cửa hàng thành công")
               else if(responseAPI===401) toast.warning("Vui lòng đăng nhập")
-              else if(responseAPI.status===400) toast.warning(responseAPI.message);
+              //else if(responseAPI.status===400 && responseAPI!==null) toast.warning(responseAPI.message);
               else toast.error("Cập nhật cửa hàng thất bại")
 
       
@@ -212,7 +212,7 @@ const handleSubmit =async (e)=>{
     }
     fetchData();
     
-},[params.storeId]);
+},[params.storeId,districtId]);
 
     return (
       <>
@@ -290,16 +290,7 @@ const handleSubmit =async (e)=>{
                                 value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
                                 readOnly
                                 />
-                                
                             </div>
-                                  {/* <div className="">Địa chỉ hiện tại:</div>
-                                  <input
-                                  type="text"
-                                  className="rounded-lg w-[42rem] h-12"
-                                  value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
-                                  readOnly
-                                  /> */}
-                                  {/* <div className="w-[28rem] h-12">{store.addressNo}, {store.street!=="null"?store.street +",":""} {store.ward}, ${store.zone}</div> */}
                         </div>
                         <div className="flex flex-row mt-8 items-center">
                           <div htmlFor="description" className="">Các trạm hiện tại được đăng kí:</div>
