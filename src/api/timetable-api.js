@@ -27,6 +27,10 @@ export const createTimeTableManually=async (timeTableModel)=>{
         else return null;
     } catch (error) {
         console.error("create time table exception", error);
+        return {
+            status:error.response.status,
+            message:error.response.data.error
+        };
     }
 }
 
@@ -79,5 +83,19 @@ export const applyTimetableFortrip=async (timetableId)=>{
         return null
     } catch (error) {
         console.error('Apply timetable for trip exception', error)
+    }
+}
+
+export const getTripsByTimetableId=async (timetableId)=>{
+    try {
+        const res= await fetch(`${BASE_URL}/timetables/${timetableId}/trips`)
+        const data=await res.json();
+        if(Array.isArray(data)===true){
+            if(data.length>0) return data;
+            else return null;
+        }else if(res.status!==200) return null;
+        else return null;
+    } catch (error) {
+        return null;
     }
 }

@@ -20,7 +20,13 @@ const formatDate = (date) => {
 export const GetDate = ({ date }) => {
   const { formattedDate, formattedTime } = formatDate(new Date(date));
 
-  return <span>{formattedDate}</span>;
+  return (
+  <>
+  {date===null||date=="07:00 - 01/01/1970"?(<span>-x-</span>):(<span>{formattedDate}</span>)}
+    
+  </>
+  )
+  
 };
 
 export const DateTimeFormat = ({ date }) => {
@@ -28,7 +34,8 @@ export const DateTimeFormat = ({ date }) => {
 
   return (
     <div>
-       <span>{formattedTime}</span> - <span>{formattedDate}</span>
+      {date=="07:00 - 01/01/1970" || date===null?(<span>-x-</span>):(<span>{formattedTime}</span> - <span>{formattedDate}</span>)}
+       
 
     </div>
   );

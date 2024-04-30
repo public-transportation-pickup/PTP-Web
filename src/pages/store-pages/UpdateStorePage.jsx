@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {ToastContainer, toast } from "react-toastify";
-import { updateStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictId, getStoreById } from "../../api/store-api";
+import { updateStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictId, getStoreById } from "../../api/store-api-1.js";
 import ComboboxComponent from "../../components/store-components/ComboboxComponent";
 import { getStationByStationId, getStations } from "../../api/station-api";
 import {useParams} from 'react-router-dom'

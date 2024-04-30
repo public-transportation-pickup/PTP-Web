@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { HiArrowRight } from "react-icons/hi";
 import StationByZone from '../StationByZone';
-import { getDistrictByProvinceId } from '../../../../api/store-api';
+import { getDistrictByProvinceId } from '../../../../api/store-api-1.js';
 import { HiOutlineTrash} from "react-icons/hi";
 import {toast} from 'react-toastify'
 import { createRouteVarManually } from '../../../../api/route-var-api';
@@ -60,20 +60,21 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
   const handleSubmit=async ()=>{
     setCreateRouteVarModel({...createRouteVarModel,routeId:params.routeId});
     try {
-      if(params.routeId!==null && params.routeId){
-        const isFormValid = Object.values(createRouteVarModel).every(value => value !== null && value !== '' && value.length>0);
-        if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
-        const responseAPI= await createRouteVarManually(createRouteVarModel);
-        console.log("Reponse api create route manuall vỀ",responseAPI);
-        if(responseAPI!==null){
-          
-          toast.success("Tạo lượt VỀ thành công");
-          getRoutevar2(responseAPI.id);
-          //setRoutevarId(responseAPI.id);
-          setButtonSubmit(true);
+        if(params.routeId!==null && params.routeId){
+          // const isFormValid = Object.values(createRouteVarModel).every(value => value !== null && value !== '' && value.length>0);
+          // if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
+          const responseAPI= await createRouteVarManually(createRouteVarModel);
+          console.log("Reponse api create route manuall vỀ",responseAPI);
+          if(responseAPI!==null){
+            
+            toast.success("Tạo lượt VỀ thành công");
+            getRoutevar2(responseAPI.id);
+            //setRoutevarId(responseAPI.id);
+            setButtonSubmit(true);
+          } 
+          else toast.error("Tạo lượt VỀ thất bại");
         } 
-        else toast.error("Tạo lượt VỀ thất bại");
-      }
+      
     } catch (error) {
       console.error("Handle submit create route var",error);
     }
@@ -111,11 +112,11 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
         </div>
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-5 group">
-              <input onChange={handleChange} type="text" name="startStop" id="startStop" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+              <input onChange={handleChange} required type="text" name="startStop" id="startStop" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
               <label htmlFor="startStop" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Trạm bắt đầu</label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
-              <input onChange={handleChange} type="text" name="endStop" id="endStop" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+              <input onChange={handleChange} required type="text" name="endStop" id="endStop" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
               <label htmlFor="endStop" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Trạm kết thúc</label>
           </div>
         </div>

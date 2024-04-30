@@ -22,7 +22,6 @@ import CreateTripPage from './pages/route-pages/trip-pages/CreateTripPage.jsx';
 import RouteMainPage from './pages/route-pages/RouteMainPage.jsx';
 import StationMainPage from './pages/station-pages/StationMainPage.jsx';
 import DashboardStorePage from './pages/store-pages/DashboardStorePage.jsx';
-import TestPage from './pages/TestPage.jsx';
 import UpdateRoutePage from './pages/route-pages/UpdateRoutePage.jsx';
 import DetailProductPage from './pages/store-pages/product-pages/DetailProductPage.jsx';
 
@@ -93,7 +92,6 @@ export default function App() {
         </Route>
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/map' element={<Map/>}/>
-        <Route path='/testpage' element={<TestPage/>}/>
         <Route path='/detailProduct' element={<DetailProductPage/>}/>
       </Routes>
     </BrowserRouter>

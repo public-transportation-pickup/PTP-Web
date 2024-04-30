@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 //import PaginationButton from "../../../components/store-components/PaginationButton";
 import { useNavigate,useParams } from "react-router-dom";
-import { getProductByStoreId, getStoreById } from "../../../api/store-api";
+import { getProductByStoreId, getStoreById } from "../../../api/store-api-1.js";
 import NumberFormat from "../../../lib/utils/NumberFormat";
 import {DateTimeFormat} from "../../../lib/utils/DateFormat"
 import classNames from "classnames";
