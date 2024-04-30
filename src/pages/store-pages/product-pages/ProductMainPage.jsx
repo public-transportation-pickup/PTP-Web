@@ -19,6 +19,7 @@ export default function ProductMainPage() {
     const [currentPage, setCurrentPage] = useState(0);
     const [detailModal,setDetailModal]=useState(null);
     const [detailProduct,setDetailProduct]=useState(null)
+    //const [isEffectCompleted, setIsEffectCompleted] = useState(false);
     console.log("List product", listProduct);
     const handleDetailClick=async ()=>{
         navigate(`/store/${await params.storeId}`)
@@ -45,11 +46,19 @@ export default function ProductMainPage() {
             else toast.warning("Đã có lỗi trong quá trình lấy dữ liệu")
         }
         fetchData();
+        //setIsEffectCompleted(true);
     },[params.storeId])
+
+    // useEffect(()=>{
+    //     if (isEffectCompleted===true && listProduct.length === 0) {
+    //       toast.error("Danh sách sản phẩm trống!");
+    //     }
+    //   },[isEffectCompleted]);
 
   return (
     <>
     <ToastContainer/>
+    {/* {listProduct.length === 0 && "Danh sách sản phẩm trống!"} */}
     <p>
         <span className="hover:underline text-sky-700">Cửa hàng</span>
         <span className="px-2">&gt;</span>
@@ -58,9 +67,6 @@ export default function ProductMainPage() {
         <span className="hover:underline text-sky-700">Sản phẩm</span>
     </p>
     <h1 className="text-center mx-auto my-10 flex flex-col"><span className="font-bold text-3xl font-montserrat">{storeInfo.name} </span><span className="text-3xl font-quicksand">Danh sách sản phẩm</span></h1>
-        {/* <div className="flex justify-end mb-8">
-            <button className="rounded-lg bg-orange-400 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:bg-orange-100" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Create new product</button>
-        </div> */}
         
         <div className="rounded-lg">
             <table className="table-auto rounded-lg min-w-full divide-y divide-gray-200 px-1">
@@ -75,8 +81,8 @@ export default function ProductMainPage() {
                         <th>Ngày hết hạn</th>
                     </tr>
                 </thead>
-                <tbody className="">
-                    {listProduct && listProduct.length >0&&  (listProduct.map((item,index)=>(
+                    <tbody className="">
+                    {listProduct && listProduct.length >0&& (listProduct.map((item,index)=>(
                         <tr onClick={()=>handleDetailModal(item.id)} key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4 hover:bg-sky-50 hover:cursor-pointer")}>
                         <td className="px-4">{index+1}</td>
                         <td>
@@ -92,11 +98,12 @@ export default function ProductMainPage() {
                         <td className="text-center py-2"><DateTimeFormat date={item.expirationDate}/></td>
                     </tr>
                     )))}
-                    
-                    {/* {listProduct.length===0 && toast("Cửa hàng chưa có sản phẩm")} */}
                 </tbody>
+                
+                
             </table>
             <div>
+            {listProduct && listProduct.length===0 &&(<div className="text-center"> Danh sách trống!!!</div>)}
             {listProduct && listProduct.length >0?
                 <div className="items-center  align-middle dark:bg-gray-800 dark:border-gray-700 border-0">
                     <PaginationButton

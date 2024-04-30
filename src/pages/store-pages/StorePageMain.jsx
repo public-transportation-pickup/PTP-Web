@@ -99,6 +99,7 @@ return (
                    
                 </tbody>
             </table>
+            {listStore && listStore.length===0 &&(<div className="text-center"> Danh sách trống!!!</div>)}
             <div>
             {listStore && listStore.length >0?
             <div className="items-center align-middle dark:bg-gray-800 dark:border-gray-700 border-0 border-slate-300 ">

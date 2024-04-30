@@ -128,8 +128,8 @@ export default function DetailRoutePage() {
         <p><span className="text-sky-500 font-bold font-montserrat" >Thời gian hoạt động:</span> <span className="font-montserrat">{routeInfo.operationTime}</span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Loại xe:</span> <span className="font-montserrat">{routeInfo.numOfSeats} chỗ</span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Tổng số chuyến:</span> <span className="font-montserrat">{routeInfo.totalTrip}</span></p>
-        <p><span className="text-sky-500 font-bold font-montserrat" >Thuộc tổ chức:</span> <span className="font-montserrat">{routeInfo.orgs}</span></p>
-        <p><span className="text-sky-500 font-bold font-montserrat" >Mô tả vé:</span> <span className="font-montserrat">{routeInfo.tickets}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thuộc tổ chức:</span> <span className="font-montserrat" dangerouslySetInnerHTML={{ __html: routeInfo.orgs }}></span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Mô tả vé:</span> <span className="font-montserrat"  dangerouslySetInnerHTML={{ __html: routeInfo.tickets }}></span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt đi:</span> <span className="font-montserrat">{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt về:</span> <span className="font-montserrat">{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Trạng thái:</span> <span className="font-montserrat">{routeInfo.status}</span></p>

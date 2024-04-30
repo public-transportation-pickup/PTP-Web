@@ -1,39 +1,17 @@
 import { useState,useEffect, useCallback } from "react";
 import NumberFormat from "../../../lib/common/NumberFormat.jsx";
 import DateTimeFormat from "../../../lib/common/DateTimeFormat.jsx";
-import {Actions, useAPIRequest } from '../../../lib/utils/api-request.js';
 import { getTransactions } from "../../../api/transaction-api.js";
-import { useNavigate } from 'react-router';
 import PropTypes from 'prop-types'
-import { ToastContainer, toast } from "react-toastify";
 
 export default function CardPageTransactions({storeId}) {
-  //#region api request
-  //const [transState,requestTrans]=useAPIRequest(getTransactions(storeId));
-  //#endregion
-  const navigate = useNavigate();
   const [transactions,setTransactions]= useState([]);
-//   useEffect(()=>{
-//     requestTrans();
-//   },[])
-
-//   useEffect(()=>{
-//     if(transState.status===Actions.success){
-//       setTransactions(transState.payload.transactions);
-//     }
-//     if(transState.status===Actions.failure){
-//       console.log(transState.error);
-//     }
-
-//   },[transState]);
 
 const fetchData=useCallback(async ()=>{
     try {
         const responseAPI=await getTransactions(storeId);
         console.log("Response api fetch card transaction",responseAPI);
         if(responseAPI!==null) setTransactions(responseAPI);
-        
-        // else toast("Đã xảy ra lỗi khi lấy dữ liệu giao dịch")
 
     } catch (error) {
         console.error("fetch data card page transaction exception",error)
@@ -44,13 +22,8 @@ useEffect(()=>{
     fetchData()
 },[storeId])
 
-  const handleClick=()=>{
-    navigate(`transactions`)
-  }
-  // console.log(transactions);
   return (
     <>
-    {/* <ToastContainer/> */}
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
         <div className="rounded-t mb-0 px-4 py-3 border-0">
           <div className="flex flex-wrap items-center">
@@ -60,13 +33,13 @@ useEffect(()=>{
               </h3>
             </div>
             <div className="relative w-full px-4 max-w-full flex-grow flex-1 text-right">
-              <button
+              {/* <button
                 onClick={()=>handleClick()}
                 className="bg-indigo-500 text-white active:bg-cyan-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 type="button"
               >
                  Tất cả
-              </button>
+              </button> */}
             </div>
           </div>
         </div>

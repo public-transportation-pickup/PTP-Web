@@ -35,11 +35,11 @@ const addStations=async (station)=>{
     setStationChoozen(station);
     listRouteStationUpdate.map(async (item)=>{
             //console.log("item.stationName===station.name",item.stationName==station.name)
-            if (item.stationName==station.name){await setStationDup(true);return}
-            else await setStationDup(false);
+            if (item.stationName==station.name){ setStationDup(true);return}
+            else setStationDup(false);
             console.log("Station dup", stationDup)
         })
-    stationDup===false?setListRouteStationUpdate(listRouteStationUpdate.concat({id:listRouteStationUpdate.length+1,stationId:station.id,index:listRouteStationUpdate.length +1,stationName:station.name})) :toast("Trạm đã được thêm")
+    await stationDup===false?setListRouteStationUpdate(listRouteStationUpdate.concat({id:listRouteStationUpdate.length+1,stationId:station.id,index:listRouteStationUpdate.length +1,stationName:station.name})) :toast("Trạm đã được thêm")
     //await 
     //setListRouteStationUpdate({...listRouteStationUpdate,id:listRouteStationUpdate.length+1,station:station.id,index:listRouteStationUpdate.length +1,stationName:station.name})
     setLoading(false);

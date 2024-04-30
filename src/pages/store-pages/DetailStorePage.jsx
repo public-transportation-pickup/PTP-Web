@@ -1,7 +1,8 @@
 import { useParams,useNavigate } from "react-router-dom";
-import Map from "../Map";
+//import Map from "../Map";
 import { useEffect, useState } from "react";
 import { getStoreById } from "../../api/store-api";
+import MenuDropDownComponent from "../../components/store-components/MenuDropDownComponent";
 
 
 export default function DetailStorePage() {
@@ -10,7 +11,7 @@ export default function DetailStorePage() {
     console.log("param detail page", params.storeId);
     const [detailStore, setDetailStore]=useState({});
     const [markerStore,setMarkerStore]=useState([])
-    const date= new Date(detailStore.activationDate);
+    //const date= new Date(detailStore.activationDate);
     // const year=date.getFullYear()
     // console.log("date",year);
 
@@ -38,9 +39,9 @@ export default function DetailStorePage() {
         navigate(`/store/${id}/menu`)
     }
 
-    const handleViewDashboardButton=async (id)=>{
-        navigate(`/store/${id}/dashboard`)
-    }
+    // const handleViewDashboardButton=async (id)=>{
+    //     navigate(`/store/${id}/dashboard`)
+    // }
 
   return (
     <div>
@@ -58,7 +59,8 @@ export default function DetailStorePage() {
              <div className="items-center flex justify-center gap-14 pt-4 pb-8">
                  <button onClick={()=>handleViewProductClick(params.storeId)} className="bg-sky-400 rounded-lg w-32 h-8 hover:bg-sky-200 font-montserrat font-semibold">Sản phẩm</button>
                  <button onClick={()=>handleViewMenuClick(params.storeId)} className="bg-sky-400 rounded-lg w-32 h-8 hover:bg-sky-200 font-montserrat font-semibold">Lịch bán</button>
-                 <button onClick={()=>handleViewDashboardButton(params.storeId)} className="bg-sky-400 rounded-lg w-auto h-8 hover:bg-sky-200 px-2 font-montserrat font-semibold">Thống kê cửa hàng</button>
+                 {/* <button onClick={()=>handleViewDashboardButton(params.storeId)} className="bg-sky-400 rounded-lg w-auto h-8 hover:bg-sky-200 px-2 font-montserrat font-semibold">Thống kê cửa hàng</button> */}
+                 <MenuDropDownComponent storeId={params.storeId}/>
              </div>
              <div className='p-3 max-w-6xl mx-auto'>
                  {/* xem detail store như create store, cho thêm thuộc tính

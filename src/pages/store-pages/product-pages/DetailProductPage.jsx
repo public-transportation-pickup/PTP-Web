@@ -13,7 +13,8 @@ export default function DetailProductPage({detailProduct}) {
                 <div className="w-full mb-6 md:mb-0">
                     <div className="sticky top-0 z-50 overflow-hidden ">
                         <div className="relative mb-4 lg:mb-6 lg:h-2/4 flex justify-center items-center">
-                            <img src="https://i.postimg.cc/6qcPhTQg/R-18.png" alt=""className="object-cover w-28 h-28 "/>
+                            {/*<img src="https://i.postimg.cc/6qcPhTQg/R-18.png" alt=""className="object-cover w-28 h-28 "/>*/}
+                            <img src={detailProduct.imageURL} alt=""className="object-cover w-28 h-28 "/>
                         </div>
                         <div className="px-6 pb-6 mt-6 border-t border-gray-300 dark:border-gray-400 flex flex-row justify-start">
                             <div className="flex flex-row items-center mt-6">
