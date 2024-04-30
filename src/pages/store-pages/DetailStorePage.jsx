@@ -1,7 +1,7 @@
 import { useParams,useNavigate } from "react-router-dom";
 //import Map from "../Map";
 import { useEffect, useState } from "react";
-import { getStoreById } from "../../api/store-api";
+import { getStoreById } from "../../api/store-api-1.js";
 import MenuDropDownComponent from "../../components/store-components/MenuDropDownComponent";
 
 
@@ -11,13 +11,9 @@ export default function DetailStorePage() {
     console.log("param detail page", params.storeId);
     const [detailStore, setDetailStore]=useState({});
     const [markerStore,setMarkerStore]=useState([])
-    //const date= new Date(detailStore.activationDate);
-    // const year=date.getFullYear()
-    // console.log("date",year);
 
     console.log("detail store", detailStore);
     console.log("Marker store", markerStore);
-    //console.log("JSON.strungfy",detailStore.name)
 
     
     useEffect(()=>{

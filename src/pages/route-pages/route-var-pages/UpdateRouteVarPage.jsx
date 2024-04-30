@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { getRouteById } from '../../../api/route-api';
-import { getDistrictByProvinceId } from '../../../api/store-api';
+import { getDistrictByProvinceId } from '../../../api/store-api-1.js';
 import { toast } from 'react-toastify';
 import { createRouteVarManually } from '../../../api/route-var-api';
 import StationByZone from '../../../components/route-components/route-create-components/StationByZone'

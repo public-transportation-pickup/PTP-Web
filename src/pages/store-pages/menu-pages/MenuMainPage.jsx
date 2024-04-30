@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {useParams,useNavigate} from 'react-router-dom'
-import { getMenuByStoreId, getStoreById } from "../../../api/store-api";
+import { getMenuByStoreId, getStoreById } from "../../../api/store-api-1.js";
 import { getProductsInMenu } from "../../../api/product-in-menu-api";
 import { getMenuById } from "../../../api/menu-api";
 import NumberFormat from "../../../lib/utils/NumberFormat";

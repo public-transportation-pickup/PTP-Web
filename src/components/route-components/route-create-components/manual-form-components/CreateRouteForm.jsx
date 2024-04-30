@@ -42,7 +42,8 @@ console.log("create route model", createRouteModel)
     try {
       const isFormValid = Object.values(createRouteModel).every(value => value !== null && value !== '' && value.length>0);
       if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
-      const responseAPI= await createRoute(createRouteModel);
+      else{
+        const responseAPI= await createRoute(createRouteModel);
       console.log("Reponse api create route form page", responseAPI);
       if (responseAPI!==null){
         setRouteId(responseAPI.id);
@@ -50,6 +51,8 @@ console.log("create route model", createRouteModel)
         toast.success("Tạo tuyến thành công")
       } 
       else toast.error("Tạo tuyến thất bại")
+    }
+      
     } catch (error) {
       console.error("handle submit create route form", error);
     }
@@ -101,7 +104,7 @@ console.log("create route model", createRouteModel)
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-5 group">
               <input onChange={handleChange} type="text" name="numOfSeats" id="numOfSeats" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-              <label htmlFor="numOfSeats" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Xe mấy chỗ</label>
+              <label htmlFor="numOfSeats" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Loại xe</label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
               <input onChange={handleChange} type="text" name="orgs" id="orgs" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />

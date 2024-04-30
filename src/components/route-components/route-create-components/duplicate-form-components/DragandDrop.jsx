@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import RowItemDrag from "./RowItemDrag";
 import { createRouteVarDuplicate } from "../../../../api/route-var-api";
 //import ComboboxComponent from "../../../store-components/ComboboxComponent";
-import { getDistrictByProvinceId } from "../../../../api/store-api";
+import { getDistrictByProvinceId } from "../../../../api/store-api-1.js";
 // import { HiOutlinePlus } from "react-icons/hi";
 // import { getStations } from "../../../../api/station-api";
 import {toast} from 'react-toastify'

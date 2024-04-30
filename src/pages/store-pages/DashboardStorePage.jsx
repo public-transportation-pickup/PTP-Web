@@ -9,7 +9,7 @@ import CardPageTransactions from '../../components/store-components/dashboard-st
 //import { Actions, useAPIRequest } from '../../lib/utils/api-request.js'
 import { useCallback, useEffect, useState } from 'react'
 import {useNavigate, useParams} from 'react-router-dom'
-import { getStoreReport } from '../../api/store-api.js'
+import { getStoreReport } from '../../api/store-api-1.js'
 
 export default function DashboardStorePage() {
     const params =useParams();

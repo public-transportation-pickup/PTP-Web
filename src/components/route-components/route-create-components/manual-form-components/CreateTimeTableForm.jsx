@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import { useEffect, useState } from 'react';
-import { applyTimetableFortrip, createTimeTableManually } from '../../../../api/timetable-api';
+import { applyTimetableFortrip, createTimeTableManually, getTimeTableByRouteIdandRouteVarId } from '../../../../api/timetable-api';
 import {toast} from 'react-toastify'
 import {useNavigate, useParams} from 'react-router-dom'
 import { HiArrowRight } from 'react-icons/hi';
@@ -19,6 +19,7 @@ export default function CreateTimeTableForm() {
     const [timetableId2,setTimetableId2]=useState('');
     const [buttonSubmit,setButtonSubmit]=useState(false);
     const [loading,setLoading]=useState(false);
+    console.log("loading",loading);
     //console.log("timetableId",timetableId);
     console.log("Time 1"+timetableId1+"Time 2"+timetableId2)
 
@@ -48,9 +49,11 @@ export default function CreateTimeTableForm() {
         const responseAPI1= await applyTimetableFortrip(timetableId1);
         const responseAPI2= await applyTimetableFortrip(timetableId2);
         if(responseAPI1===200 && responseAPI2===200){
-            await toast.success("Áp dụng thời khóa biếu thành công")
-            setLoading(true)
-            if(loading===true) navigate(`/route/${params.routeId}`)
+            toast.success("Áp dụng thời khóa biếu thành công")
+            setTimeout(() => {
+                navigate(`/route/${params.routeId}`);
+              }, 2000);        
+            //navigate(`/route/${params.routeId}`)
         } 
         else toast.error("Áp dụng thời khóa biếu thất bại")
     }
@@ -75,8 +78,9 @@ export default function CreateTimeTableForm() {
     ]
         try {
             const responseAPI= await createTimeTableManually(timeTableModel);
-            if(responseAPI!==null){
-                
+            console.log("responseAPI.status",responseAPI); 
+            console.log("response true false",responseAPI.status===400)
+            if(responseAPI.status!==500 && responseAPI.status!==400){
                 console.log("responseAPI[0].id",responseAPI[0].id)
                 setTimetableId1(responseAPI[0].id);
                 setTimetableId2(responseAPI[1].id);
@@ -84,7 +88,19 @@ export default function CreateTimeTableForm() {
                 await toast.success("Tạo thời khóa biểu thành công")
                 
             } 
+            else if (responseAPI.status===400){
+                setButtonSubmit(true);
+                const responseAPI2=await getTimeTableByRouteIdandRouteVarId(params.routeId,params.routevarId1);
+                const responseAPI3=await getTimeTableByRouteIdandRouteVarId(params.routeId,params.routevarId2);
+                console.log("response 2 3"+JSON.stringify(responseAPI2)+"3 nha"+JSON.stringify(responseAPI3))
+                if(responseAPI2!==null && responseAPI3!==null){
+                    setTimetableId1(responseAPI2[0].id);
+                    setTimetableId2(responseAPI3[0].id);
+                } 
+                await toast.info("Bạn đã tạo thời khóa biểu.")
+            } 
             else toast.error("Tạo thời khóa biểu thất bại");
+            
         } catch (error) {
             console.error("handle submit create time table page", error)
         }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { createStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictId } from "../../api/store-api";
+import { createStore,forwardGeocoding,getDistrictByProvinceId,getWardByDistrictId } from "../../api/store-api-1.js";
 import ComboboxComponent from "../../components/store-components/ComboboxComponent";
 import {ToastContainer, toast } from "react-toastify";
 import { getStations } from "../../api/station-api";

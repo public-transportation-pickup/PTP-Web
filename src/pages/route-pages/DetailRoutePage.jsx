@@ -6,11 +6,12 @@ import { getRouteVars } from "../../api/route-var-api";
 import { ToastContainer,toast } from "react-toastify";
 import { getRouteStation } from "../../api/route-station-api";
 import Map from '../../pages/Map.jsx';
-import { getTimeTableByRouteIdandRouteVarId } from "../../api/timetable-api.js";
+import { applyTimetableFortrip, getTimeTableByRouteIdandRouteVarId, getTripsByTimetableId } from "../../api/timetable-api.js";
 import classNames from "classnames";
 import { getStationByStationId } from "../../api/station-api.js";
 import StationDetailModal from "../../components/route-components/StationDetailModal.jsx";
 import { HiPencil } from "react-icons/hi";
+import { HiOutlinePlus } from "react-icons/hi";
 
 export default function DetailRoutePage() {
   const params=useParams();
@@ -18,8 +19,8 @@ export default function DetailRoutePage() {
   const [routeInfo,setRouteInfo]=useState({});
   const [routeStationList1,setRouteStationList1]=useState([])
   const [routeStationList2,setRouteStationList2]=useState([])
-  // const [routeVar1,setRouteVar1]=useState('')
-  // const [routeVar2,setRouteVar2]=useState('')
+  const [routeVar1,setRouteVar1]=useState('')
+  const [routeVar2,setRouteVar2]=useState('')
   const [timetable1,setTimetable1]=useState(null)
   const [timetable2,setTimetable2]=useState(null)
   const [isOpenMap,setIsOpenMap]=useState(null);
@@ -30,6 +31,7 @@ export default function DetailRoutePage() {
   console.log("route info",routeInfo)
   console.log("routeStationList1",routeStationList1)
   console.log("routeStationList2",routeStationList2)
+  console.log("timetable 1 detail route",timetable1)
 
   const handleViewMap = (enumType)=>{
    
@@ -71,6 +73,10 @@ export default function DetailRoutePage() {
   //   navigate(`/route/${params.routeId}`)
   // }
 
+  const handleUpdateTimetable=async()=>{
+    navigate(`/route/${routeInfo.id}/routevar/${routeVar1}/${routeVar2}/timetable/create`)
+  }
+
   useEffect(()=>{
     const fetchData=async ()=>{
       try {
@@ -83,22 +89,31 @@ export default function DetailRoutePage() {
             if(index===0 && Array.isArray(responseRouteStation)===true){
               setRouteStationList1(responseRouteStation)
               console.log("Luot 1",item.id)
-              //setRouteVar1(item.id)
+              setRouteVar1(item.id)
               const responseTimetable1= await getTimeTableByRouteIdandRouteVarId(params.routeId, item.id);
               if(responseTimetable1!==null) setTimetable1(responseTimetable1[0])
             }else{
               setRouteStationList2(responseRouteStation);
               console.log("Luot 2",item.id)
-              //setRouteVar2(item.id);
+              setRouteVar2(item.id);
               const responseTimetable2= await getTimeTableByRouteIdandRouteVarId(params.routeId, item.id);
               if(responseTimetable2!==null) setTimetable2(responseTimetable2[0])
             }
           })
           await responserouteInfo!==null?setRouteInfo(responserouteInfo):setRouteInfo({});
-        
         }else{
           toast(`Tuyến số ${routeInfo.routeNo} không có lượt`)
         }
+        const reponseAPICheckApplyTimetable=await getTripsByTimetableId(timetable1.id);
+        console.log("reponseAPICheckApplyTimetable",reponseAPICheckApplyTimetable)
+        if(reponseAPICheckApplyTimetable===null){
+          const responseAPI1= await applyTimetableFortrip(timetable1.id);
+          const responseAPI2= await applyTimetableFortrip(timetable2.id);
+          if(responseAPI1===200 && responseAPI2===200){
+              toast.success(`Đã tự động tạo chuyến cho tuyến ${routeInfo.routeNo}`)
+          } 
+          else toast.error(`Tự động tạo chuyến cho tuyến ${routeInfo.routeNo} thất bại`)
+          }
       } catch (error) {
         console.error('fetch data detail page',error)
       }
@@ -130,11 +145,18 @@ export default function DetailRoutePage() {
         <p><span className="text-sky-500 font-bold font-montserrat" >Tổng số chuyến:</span> <span className="font-montserrat">{routeInfo.totalTrip}</span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Thuộc tổ chức:</span> <span className="font-montserrat" dangerouslySetInnerHTML={{ __html: routeInfo.orgs }}></span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Mô tả vé:</span> <span className="font-montserrat"  dangerouslySetInnerHTML={{ __html: routeInfo.tickets }}></span></p>
-        <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt đi:</span> <span className="font-montserrat">{timetable1!==null? timetable1.applyDates:"Chưa có thời khóa biểu cho lượt đi"}</span></p>
-        <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt về:</span> <span className="font-montserrat">{timetable2!==null? timetable2.applyDates:"Chưa có thời khóa biểu cho lượt về"}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt đi:</span> <span className="font-montserrat">{timetable1!==null? timetable1.applyDates:(
+          <div className="flex flex-row items-center gap-3">
+            <p className="text-slate-400">Chưa có thời khóa biểu cho lượt đi</p>
+            <HiOutlinePlus className="bg-cyan-700 rounded-full hover:cursor-pointer" onClick={()=>handleUpdateTimetable()}/>
+          </div>
+        )}</span></p>
+        <p><span className="text-sky-500 font-bold font-montserrat" >Thời khóa biểu - lượt về:</span> <span className="font-montserrat">{timetable2!==null? timetable2.applyDates:(<div className="flex flex-row items-center gap-3">
+            <p className="text-slate-400">Chưa có thời khóa biểu cho lượt về</p>
+            <HiOutlinePlus className="bg-cyan-700 rounded-full hover:cursor-pointer" onClick={()=>handleUpdateTimetable()}/>
+          </div>)}</span></p>
         <p><span className="text-sky-500 font-bold font-montserrat" >Trạng thái:</span> <span className="font-montserrat">{routeInfo.status}</span></p>
         </div>
-        
       </div>
       
       <div className="flex flex-col gap-4 pt-8">

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 //import PaginationButton from "../../components/store-components/PaginationButton";
 import { HiOutlinePlusSm } from "react-icons/hi";
 import {useNavigate} from 'react-router-dom'
-import { deleteStore, getStores } from "../../api/store-api";
+import { deleteStore, getStores } from "../../api/store-api-1.js";
 import classNames from 'classnames'
 import MenuDropDown from "../../components/shared/MenuDropDown";
 import { ToastContainer,toast } from "react-toastify";
