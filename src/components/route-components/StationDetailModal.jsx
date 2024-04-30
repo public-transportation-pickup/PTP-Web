@@ -54,7 +54,7 @@ export default function StationDetailModal({buttonCheck,detailStation,setButtonC
                         <HiClipboardList className="h-6 w-6 text-amber-500" aria-hidden="true" />
                       </div>
                       <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                        <Dialog.Title as="h3" className="text-base font-semibold font-montserrat mt-2 leading-6 text-gray-900">
                           Chi tiết thông tin trạm
                         </Dialog.Title>
                         <div className="mt-2">

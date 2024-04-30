@@ -2,12 +2,7 @@ import {
 	HiOutlineViewGrid,
 	HiOutlineUsers,
 	HiOutlineDocumentText,
-	HiOutlineQuestionMarkCircle,
-	HiOutlineCog
 } from 'react-icons/hi'
-import { FaChartBar,FaMapLocation  } from "react-icons/fa6";
-
-import { VscMapFilled } from "react-icons/vsc";
 import { CiRoute,CiShop } from "react-icons/ci";
 
 export const DASHBOARD_SIDEBAR_LINKS = [
@@ -25,18 +20,6 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <CiShop />,
 		flag:true
 	},
-	// {
-	// 	key: 'products',
-	// 	label: 'Products',
-	// 	path: '/product',
-	// 	icon: <HiOutlineCube />
-	// },
-	// {
-	// 	key: 'orders',
-	// 	label: 'Orders',
-	// 	path: '/orders',
-	// 	icon: <HiOutlineShoppingCart />
-	// },
 	{
 		key: 'user',
 		label: 'Người dùng',
@@ -44,13 +27,6 @@ export const DASHBOARD_SIDEBAR_LINKS = [
 		icon: <HiOutlineUsers />,
 		flag:false
 	},
-	// {
-	// 	key: 'Map',
-	// 	label: 'Bản đồ',
-	// 	path: '/map',
-	// 	icon: <VscMapFilled />,
-	// 	flag:false
-	// },
 	{
 		key: 'route',
 		label: 'Tuyến',

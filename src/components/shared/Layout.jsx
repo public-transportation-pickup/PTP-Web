@@ -1,14 +1,12 @@
 //import React from 'react'
-import {Outlet, useNavigate} from 'react-router-dom'
+import {Outlet} from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Header from './Header'
-import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { ACCESS_TOKEN, refreshToken } from '../../api/auth-api';
+import { ACCESS_TOKEN } from '../../api/auth-api';
 
 export default function Layout() {
-	const {currentUser}=useSelector(state=>state.user);
-   const navigate=useNavigate()
+	// const {currentUser}=useSelector(state=>state.user);
+  //  const navigate=useNavigate()
    console.log("AccessToken Layout",ACCESS_TOKEN);
   // useEffect(()=>{
   //    const storeUserLocal=async()=>{

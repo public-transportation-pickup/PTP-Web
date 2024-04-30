@@ -47,14 +47,20 @@ export default function CreateCategoryPage({checkReload}) {
   const handleSubmit=async ()=>{
     try {
       checkReload(true);
-      const responseAPI= await CreateCategory(createModal);
-      console.log("ResponseAPI create category page", responseAPI);
-      if (responseAPI===201){
-        await toast.success("Tạo danh mục thành công");
-        fetchData();
-        checkReload(false);
-      } 
-      else toast.error("Tạo danh mục thất bại")
+      const isFormValid =Object.values(createModal).every(value => value !== null && value !== '' && value.length>0);
+      console.log("isFormValid",isFormValid)
+      if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
+      else{
+        const responseAPI= await CreateCategory(createModal);
+        console.log("ResponseAPI create category page", responseAPI);
+        if (responseAPI===201){
+          await toast.success("Tạo danh mục thành công");
+          fetchData();
+          checkReload(false);
+        } 
+        else toast.error("Tạo danh mục thất bại")
+      }
+      
     } catch (error) {
       console.error("Create category page error", error);
     }

@@ -55,7 +55,7 @@ export default function DuplicateForm() {
     }
 
     const fetchData=async()=>{
-        const responseAPI=await getRoutes();
+        const responseAPI=await getRoutes('');
         Array.isArray(responseAPI)?setListRoute(responseAPI):()=>{
             setListRoute([]);
             toast("Không thể tải danh sách tuyến");
@@ -71,7 +71,6 @@ export default function DuplicateForm() {
     }
 
     useEffect(()=>{
-        
         fetchData();
     },[routeId,routeVarInfo,listRouteVarStation])
     

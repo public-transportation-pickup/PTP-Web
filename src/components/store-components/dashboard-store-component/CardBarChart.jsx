@@ -119,7 +119,7 @@ export default function CardBarChart({param}) {
                  Total orders
                 </h6>
                 <h2 className="text-slate-700 text-xl font-semibold">
-                  Biểu đồ số sánh đơn hàng
+                  Biểu đồ đơn hàng
                 </h2>
               </div>
             </div>

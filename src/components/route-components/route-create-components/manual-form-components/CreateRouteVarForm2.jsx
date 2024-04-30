@@ -61,6 +61,8 @@ export default function CreateRouteVarForm2({getRoutevar2}) {
     setCreateRouteVarModel({...createRouteVarModel,routeId:params.routeId});
     try {
       if(params.routeId!==null && params.routeId){
+        const isFormValid = Object.values(createRouteVarModel).every(value => value !== null && value !== '' && value.length>0);
+        if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
         const responseAPI= await createRouteVarManually(createRouteVarModel);
         console.log("Reponse api create route manuall vỀ",responseAPI);
         if(responseAPI!==null){

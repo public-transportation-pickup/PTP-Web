@@ -50,7 +50,7 @@ useEffect(()=>{
         <span className="px-2">&gt;</span>
         <button type="button" onClick={handleDetailClick} className="hover:underline text-sky-700">Chi tiết</button>
         <span className="px-2">&gt;</span>
-        <span className="hover:underline text-sky-700">Sản phẩm</span>
+        <span className="hover:underline text-sky-700">Thống kê chung</span>
     </p>
         <h1 className="text-center mx-auto text-3xl my-10 font-bold">Thống Kê Của Cửa Hàng: {report.storeName}</h1>
         <div>
@@ -68,11 +68,13 @@ useEffect(()=>{
             </div>
             <div className="flex flex-wrap mt-4">
                 <div className="w-full xl:w-8/12 mb-12 xl:mb-0 px-4 pt-8">
-                <CardPageVisits param={report!==null?report.productMosts:[]}/>
+                {/* <CardPageVisits param={report!==null?report.productMosts:[]}/> */}
+                <CardSocialTraffic  param={report!==null?report.customerMosts:[]}/>
                 {/* App3 */}
                 </div>
                 <div className="w-full xl:w-4/12 px-4 pt-8">
-                <CardSocialTraffic  param={report!==null?report.customerMosts:[]}/>
+                <CardPageVisits param={report!==null?report.productMosts:[]}/>
+                {/* <CardSocialTraffic  param={report!==null?report.customerMosts:[]}/> */}
                 {/* App4   */}
                 </div>
             </div>

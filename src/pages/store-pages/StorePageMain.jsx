@@ -58,27 +58,27 @@ export default function StorePageMain() {
 return (
     <>
     <ToastContainer/>
-        <h1 className="text-center mx-auto text-4xl font-bold pb-8 pt-4">Danh Sách Cửa Hàng</h1>
+        <h1 className="text-center mx-auto text-4xl font-bold font-poppins pb-8 pt-4">Danh Sách Cửa Hàng</h1>
         <div className="flex justify-end mb-8">
-            <button className="text-lg font-semibold rounded-lg bg-gradient-to-r from-cyan-600 to-sky-500 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:from-green-500 hover:to-yellow-500" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Tạo mới cửa hàng</button>
+            <button className="text-lg font-montserrat font-semibold rounded-lg bg-gradient-to-r from-cyan-600 to-sky-500 pl-3 pr-4 pt-2 pb-2 flex flex-row items-center hover:from-green-500 hover:to-yellow-500" onClick={handleCreateButtonClick}><HiOutlinePlusSm />Tạo mới cửa hàng</button>
         </div>
         
         <div className="">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
-                <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center">
+                <thead className="text-sm text-gray-700 uppercase bg-blue-400 dark:bg-gray-700 dark:text-gray-40 h-10 items-center font-montserrat font-bold">
                     <tr>
                     <th className="px-4">#</th>
                     <th>Tên cửa hàng</th>
                     <th>Số điện thoại</th>
                     <th>Email</th>
                     <th>Địa chỉ</th>
-                    <th>Trạng thái</th>
+                    {/* <th>Trạng thái</th> */}
                     <th>Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
                     {listStore && listStore.length >0 ? (listStore.map((item,index)=>(
-                        <tr key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4")}>
+                        <tr key={index} className= {classNames(index%2!==0?'bg-blue-100':''," h-8 border-b-2  dark:bg-gray-800 dark:border-gray-700 text-xs py-4 font-montserrat")}>
                             {/* <div className="hover:bg-red-400"> */}
                             <td className="px-4">{index+1}</td>
                             <td>{item.name}</td>
@@ -86,7 +86,7 @@ return (
                             <td>{item.email}</td>
                             <td>{item.addressNo}, {item.street==="null"? "":`Đường ${item.street},`} {item.ward}, {item.zone}, TPHCM</td>
                             
-                            <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status==='ACTIVE'?'ĐANG HOẠT ĐỘNG':'DỪNG HOẠT ĐỘNG'}</span></td>
+                            {/* <td><span className={classNames(item.status==='ACTIVE'?' bg-green-200':'bg-rose-200','p-2 rounded-lg')}>{item.status==='ACTIVE'?'ĐANG HOẠT ĐỘNG':'DỪNG HOẠT ĐỘNG'}</span></td> */}
                             {/* </div> */}
                             
                             <td><MenuDropDown EditFunc={()=>EditFunc(item.id)} DeleteFunc={()=>DeleteFunc(item.id)} ViewDetailFunc={()=>ViewDetailFunc(item.id)}/></td>
@@ -99,6 +99,7 @@ return (
                    
                 </tbody>
             </table>
+            {listStore && listStore.length===0 &&(<div className="text-center"> Danh sách trống!!!</div>)}
             <div>
             {listStore && listStore.length >0?
             <div className="items-center align-middle dark:bg-gray-800 dark:border-gray-700 border-0 border-slate-300 ">

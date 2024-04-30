@@ -41,16 +41,16 @@ export default function UpdateStorePage() {
 
   const [jsonForm,setJsonForm]=useState({
     Id:'',
-    Name:"",
-    Description:"",
-    PhoneNumber:"",
+    Name:'',
+    Description:'',
+    PhoneNumber:'',
     OpenedTime:"06:00",
     ClosedTime:"22:00",
     Latitude:0,
     Longitude: 0,
-    Zone:"",
-    Ward:"",
-    AddressNo:"",
+    Zone:'',
+    Ward:'',
+    AddressNo:'',
     Street:"null",
     File:[],
     ActivationDate: new Date().toISOString(),
@@ -147,6 +147,8 @@ const handleSubmit =async (e)=>{
   e.preventDefault();
   try{
       //if(jsonForm.File.length <1 ) return setError('You must upload at least one image');
+      const isFormValid = Object.values(jsonForm).every(value => value !== null && value !== '' && value.length>0);
+      if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
       setLoading(true);
       //setError(false);
       const responseAPI= await updateStore(jsonForm);
@@ -155,8 +157,6 @@ const handleSubmit =async (e)=>{
               else if(responseAPI===401) toast.warning("Vui lòng đăng nhập")
               //else if(responseAPI.status===400 && responseAPI!==null) toast.warning(responseAPI.message);
               else toast.error("Cập nhật cửa hàng thất bại")
-
-      
       setLoading(false);
   }catch(error){
       console.log("Catch:",error);
@@ -218,13 +218,13 @@ const handleSubmit =async (e)=>{
       <>
       <ToastContainer/>
           <main className='p-3 max-w-6xl mx-auto'>
-              <h1 className='text-3xl font-semibold text-center my-7'>Cập Nhật Cửa Hàng</h1>
+              <h1 className='text-3xl font-semibold text-center my-7 font-montserrat'>Cập Nhật Cửa Hàng</h1>
               <div>
                 <div>
-                  <h3 className="font-bold mb-2">I. Cập nhật thông tin quản lý của cửa hàng:</h3>
+                  <h3 className="font-bold mb-2 font-montserrat">I. Cập nhật thông tin quản lý của cửa hàng:</h3>
                   <div className="px-12">
                         <div className="flex flex-row items-center w-full pb-4">
-                                <label className="w-1/5" htmlFor="ManagerName">Họ và tên quản lý</label>
+                                <label className="w-1/5 font-montserrat" htmlFor="ManagerName">Họ và tên quản lý</label>
                                 <input
                                 type="text"
                                 id="ManagerName"
@@ -236,7 +236,7 @@ const handleSubmit =async (e)=>{
                                 
                             </div>
                             <div className="flex flex-row items-center w-full pb-4">
-                                <label className="w-1/5" htmlFor="Email">Email</label>
+                                <label className="w-1/5 font-montserrat" htmlFor="Email">Email</label>
                                 <input
                                 type="text"
                                 id="Email"
@@ -248,7 +248,7 @@ const handleSubmit =async (e)=>{
                                 
                             </div>
                             <div className="flex flex-row items-center w-full pb-4">
-                                <label className="w-1/5" htmlFor="DateOfBirth">Ngày sinh</label>
+                                <label className="w-1/5 font-montserrat" htmlFor="DateOfBirth">Ngày sinh</label>
                                 <input
                                 type="date"
                                 id="DateOfBirth"
@@ -260,7 +260,7 @@ const handleSubmit =async (e)=>{
                                 
                             </div>
                             <div className="flex flex-row items-center w-full pb-8">
-                                <label className="w-1/5" htmlFor="ManagerPhone">Số điện thoại</label>
+                                <label className="w-1/5 font-montserrat" htmlFor="ManagerPhone">Số điện thoại</label>
                                 <input
                                 type="text"
                                 id="ManagerPhone"
@@ -274,33 +274,35 @@ const handleSubmit =async (e)=>{
                     </div>
                 </div>
                 <div>
-                  <h3 className="font-bold mb-2">II. Cập nhật thông tin cửa hàng:</h3>
+                  <h3 className="font-bold mb-2 font-montserrat">II. Cập nhật thông tin cửa hàng:</h3>
                   <div>
                     <div className="flex flex-row gap-2 mb-6 w-full">
                   <div className="w-full">
-                    <div className=" ml-20 flex flex-row items-center gap-5">
+                    <div className=" ml-10 flex flex-row items-center gap-5">
                       <div>
                         <div className="flex flex-row gap-3 items-center">
                         <div className="flex flex-row items-center w-full">
-                                <label className="w-1/5" htmlFor="ManagerName">Địa chỉ hiện tại</label>
+                                <label className="w-1/5 font-montserrat" htmlFor="ManagerName">Địa chỉ hiện tại</label>
                                 <input
                                 type="text"
                                 id="ManagerName"
-                                className="rounded-lg w-4/5 h-12 px-4"
+                                className="rounded-lg w-[50rem] h-12 px-4 ml-14"
                                 value={`${store.addressNo}, ${store.street!=="null"?store.street +",":""} ${store.ward}, ${store.zone}`}
                                 readOnly
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-row mt-8 items-center">
-                          <div htmlFor="description" className="">Các trạm hiện tại được đăng kí:</div>
-                         
+                        <div className="flex flex-row mt-8">
+                          <div htmlFor="description" className="font-montserrat">Các trạm hiện tại được đăng kí:</div>
+                            <div className="grid grid-cols-2 gap-2">
                             {store.stationName && store.stationName.length >0&& store.stationName.map((item,index)=>(
                                     // <div key={index} className="ml-8 items-center">
-                                    <div key={index} className="flex flex-wrap ml-3 items-center bg-white w-[28rem] h-12 rounded-lg">
-                                        <p key={index} className="p-2 mb-2">{index+1}-{item} </p>
+                                    <div key={index} className="ml-3 items-center bg-white w-[20rem] h-12 rounded-lg">
+                                        <p key={index} className="p-2 mb-2">{index+1} - {item} </p>
                                     </div>
                                 ))}
+                            </div>
+                            
                          
                         </div>
                       </div>

@@ -40,6 +40,8 @@ console.log("create route model", createRouteModel)
 
   const handleSubmit=async ()=>{
     try {
+      const isFormValid = Object.values(createRouteModel).every(value => value !== null && value !== '' && value.length>0);
+      if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
       const responseAPI= await createRoute(createRouteModel);
       console.log("Reponse api create route form page", responseAPI);
       if (responseAPI!==null){
