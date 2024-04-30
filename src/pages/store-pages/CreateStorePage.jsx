@@ -20,7 +20,7 @@ export default function CreateStorePage() {
     const [districtId,setDistrictId]=useState('');
     // console.log("ProvinceID", provinceId);
     // console.log("DistrictId",districtId);
-    const [error, setError]=useState(false);
+    //const [error, setError]=useState(false);
     const [loading,setLoading]=useState(false);
     //const [addressStation,setAddressStation]=useState('');
     const [stationListInfo,setStationListInfo]=useState([]);
@@ -108,16 +108,17 @@ export default function CreateStorePage() {
     const handleSubmit =async (e)=>{
         e.preventDefault();
         try{
-            const isFormValid = Object.values(jsonForm).every(value => value !== null && value !== '' && value.length>0);
-            if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
-            if(file.length<1) return setError('You must upload at least one image');
+            // const isFormValid = Object.values(jsonForm).every(value => value !== null && value !== '' && value.length>0);
+            // if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
+            //if(file.length<1) return setError('You must upload at least one image');
             setLoading(true);
-            setError(false);
+            //setError(false);
             if(jsonForm.Latitude !==0 && jsonForm.Longitude!==0){
                 const responseAPI= await createStore(jsonForm,file);
                 console.log("call api create store", responseAPI);
                 if(responseAPI===null) toast.error("Tạo cửa hàng thất bại")
-                else if (responseAPI===500) toast.info("Đang trong quá trình tạo tài khoản cho store");
+                else if (responseAPI.status===400) toast.info(responseAPI.message);
+                else if (responseAPI.status===500) toast.info("Lỗi hệ thống")
                 else toast.success("Tạo cửa hàng thành công")
             }else toast("Đang cập nhật địa chỉ. Xin chờ chút ạ!")
             

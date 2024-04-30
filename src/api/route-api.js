@@ -74,6 +74,10 @@ export const updateRoute = async (routeId,routeModel)=>{
         if(res.status===204) return res.status;
     } catch (error) {
         console.error("update Route exception", error);
+        return {
+            status:error.response.status,
+            message:error.response.data.error
+        };
     }
 }
 

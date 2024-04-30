@@ -117,7 +117,10 @@ export const createStore = async (storeModel,file)=>{
     } catch (error) {
         console.log("Create store api wrong", error);
         console.log("Error data", error.response.data.error);
-        return null;
+        return {
+            status:error.response.status,
+            message:error.response.data.error
+        };
     }
 }
 
