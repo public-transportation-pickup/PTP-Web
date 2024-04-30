@@ -43,6 +43,7 @@ export const CreateCategory=async (createModal)=>{
         else if(res.status===401) await refreshToken(ACCESS_TOKEN);
     } catch (error) {
         console.log("Get all category error: ",error);
+        
     }
 }
 

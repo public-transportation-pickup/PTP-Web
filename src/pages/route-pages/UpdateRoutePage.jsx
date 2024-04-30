@@ -51,6 +51,7 @@ console.log("Update route info",routeInfo)
         //setButtonSubmit(true);
         toast.success("Cập nhật tuyến thành công")
       } 
+      else if(responseAPI.status===400 || responseAPI.status===500) toast(responseAPI.message)
       else toast.error("Cập tuyến thất bại")
       setLoading(false)
     } catch (error) {
