@@ -147,8 +147,8 @@ const handleSubmit =async (e)=>{
   e.preventDefault();
   try{
       //if(jsonForm.File.length <1 ) return setError('You must upload at least one image');
-      const isFormValid = Object.values(jsonForm).every(value => value !== null && value !== '');
-      if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
+      // const isFormValid = Object.values(jsonForm).every(value => value !== null && value !== '');
+      // if(isFormValid===false) toast.warning("Thông tin form chưa đủ")
       setLoading(true);
       //setError(false);
       const responseAPI= await updateStore(jsonForm);

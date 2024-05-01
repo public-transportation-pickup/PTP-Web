@@ -48,7 +48,7 @@ export default function CreateTimeTableForm() {
         setLoading(false);
         const responseAPI1= await applyTimetableFortrip(timetableId1);
         const responseAPI2= await applyTimetableFortrip(timetableId2);
-        if(responseAPI1===200 && responseAPI2===200){
+        if(responseAPI1===200 || responseAPI2===200){
             toast.success("Áp dụng thời khóa biếu thành công")
             setTimeout(() => {
                 navigate(`/route/${params.routeId}`);
